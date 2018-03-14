@@ -1,0 +1,32 @@
+
+#include "../includes/ft_printf.h"
+
+static int	ft_write_flag_sgn(t_env *arg, ssize_t nbr)
+{
+	arg->len += ft_write_flag_more(arg);
+	arg->len += ft_write_flag_space(arg);
+	ft_putnbr_lng(nbr);
+	return (arg->len);
+}
+
+static int	ft_write_prc_zero_sgn(t_env *arg)
+{
+	if (!arg->size)
+		return (0);
+	else
+	{
+		ft_write_flag_spaces(arg->size, arg->precision);
+		return (arg->size);
+	}
+}
+
+int			ft_write_sgn(t_env *arg, ssize_t nbr)
+{
+	arg->len = ft_nbrlen(nbr);
+	if (nbr == 0 && arg->dot == 1 && arg->precision == 0)
+		return (ft_write_prc_zero_sgn(arg));
+	if (nbr >= 0 && (arg->flag[MORE] || arg->flag[SPACE]) &&
+	!arg->flag[LESS] && arg->size < arg->len && !arg->dot)
+		return (ft_write_flag_sgn(arg, nbr));
+	return (nbr >= 0 ? ft_write_sgn_pos(arg, nbr) : ft_write_sgn_neg(arg, nbr));
+}
