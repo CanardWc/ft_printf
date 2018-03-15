@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_flag.c                                    :+:      :+:    :+:   */
+/*   ft_buff_gestion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/14 14:46:53 by fgrea             #+#    #+#             */
-/*   Updated: 2018/03/14 14:53:27 by fgrea            ###   ########.fr       */
+/*   Created: 2018/03/14 14:36:38 by fgrea             #+#    #+#             */
+/*   Updated: 2018/03/14 15:59:31 by fgrea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	ft_parse_flag(t_env *arg)
+void		ft_buff_gestion(t_env *arg)
 {
-	if (arg->str[arg->cur] == '#')
+	if (arg->index == BUFF_SIZE)
 	{
-		arg->flag[DIESE] = 1;
-		arg->cur++;
+		ft_putstr(arg->buff);
+		arg->index = 0;
 	}
-	else if (arg->str[arg->cur] == '0')
+	if (arg->index == 0)
+		ft_bzero(arg->buff, BUFF_SIZE);	
+}
+
+void		ft_add_to_buff(t_env *arg, char *s)
+{
+	char	*tmp;
+
+	tmp = s;
+	while (*tmp)
 	{
-		arg->flag[ZERO] = 1;
-		arg->cur++;
-	}
-	else if (arg->str[arg->cur] == '-')
-	{
-		arg->flag[LESS] = 1;
-		arg->cur++;
-	}
-	else if (arg->str[arg->cur] == '+')
-	{
-		arg->flag[MORE] = 1;
-		arg->cur++;
-	}
-	else if (arg->str[arg->cur] == ' ')
-	{
-		arg->flag[SPACE] = 1;
-		arg->cur++;
+		arg->buff[arg->index] = *tmp;
+		*tmp++;
+		arg->index++;
+		ft_buff_gestion(arg);
 	}
 }

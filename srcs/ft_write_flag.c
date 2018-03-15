@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_write_flag.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/14 16:02:16 by fgrea             #+#    #+#             */
+/*   Updated: 2018/03/14 16:03:58 by fgrea            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
@@ -49,14 +60,14 @@ int	ft_write_flag_space(t_env *arg)
 	return (0);
 }
 
-int	ft_write_flag_zero(int start, int end)
+int	ft_write_flag_zero(t_env *arg, int start, int end)
 {
 	int i;
 
 	i = 0;
 	while (i < start - end)
 	{
-		ft_putchar('0');
+		ft_add_to_buff(arg, "0");
 		i++;
 	}
 	return (i);

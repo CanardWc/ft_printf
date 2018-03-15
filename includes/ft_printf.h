@@ -6,6 +6,8 @@
 # include <wchar.h>
 # include "../libft/includes/libft.h"
 
+# define BUFF_SIZE 4096
+
 # define MAJ_HEXA "0123456789ABCDEF"
 # define MIN_HEXA "0123456789abcdef"
 # define OCTAL "01234567"
@@ -34,6 +36,8 @@ typedef struct	s_precision
 
 typedef struct	s_env
 {
+	char		buff[BUFF_SIZE];
+	int			index;
 	const char	*str;
 	size_t		cur;
 	char		flag[5];

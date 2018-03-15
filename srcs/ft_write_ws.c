@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_write_ws.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/14 15:04:21 by fgrea             #+#    #+#             */
+/*   Updated: 2018/03/14 16:06:18 by fgrea            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
@@ -56,9 +67,9 @@ static int	ft_write_prc_zero_ws(t_env *arg)
 	else
 	{
 		if (arg->flag[ZERO])
-			ft_write_flag_zero(arg->size, 0);
+			ft_write_flag_zero(arg, arg->size, 0);
 		else
-			ft_write_flag_spaces(arg->size, 0);
+			ft_write_flag_spaces(arg, arg->size, 0);
 		return (arg->size);
 	}
 }
