@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 14:35:03 by fgrea             #+#    #+#             */
-/*   Updated: 2018/03/14 15:20:07 by fgrea            ###   ########.fr       */
+/*   Updated: 2018/03/18 19:38:26 by fgrea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	ft_reader(t_env *arg, va_list ap)
 			arg->cur++;
 			arg->ret = ft_parse(arg);
 			if (arg->ret == 1)
-				len += ft_write_arg(arg, ap);
+				len += ft_add_arg(arg, ap);
 			if (!arg->conv && arg->conv != '%' && arg->ret == 1)
 				return (0);
 		}
 		else
 		{
-			ft_add_to_buff(arg, (char *)(arg->str[arg->cur]));
+			ft_add_c_to_buff(arg, (arg->str[arg->cur]));
 			arg->cur++;
 			len++;
 		}

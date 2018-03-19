@@ -6,7 +6,7 @@
 #    By: fgrea <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/20 16:19:36 by fgrea             #+#    #+#              #
-#    Updated: 2017/04/25 18:13:50 by fgrea            ###   ########.fr        #
+#    Updated: 2018/03/18 05:30:58 by fgrea            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,34 +34,18 @@ SRC_PATH = ./srcs/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = ft_printf.h
-SRC_NAME =	ft_printf.c					\
-			ft_parse.c					\
-			ft_parse_conv.c				\
-			ft_parse_flag.c				\
-			ft_parse_size.c				\
-			ft_parse_precision.c		\
-			ft_parse_modif.c			\
-			ft_reader.c					\
-			ft_write_arg.c				\
-			ft_write_c.c				\
-			ft_write_wc.c				\
-			ft_write_sgn.c				\
-			ft_write_sgn_pos.c			\
-			ft_write_sgn_neg.c			\
-			ft_write_octal.c			\
-			ft_write_b.c				\
-			ft_write_p.c				\
-			ft_write_s.c				\
-			ft_write_ws.c				\
-			ft_write_uns.c				\
-			ft_write_hexa.c				\
-			ft_write_non_valid.c		\
-			ft_write_flag.c				\
-			ft_printf_putnbr_uns.c		\
-			ft_printf_nbrlen_uns.c		\
-			ft_printf_str.c				\
-			ft_caste_sgn.c				\
-			ft_caste_uns.c				\
+SRC_NAME =	ft_printf.c	\
+			ft_reader.c	\
+			ft_parse.c	ft_parse_conv.c	ft_parse_flag.c	ft_parse_size.c	\
+			ft_parse_precision.c ft_parse_modif.c \
+			ft_add_arg.c ft_add_c.c ft_add_wc.c	ft_add_sgn.c \
+			ft_add_sgn_pos.c ft_add_sgn_neg.c ft_add_octal.c ft_add_b.c	\
+			ft_add_p.c ft_add_s.c ft_add_ws.c ft_add_uns.c ft_add_hexa.c \
+			ft_add_non_valid.c ft_add_flag.c \
+			ft_printf_putnbr_uns.c ft_printf_nbrlen_uns.c ft_printf_str.c \
+			ft_caste_sgn.c ft_caste_uns.c \
+			ft_buff_gestion.c ft_char_buff_gestion.c ft_nbr_buff_gestion.c \
+			ft_wchar_buff_gestion.c \
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))

@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 14:44:32 by fgrea             #+#    #+#             */
-/*   Updated: 2018/03/14 15:16:55 by fgrea            ###   ########.fr       */
+/*   Updated: 2018/03/18 18:36:12 by fgrea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_parse_double_percent(t_env *arg)
 {
 	if (arg->str[arg->cur] == '%')
 	{
-		ft_add_to_buff(arg, "%");
+		ft_add_c_to_buff(arg, '%');
 		arg->printcar++;
 		arg->cur++;
 		return (1);

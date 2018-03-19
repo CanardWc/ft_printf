@@ -6,26 +6,26 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 15:10:55 by fgrea             #+#    #+#             */
-/*   Updated: 2018/03/14 15:10:57 by fgrea            ###   ########.fr       */
+/*   Updated: 2018/03/18 15:36:27 by fgrea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	ft_printf_putstr(char const *s)
+void	ft_printf_putstr(t_env *arg, char const *s)
 {
 	if (s == NULL)
-		ft_putstr("(null)");
+		ft_add_to_buff(arg, "(null)");
 	if (s)
-		ft_putstr(s);
+		ft_add_to_buff(arg, (char *)s);
 }
 
-void	ft_printf_putwstr(wchar_t const *s)
+void	ft_printf_putwstr(t_env *arg, wchar_t const *s)
 {
 	if (s == NULL)
-		ft_putstr("(null)");
+		ft_add_to_buff(arg, "(null)");
 	if (s)
-		ft_putwstr(s);
+		ft_add_wstr(arg, s);
 }
 
 int		ft_printf_strlen(const char *s)

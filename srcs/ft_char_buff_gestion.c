@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_lng.c                                    :+:      :+:    :+:   */
+/*   ft_char_buff_gestion.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/18 20:20:08 by fgrea             #+#    #+#             */
-/*   Updated: 2018/03/18 20:20:10 by fgrea            ###   ########.fr       */
+/*   Created: 2018/03/18 01:47:11 by fgrea             #+#    #+#             */
+/*   Updated: 2018/03/18 15:29:46 by fgrea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/ft_printf.h"
 
-void	ft_putnbr_lng(long long int n)
+void	ft_add_str_n(t_env *arg, const char *s, int n)
 {
-	if (n <= LONG_MIN)
+	int i;
+
+	i = 0;
+	while (i < n && s[i] != '\0')
 	{
-		ft_putstr("-9223372036854775808");
-		return ;
+		ft_add_c_to_buff(arg, s[i]);
+		i++;
 	}
-	if (n < 0)
-	{
-		ft_putchar('-');
-		n = -n;
-	}
-	if (n > 9)
-		ft_putnbr_lng(n / 10);
-	ft_putchar(n % 10 + '0');
 }

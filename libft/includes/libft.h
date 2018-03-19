@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 18:40:03 by fgrea             #+#    #+#             */
-/*   Updated: 2017/03/14 16:17:10 by fgrea            ###   ########.fr       */
+/*   Updated: 2018/03/18 23:31:05 by fgrea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
 char				*ft_strstr(const char *big, const char *little);
 char				*ft_strnstr(const char *big, const char *little, \
-								size_t len);
+					size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_atoi(const char *str);
 int					ft_isalpha(int c);
@@ -105,23 +105,23 @@ int					ft_sqrt(int nb);
 int					ft_pow(int nb, int i);
 int					ft_islower(int c);
 int					ft_isupper(int c);
-void					ft_putwchar(wchar_t c);
+void				ft_putwchar(wchar_t c);
 int					ft_wcharlen(wchar_t s);
 void				ft_putnbr_lng(long long int n);
-int				ft_nbrlen(long long int nb);
-int				ft_nbcmp_max(int nb1, int nb2);
-int				ft_abs(int nb);
-void				ft_putnbr_base(unsigned long long int, char *base);
-int				ft_nbrlen_binary(unsigned long long int nb);
+int					ft_nbrlen(long long int nb);
+int					ft_nbcmp_max(int nb1, int nb2);
+int					ft_abs(int nb);
+void				ft_putnbr_base(unsigned long long int n, char *base);
+int					ft_nbrlen_binary(unsigned long long int nb);
 void				ft_print_hex(size_t nb);
-int				ft_nbrlen_hexa(unsigned long long int nb);
+int					ft_nbrlen_hexa(unsigned long long int nb);
 void				ft_putstr_n(const char *s, int n);
-int				ft_nbcmp_min(int nb1, int nb2);
+int					ft_nbcmp_min(int nb1, int nb2);
 void				ft_putwstr_n(wchar_t *s, int n);
 size_t				ft_strwlen_n(const wchar_t *s, int n);
 void				ft_putnbr_uns(unsigned long long int n);
-int				ft_nbrlen_uns(unsigned long long int nb);
-int				ft_nbrlen_octal(unsigned long long int nb);
+int					ft_nbrlen_uns(unsigned long long int nb);
+int					ft_nbrlen_octal(unsigned long long int nb);
 void				ft_putwstr(wchar_t const *str);
 size_t				ft_strwlen(const wchar_t *s);
 

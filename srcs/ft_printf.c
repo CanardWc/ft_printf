@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 14:02:52 by fgrea             #+#    #+#             */
-/*   Updated: 2018/03/14 14:36:55 by fgrea            ###   ########.fr       */
+/*   Updated: 2018/03/18 18:36:36 by fgrea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	ft_printf(const char *format, ...)
 	arg.str = format;
 	va_start(ap, format);
 	arg.ret = ft_reader(&arg, ap);
+	ft_buff_final(&arg);
 	if (arg.ret == 1)
 		ret = -1;
 	va_end(ap);

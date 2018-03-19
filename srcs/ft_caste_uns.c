@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_caste_uns.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/18 03:09:40 by fgrea             #+#    #+#             */
+/*   Updated: 2018/03/18 15:27:08 by fgrea            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
@@ -7,27 +18,27 @@ int	ft_caste_uns_octal(t_env *arg, va_list ap)
 
 	cast = 0;
 	if (arg->conv == 'O')
-		return (ft_write_octal(arg, va_arg(ap, unsigned long)));
+		return (ft_add_octal(arg, va_arg(ap, unsigned long)));
 	else if (arg->modif[Z] == 1)
-		return (ft_write_octal(arg, va_arg(ap, size_t)));
+		return (ft_add_octal(arg, va_arg(ap, size_t)));
 	else if (arg->modif[LL] == 1)
-		return (ft_write_octal(arg, va_arg(ap, size_t)));
+		return (ft_add_octal(arg, va_arg(ap, size_t)));
 	else if (arg->modif[J] == 1)
-		return (ft_write_octal(arg, va_arg(ap, uintmax_t)));
+		return (ft_add_octal(arg, va_arg(ap, uintmax_t)));
 	else if (arg->modif[L] == 1)
-		return (ft_write_octal(arg, va_arg(ap, unsigned long)));
+		return (ft_add_octal(arg, va_arg(ap, unsigned long)));
 	else if (arg->modif[H] == 1)
 	{
 		cast = va_arg(ap, unsigned int);
-		return (ft_write_octal(arg, (unsigned short)cast));
+		return (ft_add_octal(arg, (unsigned short)cast));
 	}
 	else if (arg->modif[HH] == 1)
 	{
 		cast = va_arg(ap, unsigned int);
-		return (ft_write_octal(arg, (unsigned char)cast));
+		return (ft_add_octal(arg, (unsigned char)cast));
 	}
 	else
-		return (ft_write_octal(arg, va_arg(ap, unsigned)));
+		return (ft_add_octal(arg, va_arg(ap, unsigned)));
 }
 
 int	ft_caste_uns_uns(t_env *arg, va_list ap)
@@ -36,27 +47,27 @@ int	ft_caste_uns_uns(t_env *arg, va_list ap)
 
 	cast = 0;
 	if (arg->conv == 'U')
-		return (ft_write_uns(arg, va_arg(ap, unsigned long)));
+		return (ft_add_uns(arg, va_arg(ap, unsigned long)));
 	else if (arg->modif[Z] == 1)
-		return (ft_write_uns(arg, va_arg(ap, size_t)));
+		return (ft_add_uns(arg, va_arg(ap, size_t)));
 	else if (arg->modif[LL] == 1)
-		return (ft_write_uns(arg, va_arg(ap, size_t)));
+		return (ft_add_uns(arg, va_arg(ap, size_t)));
 	else if (arg->modif[J] == 1)
-		return (ft_write_uns(arg, va_arg(ap, uintmax_t)));
+		return (ft_add_uns(arg, va_arg(ap, uintmax_t)));
 	else if (arg->modif[L] == 1)
-		return (ft_write_uns(arg, va_arg(ap, unsigned long)));
+		return (ft_add_uns(arg, va_arg(ap, unsigned long)));
 	else if (arg->modif[H] == 1)
 	{
 		cast = va_arg(ap, unsigned int);
-		return (ft_write_uns(arg, (unsigned short)cast));
+		return (ft_add_uns(arg, (unsigned short)cast));
 	}
 	else if (arg->modif[HH] == 1)
 	{
 		cast = va_arg(ap, unsigned int);
-		return (ft_write_uns(arg, (unsigned char)cast));
+		return (ft_add_uns(arg, (unsigned char)cast));
 	}
 	else
-		return (ft_write_uns(arg, va_arg(ap, unsigned)));
+		return (ft_add_uns(arg, va_arg(ap, unsigned)));
 }
 
 int	ft_caste_uns_hexa(t_env *arg, va_list ap)
@@ -65,25 +76,25 @@ int	ft_caste_uns_hexa(t_env *arg, va_list ap)
 
 	cast = 0;
 	if (arg->modif[Z] == 1)
-		return (ft_write_hexa(arg, va_arg(ap, size_t)));
+		return (ft_add_hexa(arg, va_arg(ap, size_t)));
 	else if (arg->modif[LL] == 1)
-		return (ft_write_hexa(arg, va_arg(ap, size_t)));
+		return (ft_add_hexa(arg, va_arg(ap, size_t)));
 	else if (arg->modif[J] == 1)
-		return (ft_write_hexa(arg, va_arg(ap, uintmax_t)));
+		return (ft_add_hexa(arg, va_arg(ap, uintmax_t)));
 	else if (arg->modif[L] == 1)
-		return (ft_write_hexa(arg, va_arg(ap, unsigned long)));
+		return (ft_add_hexa(arg, va_arg(ap, unsigned long)));
 	else if (arg->modif[H] == 1)
 	{
 		cast = va_arg(ap, unsigned int);
-		return (ft_write_hexa(arg, (unsigned short)cast));
+		return (ft_add_hexa(arg, (unsigned short)cast));
 	}
 	else if (arg->modif[HH] == 1)
 	{
 		cast = va_arg(ap, unsigned int);
-		return (ft_write_hexa(arg, (unsigned char)cast));
+		return (ft_add_hexa(arg, (unsigned char)cast));
 	}
 	else
-		return (ft_write_hexa(arg, va_arg(ap, unsigned)));
+		return (ft_add_hexa(arg, va_arg(ap, unsigned)));
 }
 
 int	ft_caste_uns_binary(t_env *arg, va_list ap)
@@ -92,25 +103,25 @@ int	ft_caste_uns_binary(t_env *arg, va_list ap)
 
 	cast = 0;
 	if (arg->modif[Z] == 1)
-		return (ft_write_b(arg, va_arg(ap, size_t)));
+		return (ft_add_b(arg, va_arg(ap, size_t)));
 	else if (arg->modif[LL] == 1)
-		return (ft_write_b(arg, va_arg(ap, size_t)));
+		return (ft_add_b(arg, va_arg(ap, size_t)));
 	else if (arg->modif[J] == 1)
-		return (ft_write_b(arg, va_arg(ap, uintmax_t)));
+		return (ft_add_b(arg, va_arg(ap, uintmax_t)));
 	else if (arg->modif[L] == 1)
-		return (ft_write_b(arg, va_arg(ap, unsigned long)));
+		return (ft_add_b(arg, va_arg(ap, unsigned long)));
 	else if (arg->modif[H] == 1)
 	{
 		cast = va_arg(ap, unsigned int);
-		return (ft_write_b(arg, (unsigned short)cast));
+		return (ft_add_b(arg, (unsigned short)cast));
 	}
 	else if (arg->modif[HH] == 1)
 	{
 		cast = va_arg(ap, unsigned int);
-		return (ft_write_b(arg, (unsigned char)cast));
+		return (ft_add_b(arg, (unsigned char)cast));
 	}
 	else
-		return (ft_write_b(arg, va_arg(ap, unsigned)));
+		return (ft_add_b(arg, va_arg(ap, unsigned)));
 }
 
 int	ft_caste_uns(t_env *arg, va_list ap)
