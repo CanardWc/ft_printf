@@ -7,6 +7,13 @@ int	ft_format_treatment(const char *s, int i, va_list ap)
 	char	*flag = "-.*lh# +0";
 	int	j;
 
+	creation tableau fonction;
+
+	while (ft_strchr(form, s[i + (++j)]))
+		ret = DEF(index) -> strchr.
+	while (ft_strchr(flag, s[i + (++j)]))
+		while (ft_strchr(flag, s[i + (++j)]))
+			ret = ajout du flag;
 	j = 0;
 	//systeme d'indices pour les fonctions a gerer.
 	while (ft_strchr(flag, s[i + (++j)]))
@@ -51,6 +58,7 @@ int	ft_format_treatment(const char *s, int i, va_list ap)
 	//	ft_putdbl_fd(va_arg(ap, double), 1);
 	//if (s[i + j] == 'e')
 	//	ft_putdbl_fd(va_arg(ap, double), 1);
+	ft_putstr_fd(ret);
 	j++;
 	return (j);
 }
