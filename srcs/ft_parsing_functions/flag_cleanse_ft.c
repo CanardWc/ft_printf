@@ -1,20 +1,25 @@
-
-//#include "ft_printf.h"
-
+#include <libftprintf.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 char		*ft_add_one_c(char *dst, char c)
 {
-	char	*tmp;
+	char	*ret;
+	int		i;
 
-	tmp = dst;
-	if (!(dst = malloc(sizeof(char *) * ft_strlen(dst) + 2)))
+	i = -1;
+	if (!(ret = malloc(sizeof(char) * (dst ? (ft_strlen((const char *)dst) + \
+							2) : 2))))
 		return (0);
-	dst = ft_strcpy(dst, tmp);
-	free(tmp);
-	dst[ft_strlen(dst) + 1] = c;
-	dst[ft_strlen(dst) + 2] = 0;
-	return (dst);
+	if (dst)
+		while (dst[++i])
+			ret[i] = dst[i];
+	else
+		i = 0;
+	free(dst);
+	ret[i++] = c;
+	ret[i] = 0;
+	return (ret);
 }
 
 char		*ft_asterisk(va_list ap, char *ret)
@@ -54,15 +59,13 @@ char		*ft_flag_indicator(char *s, char *flag)
 	int		check;
 	int		i;
 	char	*indic;
-	char	*tmp;
 
+	indic = NULL;
 	i = -1;
+	check = ft_parse_chr('-', s);
 	while (ft_strchr(flag, s[++i]))
-	{
-		check = ft_strchr(s, '-') && s[i] == 0 ? 0 : 1;
-		if (!ft_strchr(indic, s[i]) && check)
+		if ((!(s[i] == '0' && check) && (!indic || !ft_strchr(indic, s[i]))))
 			indic = ft_add_one_c(indic, s[i]);
-	}
 	return (indic);
 }
 
@@ -73,6 +76,8 @@ char		*ft_flag_len(va_list ap, char *s, char *flag)
 
 	i = 0;
 	ret = NULL;
+	while (ft_strchr(flag, s[i]))
+		i++;
 	while (s[i])
 	{
 		if (s[i] == '*')

@@ -1,7 +1,6 @@
 
-//#include "ft_printf.h"
-
-#include <stdlib.h>
+#include <libftprintf.h>
+#include <stdio.h>
 
 char	*ft_add_one_c(char *dst, char c);
 char	*ft_asterisk(va_list ap, char *ret);
@@ -28,10 +27,10 @@ int			ft_parse(char *s, char *flag, char *format)
 	int		i;
 	int		check;
 
-	i = -1;
-	check = 0;
-	while (ft_strchr(flag, s[++i]))
-		check = s[i] == '#' ? ft_parse_chr(s[ft_strlen(s) - 1], "xXo") : 1;
+	i = 0;
+	check = 1;
+	while (ft_strchr((const char *)flag, s[i]))
+		check = s[i++] == '#' ? ft_parse_chr(s[ft_strlen(s) - 1], "xXo") : check;
 	if (s[i] == '*')
 		i++;
 	else
@@ -57,12 +56,19 @@ char		*flag_cleanse(va_list ap, char const *s, char *flag, char *format)
 	char		*tmp;
 	int			error;
 
+	flag_clean = NULL;
 	error = (new_s = ft_arg(s, format)) ? 0 : 1;
-	error = (ft_parse(new_s, flag, format)) && !error ? 0 : 1;
-	flag_clean = ft_flag_indicator(new_s, flag);
-	tmp = flag_clean;
-	error = (flag_clean = ft_strjoin(flag_clean, ft_flag_len(ap, new_s, flag)))\
-			&& !error ? 0 : 1;
-	free(tmp);
+	if (!error)
+		error = ft_parse(new_s, flag, format) ? 0 : 1;
+	if (!error)
+	{
+		flag_clean = ft_flag_indicator(new_s, flag);
+		tmp = flag_clean;
+		error = (flag_clean = ft_strjoin(tmp, ft_flag_len(ap, new_s, flag)))\
+				? 0 : 1;
+		free(tmp);
+	}
+	if (flag_clean)
+		flag_clean[ft_strlen(flag_clean) - 1] = 0;
 	return (error ? "error" : flag_clean);
 }
