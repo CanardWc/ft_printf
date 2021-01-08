@@ -1,21 +1,39 @@
 #include <libftprintf.h>
 #include <stdio.h>
 
-int	ft_format_treatment(const char *s, int i, va_list ap)
+int	ft_format_treatment(const char *s, int i, va_list ap, t_list **ret)
 {
-	//char	*form = "cspdiuxX%nfge";
-	char	*flag = "-.*lh# +0";
-	int	j;
+	t_f_fcts	form_func[] = {
+		{ 'c', &ft_format_c }, { 's', &ft_format_s },
+		{ 'p', &ft_format_p }, { 'd', &ft_format_d },
+		{ 'i', &ft_format_i }, { 'u', &ft_format_u },
+		{ 'o', &ft_format_o }, { 'x', &ft_format_x },
+		{ 'X', &ft_format_bigx }, { '%', &ft_format_percent }/*,
+		{ 'n', &ft_format_n }, { 'f', &ft_format_f },
+		{ 'g', &ft_format_g }, { 'e', &ft_format_e }*/ };
 
-	creation tableau fonction;
+/*	t_f_fcts	flag_func[] = { { '-', ft_flag_min },
+		{ '.', ft_flag_pt }, { '*', ft_flag_star },
+		{ 'l', ft_flag_l }, { 'h', ft_flag_h },
+		{ '#', ft_flag_hash }, { ' ', ft_flag_spc },
+		{ '+', ft_flag_plus  }, { '0', ft_flag_zero }, }
+	*/
+	char		*form = "cspdiuoxX%";// <- need to add nfge
+	char		*flag = "-.*lh# +0";
+	//t_form	format;
+	int		j;
 
-	while (ft_strchr(form, s[i + (++j)]))
-		ret = DEF(index) -> strchr.
-	while (ft_strchr(flag, s[i + (++j)]))
-		while (ft_strchr(flag, s[i + (++j)]))
-			ret = ajout du flag;
 	j = 0;
-	//systeme d'indices pour les fonctions a gerer.
+
+	/*
+	s_flag = ft_flag_checking(s + i, ap);
+	if (!ft_strcmp(s_flag, "error"))
+	{
+		
+		return (NULL);
+	}
+	*/
+
 	while (ft_strchr(flag, s[i + (++j)]))
 	{
 		//if (s[i + j] == '-')
@@ -30,60 +48,63 @@ int	ft_format_treatment(const char *s, int i, va_list ap)
 		//if (s[i + j] == '.')
 		//if (s[i + j] == '*')
 	}
-	printf("j = %d\n", j);
+	int	k = 0;
+	while (form_func[k].form != *ft_strchr(form, s[i + j]))
+		k++;
+     	ft_lstadd_back(ret, ft_lstnew(form_func[k].fct(ap)));
+	/*
+	format.str = ret->content;
+	format.type = form_func[k].form < form / 2 ? 0 : 1;
+	k = 0;
+	while (flag_func[k].form != *ft_strchr(*s_flag++, flag))
+		k++;
+	ret->content = flag_func[k];
+	*/
+
 	
-	if (s[i + j] == 'c')
-		ft_putchar_fd((unsigned char)va_arg(ap, int), 1);
-	if (s[i + j] == 's')
-		ft_putstr_fd(va_arg(ap, char *), 1);
-	if (s[i + j] == 'p')
-		ft_putmem_fd(va_arg(ap, unsigned long int), 1);
-	if (s[i + j] == 'd' || *s == 'i')
-		ft_putnbr_fd(va_arg(ap, int), 1);
-	if (s[i + j] == 'u')
-		ft_putstr_fd(ft_itoa(va_arg(ap, unsigned int)), 1);
-	if (s[i + j] == 'o')
-		ft_putnbr_base_fd(va_arg(ap, unsigned int), "01234567", 1);
-	if (s[i + j] == 'x')
-		ft_putnbr_base_fd(va_arg(ap, unsigned int), "0123456789abcdef", 1);
-	if (s[i + j] == 'X')
-		ft_putnbr_base_fd(va_arg(ap, unsigned int), "0123456789ABCDEF", 1);
-	if (s[i + j] == '%')
-		ft_putchar_fd('%', 1);
-	if (s[i + j] == 'n')
-		*(va_arg(ap, int *)) = i;
-	//if (s[i + j] == 'f')
-	//	ft_putdbl_fd(va_arg(ap, double), 1);
-	//if (s[i + j] == 'g')
-	//	ft_putdbl_fd(va_arg(ap, double), 1);
-	//if (s[i + j] == 'e')
-	//	ft_putdbl_fd(va_arg(ap, double), 1);
-	ft_putstr_fd(ret);
 	j++;
 	return (j);
 }
 
+int	ft_display(const char *aff, t_list *ret, int i)
+{
+	char		*form = "cspdiuxX%nfge";
+	char		*flag = "-.*lh# +0123456789";
+
+	while (*aff)
+	{
+		if (*aff == '%')
+		{
+			while (ft_strchr(flag, *(++aff)))
+				;
+			while (ft_strchr(form, *aff))
+				aff++;
+			ft_putstr_fd(ret->content, 1);
+			i += ft_strlen(ret->content);
+			ret = ret->next;
+		}
+		ft_putchar_fd(*aff, 1);
+		aff++;
+	}
+	return (i);
+}
+
 int	ft_printf(const char *s, ...)
 {
-	va_list	ap;
-	int	i;
+	va_list		ap;
+	t_list		*ret;
+	const char	*aff;
+	int		i;
 
+	ret = NULL;
 	va_start(ap, s);
-	i = 0;
-	while (s[i])
-	{
+	i = -1;
+	aff = s;
+	while (s[++i])
 		if (s[i] == '%')
-			s += ft_format_treatment(s, i, ap);
-		//if (ft_strncmp((s = ft_format_treatment(s, ap)), "error", ft_strlen(s)) == 0)
-		//	return (1); // need to handle error format here
-		else
-		{
-			ft_putchar_fd(s[i], 1);
-			i++;
-		}
-	}
+			s += ft_format_treatment(s, i, ap, &ret);
 	va_end(ap);
-	return (0);
+	return (ft_display(aff, ret, i));
 }
 
 int	main(void)
@@ -94,11 +115,3 @@ int	main(void)
 	ft_printf("hey %s \n la bess ? \n %.*d \n %c\n %  p\n", "boloss", 123446, 'u', s);
 	return (0);
 }
-
-/*
- * fonctions necessaires:
- *
- * atoi
- * atoi_base
- * itoa_base
- */

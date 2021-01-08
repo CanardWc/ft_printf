@@ -20,10 +20,17 @@ LFT_INC_PATH = ./libraries/libft/includes/
 OBJ_PATH = ./objs/
 INC_PATH = ./includes/
 SRC_PATH = ./srcs/
+SRC_FRT_PATH = ft_format_functions/
+SRC_FLG_PATH = ft_flag_functions/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = libftprintf.h
-SRC_NAME = ft_printf.c 
+SRC_NAME = ft_printf.c \
+	   ft_format_functions/ft_format_c.c ft_format_functions/ft_format_s.c \
+	   ft_format_functions/ft_format_p.c ft_format_functions/ft_format_d.c \
+	   ft_format_functions/ft_format_i.c ft_format_functions/ft_format_u.c \
+	   ft_format_functions/ft_format_o.c ft_format_functions/ft_format_bigx.c \
+	   ft_format_functions/ft_format_x.c ft_format_functions/ft_format_percent.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -39,9 +46,13 @@ $(NAME): $(OBJ)
 						@echo "Executable created"
 						@echo "Compilation finished"
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
-						@mkdir $(OBJ_PATH) 2> /dev/null || true
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c $(OBJ_PATH)
 						@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
+
+$(OBJ_PATH):
+						@mkdir $(OBJ_PATH) 2> /dev/null || true
+						@mkdir $(OBJ_PATH)$(SRC_FRT_PATH) 2> /dev/null || true
+						@mkdir $(OBJ_PATH)$(SRC_FLG_PATH) 2> /dev/null || true
 
 clean:
 						@make clean -C $(LFT_PATH)

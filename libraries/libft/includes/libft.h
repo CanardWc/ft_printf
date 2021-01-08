@@ -56,7 +56,8 @@ char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strtrim(const char *s1, const char *set);
 char	**ft_split(const char *s, char c);
 char	*ft_itoa(int n);
-char	*itoa_base(int nbr, char *base);
+char	*ft_itoa_base(int nbr, char *base);
+char	*ft_itoa_mem(unsigned long int nbr);
 int	ft_atoi_base(char *str, char *base);
 char	*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 
