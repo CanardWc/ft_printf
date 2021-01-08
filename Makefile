@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pintf
+NAME = ft_printf
 
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror
