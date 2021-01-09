@@ -1,5 +1,4 @@
 #include <libftprintf.h>
-
 /*
    int			ft_parse_chr(char c, char *format)
    {

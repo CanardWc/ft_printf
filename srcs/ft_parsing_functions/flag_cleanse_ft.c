@@ -1,5 +1,4 @@
 #include <libftprintf.h>
-
 char		*ft_add_one_c(char *dst, char c)
 {
 	char	*ret;
@@ -77,8 +76,14 @@ char		*ft_flag_indicator(char *s, char *flag)
 	indic = NULL;
 	check = ft_strchr(s, '-');
 	while (ft_strchr(flag, *s))
-		if ((!(*s == '0' && check) && (!indic || !ft_strchr(indic, *s++))))
+	{
+		if ((!(*s == '0' && check) && (!indic || !ft_strchr(indic, *s))))
 			indic = ft_add_one_c(indic, *(s - 1));
+		s++;
+	}
+	if (!indic)
+		if (!(indic = (char *)malloc(1)))
+			return (NULL);
 	return (indic);
 }
 
@@ -101,5 +106,8 @@ char		*ft_flag_len(va_list ap, char *s, char *flag)
 		ret = ft_add_one_c(ret, s[i]);
 		i++;
 	}
+	if (!ret)
+		if (!(ret= (char *)malloc(1)))
+			return (0);
 	return (ret);
 }
