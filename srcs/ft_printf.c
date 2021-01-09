@@ -1,9 +1,32 @@
 #include <libftprintf.h>
 #include <stdio.h>
 
-int	ft_format_treatment(const char *s, int i, va_list ap, t_list **ret)
+/*
+char	*ft_flag_treatment(const char *s, char *format, char type)
 {
-	t_f_fcts	form_func[] = {
+	t_flag_f	flag_func[] = { { '-', ft_flag_min },
+		{ '.', ft_flag_pt }, { '*', ft_flag_star },
+		{ 'l', ft_flag_l }, { 'h', ft_flag_h },
+		{ '#', ft_flag_hash }, { ' ', ft_flag_spc },
+		{ '+', ft_flag_plus  }, { '0', ft_flag_zero }, };
+	char		*flag_list = "-.*lh# +0";
+	int		i;
+
+	while (*s)
+	{
+		i = 0;
+		while (flag_func[i].form != *ft_strchr(flag_list, *s))
+			i++;
+		format = flag_func[i].fct(format, type);
+		s++;
+	}
+	return (format);
+}
+*/
+const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret/*, \
+		t_check *err_chk*/)
+{
+	t_form_f	form_func[] = {
 		{ 'c', &ft_format_c }, { 's', &ft_format_s },
 		{ 'p', &ft_format_p }, { 'd', &ft_format_d },
 		{ 'i', &ft_format_i }, { 'u', &ft_format_u },
@@ -11,81 +34,50 @@ int	ft_format_treatment(const char *s, int i, va_list ap, t_list **ret)
 		{ 'X', &ft_format_bigx }, { '%', &ft_format_percent }/*,
 		{ 'n', &ft_format_n }, { 'f', &ft_format_f },
 		{ 'g', &ft_format_g }, { 'e', &ft_format_e }*/ };
-
-/*	t_f_fcts	flag_func[] = { { '-', ft_flag_min },
-		{ '.', ft_flag_pt }, { '*', ft_flag_star },
-		{ 'l', ft_flag_l }, { 'h', ft_flag_h },
-		{ '#', ft_flag_hash }, { ' ', ft_flag_spc },
-		{ '+', ft_flag_plus  }, { '0', ft_flag_zero }, }
-	*/
-	char		*form = "cspdiuoxX%";// <- need to add nfge
-	char		*flag = "-.*lh# +0";
-	//t_form	format;
+	char		*format_list = "cspdiuoxX%";// <- need to add nfge
 	int		j;
+	int		k;
 
-	j = 0;
-
+	j = 1;
+	k = 0;
 	/*
-	s_flag = ft_flag_checking(s + i, ap);
-	if (!ft_strcmp(s_flag, "error"))
-	{
-		
-		return (NULL);
-	}
+	s_flag = ft_flag_checking(s + i + 1, ap);
+	if (!ft_strncmp(s_flag, "error"), 5)
+		return ((err_chk.error = s_flag));
 	*/
-
-	while (ft_strchr(flag, s[i + (++j)]))
-	{
-		//if (s[i + j] == '-')
-		//	right to left;
-		//if (s[i + j] == '#')
-		//if (s[i + j] == ' ')
-		//	blank before positive;
-		//if (s[i + j] == '+')
-		//if (s[i + j] == '0')
-		//if (s[i + j] == 'l')
-		//if (s[i + j] == 'h')
-		//if (s[i + j] == '.')
-		//if (s[i + j] == '*')
-	}
-	int	k = 0;
-	while (form_func[k].form != *ft_strchr(form, s[i + j]))
+	while (ft_strchr("-.*lh# +0123456789", s[i + j]))
+		j++;
+	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
      	ft_lstadd_back(ret, ft_lstnew(form_func[k].fct(ap)));
-	/*
-	format.str = ret->content;
-	format.type = form_func[k].form < form / 2 ? 0 : 1;
-	k = 0;
-	while (flag_func[k].form != *ft_strchr(*s_flag++, flag))
-		k++;
-	ret->content = flag_func[k];
-	*/
-
-	
-	j++;
-	return (j);
+	//ret->content = ft_flag_treatment(s_flag, ret->content, form_func->format);
+	//free(s_flag);
+	return (s + j + 1);
 }
 
-int	ft_display(const char *aff, t_list *ret, int i)
+int	ft_display(t_check err_chk, t_list *ret, int i)
 {
 	char		*form = "cspdiuxX%nfge";
 	char		*flag = "-.*lh# +0123456789";
 
-	while (*aff)
+	while (*(err_chk.aff) && !err_chk.error)
 	{
-		if (*aff == '%')
+		if (*err_chk.aff == '%')
 		{
-			while (ft_strchr(flag, *(++aff)))
+			while (ft_strchr(flag, *(++err_chk.aff)))
 				;
-			while (ft_strchr(form, *aff))
-				aff++;
+			while (ft_strchr(form, *err_chk.aff))
+				err_chk.aff++;
 			ft_putstr_fd(ret->content, 1);
 			i += ft_strlen(ret->content);
 			ret = ret->next;
 		}
-		ft_putchar_fd(*aff, 1);
-		aff++;
+		ft_putchar_fd(*err_chk.aff, 1);
+		err_chk.aff++;
 	}
+	ft_lstclear(&ret, &free);
+//	if (err_chk.error)
+//		return (ft_error_gestion());
 	return (i);
 }
 
@@ -93,18 +85,21 @@ int	ft_printf(const char *s, ...)
 {
 	va_list		ap;
 	t_list		*ret;
-	const char	*aff;
+	t_check		err_chk;
 	int		i;
 
 	ret = NULL;
 	va_start(ap, s);
 	i = -1;
-	aff = s;
+	err_chk.aff = s;
+	err_chk.error = NULL;
 	while (s[++i])
 		if (s[i] == '%')
-			s += ft_format_treatment(s, i, ap, &ret);
+			if (!(s = ft_format_treatment(s, i, ap, &ret/*, &err_chk)*/)) \
+					&& err_chk.error)
+				break;
 	va_end(ap);
-	return (ft_display(aff, ret, i));
+	return (ft_display(err_chk, ret, i));
 }
 
 int	main(void)

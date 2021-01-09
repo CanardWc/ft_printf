@@ -4,17 +4,23 @@
 # include <libft.h>
 # include <stdarg.h>
 
-typedef struct	s_f_fcts
+typedef struct	s_flag_f 
 {
-	char	form;
-	char	*(*fct)(va_list);
-}		t_f_fcts;
+	char	flag;
+	char	*(*fct)(char *, char);
+}		t_flag_f;
 
-typedef struct	s_form
+typedef struct	s_form_f
 {
-	unsigned char	*ret;
-	int		type;
-}		t_form;
+	char	format;
+	char	*(*fct)(va_list);
+}		t_form_f;
+
+typedef struct	s_check
+{
+	const char	*aff;
+	char		*error;
+}		t_check;
 
 int	ft_printf(const char *s, ...);
 
