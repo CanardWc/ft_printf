@@ -24,6 +24,11 @@ typedef struct	s_check
 
 int	ft_printf(const char *s, ...);
 
+char	*flag_cleanse(const char *s, va_list ap);
+char	*ft_arg(const char *s, char *format);
+char	*ft_flag_indicator(char *s, char *flag);
+char	*ft_flag_len(va_list ap, char *s, char *flag);
+
 char	*ft_format_c(va_list ap);
 char	*ft_format_s(va_list ap);
 char	*ft_format_p(va_list ap);

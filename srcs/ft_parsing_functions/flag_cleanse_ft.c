@@ -1,6 +1,4 @@
 #include <libftprintf.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 char		*ft_add_one_c(char *dst, char c)
 {
@@ -8,8 +6,7 @@ char		*ft_add_one_c(char *dst, char c)
 	int		i;
 
 	i = -1;
-	if (!(ret = malloc(sizeof(char) * (dst ? (ft_strlen((const char *)dst) + \
-							2) : 2))))
+	if (!(ret = malloc(sizeof(char) * (ft_strlen(dst) + 2))))
 		return (0);
 	if (dst)
 		while (dst[++i])
@@ -53,19 +50,35 @@ char		*ft_arg(const char *s, char *format)
 	new_s[j] = 0;
 	return (new_s);
 }
+/*
+char		*ft_arg(const char *s, char *format)
+{
+	char	*new_s;
+	char	*ret;
+	char	*f;
+
+	f = s;
+	while (!ft_strchr(format, *f) && *f)\
+		f++;
+	if (!*f || !(new_s = (char *)malloc(sizeof(char) * ((f - s) + 1))))
+		return (0);
+	ret = new_s;
+	while (s <= f)
+		*new_s++ = *s++;
+	*new_s = 0;
+	return (ret);
+}*/
 
 char		*ft_flag_indicator(char *s, char *flag)
 {
-	int		check;
-	int		i;
+	char	*check;
 	char	*indic;
 
 	indic = NULL;
-	i = -1;
-	check = ft_parse_chr('-', s);
-	while (ft_strchr(flag, s[++i]))
-		if ((!(s[i] == '0' && check) && (!indic || !ft_strchr(indic, s[i]))))
-			indic = ft_add_one_c(indic, s[i]);
+	check = ft_strchr(s, '-');
+	while (ft_strchr(flag, *s))
+		if ((!(*s == '0' && check) && (!indic || !ft_strchr(indic, *s++))))
+			indic = ft_add_one_c(indic, *(s - 1));
 	return (indic);
 }
 

@@ -23,8 +23,8 @@ char	*ft_flag_treatment(const char *s, char *format, char type)
 	return (format);
 }
 */
-const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret/*, \
-		t_check *err_chk*/)
+const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, \
+		t_check *err_chk)
 {
 	t_form_f	form_func[] = {
 		{ 'c', &ft_format_c }, { 's', &ft_format_s },
@@ -35,16 +35,15 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret/*
 		{ 'n', &ft_format_n }, { 'f', &ft_format_f },
 		{ 'g', &ft_format_g }, { 'e', &ft_format_e }*/ };
 	char		*format_list = "cspdiuoxX%";// <- need to add nfge
+	char		*s_flag;
 	int		j;
 	int		k;
 
 	j = 1;
 	k = 0;
-	/*
-	s_flag = ft_flag_checking(s + i + 1, ap);
-	if (!ft_strncmp(s_flag, "error"), 5)
-		return ((err_chk.error = s_flag));
-	*/
+	s_flag = flag_cleanse(s + i + 1, ap);
+	if (!ft_strncmp(s_flag, "error", 5))
+		return ((err_chk->error = s_flag));
 	while (ft_strchr("-.*lh# +0123456789", s[i + j]))
 		j++;
 	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
@@ -57,7 +56,7 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret/*
 
 int	ft_display(t_check err_chk, t_list *ret, int i)
 {
-	char		*form = "cspdiuxX%nfge";
+	char		*form = "cspdiuoxXnfge%";
 	char		*flag = "-.*lh# +0123456789";
 
 	while (*(err_chk.aff) && !err_chk.error)
@@ -76,8 +75,8 @@ int	ft_display(t_check err_chk, t_list *ret, int i)
 		err_chk.aff++;
 	}
 	ft_lstclear(&ret, &free);
-//	if (err_chk.error)
-//		return (ft_error_gestion());
+	//if (err_chk.error)
+	//	return (ft_error_gestion());
 	return (i);
 }
 
@@ -95,9 +94,10 @@ int	ft_printf(const char *s, ...)
 	err_chk.error = NULL;
 	while (s[++i])
 		if (s[i] == '%')
-			if (!(s = ft_format_treatment(s, i, ap, &ret/*, &err_chk)*/)) \
+			if (!(s = ft_format_treatment(s, i, ap, &ret, &err_chk)) \
 					&& err_chk.error)
 				break;
+	printf("couc = %s\n", err_chk.error);
 	va_end(ap);
 	return (ft_display(err_chk, ret, i));
 }
@@ -107,6 +107,6 @@ int	main(void)
 	char	*s;
 
 	s = (char *)malloc(sizeof(char) * 4);
-	ft_printf("hey %s \n la bess ? \n %.*d \n %c\n %  p\n", "boloss", 123446, 'u', s);
+	ft_printf("hey %s \n la bess ? \n %d \n %c\n %  p\n", "boloss", 123446, 'u', s);
 	return (0);
 }
