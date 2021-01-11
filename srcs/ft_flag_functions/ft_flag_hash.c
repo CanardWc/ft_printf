@@ -6,7 +6,7 @@ char	*ft_flag_hash(t_form s)
 	char		*tmp;
 
 	ret = NULL;
-	if (ft_isupper(s[ft_strlen(s - 1)]))
+	if (s[ft_strlen(s - 1)] == 'X')
 		if (!(ret = ft_strjoin(ret, "0X")))
 			return (0);
 	else
