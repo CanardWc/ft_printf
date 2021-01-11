@@ -1,6 +1,6 @@
 #include <libftprintf.h>
 
-char	*ft_format_p(va_list ap)
+char	*ft_format_p(va_list ap char *flags)
 {
 	return (ft_itoa_mem(va_arg(ap, unsigned long int)));
 }

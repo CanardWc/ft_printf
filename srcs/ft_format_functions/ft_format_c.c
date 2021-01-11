@@ -1,6 +1,6 @@
 #include <libftprintf.h>
 
-char	*ft_format_c(va_list ap)
+char	*ft_format_c(va_list ap, char *flags)
 {
 	char	c[2];
 

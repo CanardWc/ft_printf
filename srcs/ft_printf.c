@@ -48,7 +48,7 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		j++;
 	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
-     	ft_lstadd_back(ret, ft_lstnew(form_func[k].fct(ap)));
+     	ft_lstadd_back(ret, ft_lstnew(form_func[k].fct(ap, s_flags)));
 	//ret->content = ft_flag_treatment(s_flag, ret->content, form_func->format);
 	//free(s_flag);
 	return (s + j + 1);
