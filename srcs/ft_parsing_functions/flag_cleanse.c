@@ -1,4 +1,5 @@
 #include <libftprintf.h>
+#include <stdio.h>
 /*
    int			ft_parse_chr(char c, char *format)
    {
@@ -57,20 +58,50 @@ int	ft_parse(char *s, char *flag, char *format)
 	while (ft_strchr(flag, *s))
 		if (*s++ == '#' && !ft_strchr("xXo", s[ft_strlen(s) - 1]))
 			return (0);
-	while (*s != '*' && ft_isdigit(*s))
+	if (*s == '*')
 		s++;
-	s += *s == '*' ? 1 : 0;
-	//check * apres digit;
-	s += *s == '.' ? 1 : 0;
-	while (*s != '*' && ft_isdigit(*s))
+	else
+		while (ft_isdigit(*s))
+			s++;
+	if (*s == '.')
+	{
 		s++;
-	s += *s == '*' ? 1 : 0;
-	//check * apres digit;
+		if (*s == '*')
+			s++;
+		else
+			while (ft_isdigit(*s))
+				s++;
+	}
 	if (*s == 'l')
 		s += *(s + 1) == 'l' ? 2 : 1;
 	else if (*s == 'h')
 		s += *(s + 1) == 'h' ? 2 : 1;
 	return ((int)ft_strchr(format, *s));
+}
+char	*ft_flag_order(char *s)
+{
+	char		*ret;
+	char		*tmp;
+	char		*ref = "#0 +-";
+
+	if (!(ret = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1))))
+		return (NULL);
+	tmp = ret;
+	while (*ref)
+	{
+		if (ft_strchr(s, *ref))
+		{
+			*ret = *ref;
+			ret++;
+			ref++;
+		}
+		else
+			ref++;
+	}
+	*ret = 0;
+	printf("ret ==%s\n", tmp);
+	free(s);
+	return (tmp);
 }
 
 char	*flag_cleanse(char const *s, va_list ap)
@@ -88,10 +119,13 @@ char	*flag_cleanse(char const *s, va_list ap)
 		return (ft_error_gestion(new_s, NULL, "error_2"));
 	if (!(flag_clean = ft_flag_indicator(new_s, flag)))
 		return (ft_error_gestion(new_s, NULL, "error_1"));
+	if (!(flag_clean = ft_flag_order(flag_clean)))
+		return (ft_error_gestion(new_s, NULL, "error_1"));
 	tmp = flag_clean;
 	if (!(flag_clean = ft_strjoin(tmp, ft_flag_len(ap, new_s, flag))))
 		return (ft_error_gestion(new_s, tmp, "error_1"));
 	free(tmp);
-	flag_clean[ft_strlen(flag_clean) - 1] = 0;
+	flag_clean[ft_strlen(flag_clean)] = 0;
+	printf("oui = %s\n", flag_clean);
 	return (flag_clean);
 }

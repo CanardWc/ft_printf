@@ -71,14 +71,17 @@ char		*ft_arg(const char *s, char *format)
 char		*ft_flag_indicator(char *s, char *flag)
 {
 	char	*check;
+	char	*check2;
 	char	*indic;
 
 	indic = NULL;
 	check = ft_strchr(s, '-');
+	check2 = ft_strchr(s, '+');
 	while (ft_strchr(flag, *s))
 	{
-		if ((!(*s == '0' && check) && (!indic || !ft_strchr(indic, *s))))
-			indic = ft_add_one_c(indic, *(s - 1));
+		if ((!(*s == '0' && check) && (!indic || !ft_strchr(indic, *s))) || \
+				(!(*s == ' ' && check2) && (!indic || !ft_strchr(indic, *s))))
+			indic = ft_add_one_c(indic, *s);
 		s++;
 	}
 	if (!indic)
