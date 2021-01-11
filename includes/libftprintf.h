@@ -13,7 +13,6 @@ typedef struct	s_flag_f
 typedef struct	s_form_f
 {
 	char	format;
-	char	*flags;
 	char	*(*fct)(va_list, char *);
 }		t_form_f;
 
