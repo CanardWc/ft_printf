@@ -2,6 +2,10 @@
 
 char	*ft_format_percent(va_list ap, char *flags)
 {
+	t_string	ret;
+
 	ap = (void *)ap;
-	return (ft_strdup("%"));
+	ret = ft_format_size(flags);
+	c[0] = '%';
+	return (ret);
 }

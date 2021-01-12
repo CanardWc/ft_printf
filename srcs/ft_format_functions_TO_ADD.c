@@ -2,7 +2,7 @@
 /*
 char	*ft_printf_n(va_list ap, int i)
 {
-	*(va_arg()) = i;
+	*(va_arg()) = i + 1;
 	return (NULL);
 }
 

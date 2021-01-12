@@ -1,10 +1,10 @@
 #include <libftprintf.h>
 
-char	*ft_format_c(va_list ap, char *flags)
+t_string	ft_format_c(va_list ap, char *flags)
 {
-	char	c[2];
+	t_string	ret;
 
+	ret = ft_format_size(flags);
 	c[0] = va_arg(ap, int);
-	c[1] = 0;
-	return (ft_strdup(c));
+	return (ret);
 }
