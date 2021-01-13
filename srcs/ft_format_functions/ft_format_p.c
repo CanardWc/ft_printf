@@ -1,5 +1,22 @@
 #include <libftprintf.h>
 
+t_string	ft_format_size_p(int nb, char *flags)
+{
+	t_string		ret;
+	int				i;
+
+	ret.size = 0;
+	i = 1;
+	while ((nb = nb >> 4)  > 0)
+		i++;
+	ret.size = ft_strchr(flags, '-') ? \
+			   ft_atoi(ft_strchr(flags, '-') + 1) + 1 : 0;
+	ret.size = ret.size < i ? i : ret.size;
+	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
+		return (0);
+	return (ret);
+}
+
 char	*ft_format_p(va_list ap, char *flags)
 {
 	char			*base = "0123456789abcdef";

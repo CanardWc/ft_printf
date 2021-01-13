@@ -1,5 +1,25 @@
 #include <libftprintf.h>
 
+t_string	ft_format_size_bigx(int nb, char *flags)
+{
+	t_string	ret;
+	char		*tmp;
+
+	tmp = flags;
+	ret.size = 0;
+	while ((nb /= 16) < 0)
+		ret.size++;
+	while (*flags)
+		ret.size = ret.size < ft_atoi(flags) ? ft_atoi(flags++) : ret.size;
+	if (ft_atoi(ft_strchr(tmp, '.') + 1 == ret.size))
+		if (ft_strchr(tmp, '#'))
+			ret.size += 2;
+	ret.size++;
+	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
+		return (0);
+	return (ret);
+}
+
 unsigned long long int	ft_get_ap_bigx(va_list ap, char *flags)
 {
 	if (ft_strchr(flags, 'l') && *(ft_strchr(flags, 'l') + 1) == 'l')
