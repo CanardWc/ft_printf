@@ -5,7 +5,8 @@ char	*ft_format_percent(va_list ap, char *flags)
 	t_string	ret;
 
 	ap = (void *)ap;
-	ret = ft_format_size(flags);
-	c[0] = '%';
-	return (ret);
+	flags = (void *)flags;
+	//ret = ft_format_size_percent(flags);
+	ret.str[0] = '%';
+	return (ret.str);
 }

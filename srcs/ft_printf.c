@@ -48,7 +48,7 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		j++;
 	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
-     	ft_lstadd_back(ret, ft_lstnew(form_func[k].fct(ap, s_flags)));
+     	ft_lstadd_back(ret, ft_lstnew((void *)form_func[k].fct(ap, s_flag)));
 	//ret->content = ft_flag_treatment(s_flag, ret->content, form_func->format);
 	//free(s_flag);
 	return (s + j + 1);
@@ -67,8 +67,8 @@ int	ft_display(t_check err_chk, t_list *ret, int i)
 				;
 			while (ft_strchr(form, *err_chk.aff))
 				err_chk.aff++;
-			ft_putstr_fd(ret->content.str, 1);
-			i += ft_strlen(ret->content.str);
+			ft_putstr_fd((char *)ret->content, 1);
+			i += ft_strlen((char *)ret->content);
 			ret = ret->next;
 		}
 		ft_putchar_fd(*err_chk.aff, 1);
