@@ -1,4 +1,34 @@
-#include <libftprintf.h>
+#include <libftprintf.h>i
+
+t_string 	ft_format_size(int i, flags)
+{
+	t_string	ret;
+	char		*tmp;
+	int		nb;
+
+	nb = i;	
+	ret.size = 0;
+	tmp = flags;
+	if(nb < 0)
+	{
+		ret.size++;
+		nb *= -1;	
+	}
+	while ((nb /= 10) > 0)
+		ret.size++;
+	while (*flags)
+	{
+		ret.size = ret.size < ft_atoi(flags) ? atoi(flags) : ret.size;
+		flags++;
+	}
+	flags = tmp;
+	ret.size = i < 0 && atoi(strchr(flags, '.') == ret.size ? ret.size++ : \
+	ret.size;
+	
+	if(!(ret.str = ft_calloc(ret.size, sizeof(char)))
+		return(0);
+	return (ret);
+}
 
 t_string	ft_format_d(va_list ap, char *flags)
 {
