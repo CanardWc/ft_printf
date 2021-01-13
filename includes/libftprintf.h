@@ -4,6 +4,21 @@
 # include <libft.h>
 # include <stdarg.h>
 
+typedef union	s_type
+{
+	char			c;
+	unsigned char		uc;
+	short int		hi;
+	int			i;
+	long int		li;
+	long long int		lli;
+	unsigned int		ui;
+	unsigned long int	uli;
+	unsigned long long int	ulli;
+	double			d;
+	long double		ld;	
+}		t_type;
+
 typedef struct	s_flag_f 
 {
 	char	flag;
@@ -24,6 +39,7 @@ typedef struct	s_check
 
 typedef struct	s_string
 {
+	t_type		type;
 	char		*str;
 	int		size;
 }		t_string;

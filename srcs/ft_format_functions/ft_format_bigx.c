@@ -10,16 +10,14 @@ t_string	ft_format_bigx(va_list ap, char *flags)
 	
 	i = va_arg(ap, unsigned int);
 	ret = ft_format_size(i, flags);
-	prec = 0;
-	if (ft_strchr(flags, '.'))
-		prec = ft_strchr(flags, '.') + 1 == '*' ? va_arg(ap, int) : \
-		       ft_atoi(ft_strchr(flags, '.'));
+	prec = ft_atoi(ft_strchr(flags, '.'));
 	size = ret.size - 1;
 	prec =  prec > 0 ? prec : -1;
-	while (i > 15 && (prec || !prec--))
+	while (i > 15)
 	{
 		ret.str[--size] = base[i % 16];
 		i /= 16;
+		prec--;
 	}
 	ret.str[--size] = base[i % 16];
 	while (--prec > 0)

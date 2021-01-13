@@ -67,8 +67,8 @@ int	ft_display(t_check err_chk, t_list *ret, int i)
 				;
 			while (ft_strchr(form, *err_chk.aff))
 				err_chk.aff++;
-			ft_putstr_fd(ret->content, 1);
-			i += ft_strlen(ret->content);
+			ft_putstr_fd(ret->content.str, 1);
+			i += ft_strlen(ret->content.str);
 			ret = ret->next;
 		}
 		ft_putchar_fd(*err_chk.aff, 1);
