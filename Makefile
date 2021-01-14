@@ -32,7 +32,8 @@ SRC_NAME = ft_printf.c \
 	   ft_format_functions/ft_format_p.c ft_format_functions/ft_format_d.c \
 	   ft_format_functions/ft_format_i.c ft_format_functions/ft_format_u.c \
 	   ft_format_functions/ft_format_o.c ft_format_functions/ft_format_bigx.c \
-	   ft_format_functions/ft_format_x.c ft_format_functions/ft_format_percent.c
+	   ft_format_functions/ft_format_x.c ft_format_functions/ft_format_percent.c \
+	   ft_format_functions/ft_format_n.c ft_format_functions/ft_format_f.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

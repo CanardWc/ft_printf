@@ -14,25 +14,26 @@ unsigned long long int	ft_get_ap_u(va_list ap, char *flags)
 		return((unsigned long long int)va_arg(ap, unsigned int));
 }
 
-char			*ft_format_u(va_list ap, char *flags)
+char			*ft_format_u(va_list ap, char *flags, int i)
 {
 	t_string	ret;
 	int		prec;
 	int		size;
-	unsigned int	i;
+	unsigned int	v;
 	
-	i = ft_get_ap_u(ap, flags);
-	//ret = ft_format_size_u(i, flags);
+	i = 0;
+	v = ft_get_ap_u(ap, flags);
+	//ret = ft_format_size_u(v, flags);
 	prec = ft_atoi(ft_strchr(flags, '.'));
 	size = ret.size - 1;
 	prec =  prec < 0 ? -1 : prec;
-	while (i > 9)
+	while (v > 9)
 	{
-		ret.str[--size] = i % 10;
-		i /= 10;
+		ret.str[--size] = v % 10;
+		v /= 10;
 		prec--;
 	}
-	ret.str[--size] = i % 10;
+	ret.str[--size] = v % 10;
 	while (--prec > 0)
 		ret.str[--size] = '0';
 	return (ret.str);

@@ -39,27 +39,35 @@ unsigned long long int	ft_get_ap_i(va_list ap, char *flags)
 		return((long long int)va_arg(ap, int));
 }
 
-char			*ft_format_i(va_list ap, char *flags)
+char			*ft_format_i(va_list ap, char *flags, int i)
 {
 	t_string	ret;
 	int		prec;
 	int		size;
+<<<<<<< HEAD
+	long long int	v;
+	
+	i = 0;
+	v = ft_get_ap_i(ap, flags);
+	ret = ft_format_size_i(v, flags);
+=======
 	long long int	i;
 
 	i = ft_get_ap_i(ap, flags);
 	ret = ft_format_size_i(i, flags);
+>>>>>>> d8d7b529e8a2d043b1a7da2812c8c44a462a0522
 	prec = ft_atoi(ft_strchr(flags, '.') + 1);
 	size = ret.size - 1;
 	prec =  prec < 0 ? -1 : prec;
-	while (i > 9 )
+	while (v > 9 )
 	{
-		ret.str[--size] = i % 10;
-		i /= 10;
+		ret.str[--size] = v % 10;
+		v /= 10;
 		prec--;
 	}
-	ret.str[--size] = i % 10;
+	ret.str[--size] = v % 10;
 	while (--prec > 0)
 		ret.str[--size] = '0';
-	ret.str[--size] = i < 0 ? '-' : ret.str[size];
+	ret.str[--size] = v < 0 ? '-' : ret.str[size];
 	return (ret.str);
 }
