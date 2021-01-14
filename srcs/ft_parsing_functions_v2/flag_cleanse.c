@@ -6,12 +6,11 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:12 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/14 17:40:23 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/01/14 18:03:58 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-#include <stdio.h>
 
 char		*ft_error_gestion(char *new_s, char *flag_clean, char *error)
 {
