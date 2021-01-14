@@ -1,6 +1,6 @@
 #include <libftprintf.h>
-
-t_string	ft_format_size_p(int nb, char *flags)
+/*
+t_string	ft_format_size_percent(char *flags)
 {
 	t_string	ret;
 	char		*tmp;
@@ -16,11 +16,12 @@ t_string	ft_format_size_p(int nb, char *flags)
 		return (0);
 	return (ret);
 }
-
-char	*ft_format_percent(va_list ap, char *flags)
+*/
+char	*ft_format_percent(va_list ap, char *flags, int i)
 {
 	t_string	ret;
 
+	i = 0;
 	ap = (void *)ap;
 	flags = (void *)flags;
 	//ret = ft_format_size_percent(flags);

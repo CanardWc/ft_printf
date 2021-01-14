@@ -13,26 +13,27 @@ t_string	ft_format_size_p(int nb, char *flags)
 			   ft_atoi(ft_strchr(flags, '-') + 1) + 1 : 0;
 	ret.size = ret.size < i ? i : ret.size;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
-		return (0);
+		return (ret);
 	return (ret);
 }
 
-char	*ft_format_p(va_list ap, char *flags)
+char	*ft_format_p(va_list ap, char *flags, int i)
 {
 	char			*base = "0123456789abcdef";
 	t_string		ret;
 	int			size;
-	unsigned long int	i;
+	unsigned long int	v;
 	
-	i = va_arg(ap, unsigned long int);
+	i = 0;
+	v = va_arg(ap, unsigned long int);
 	flags = (void *)flags;
-	//ret = ft_format_size_p(i, flags);
+	//ret = ft_format_size_p(v, flags);
 	size = ret.size - 1;
-	while (i > 15)
+	while (v > 15)
 	{
-		ret.str[--size] = base[i % 16];
-		i = i >> 4;
+		ret.str[--size] = base[v % 16];
+		v = v >> 4;
 	}
-	ret.str[--size] = base[i % 16];
+	ret.str[--size] = base[v % 16];
 	return (ret.str);
 }

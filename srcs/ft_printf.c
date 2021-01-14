@@ -31,10 +31,10 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		{ 'p', &ft_format_p }, { 'd', &ft_format_d },
 		{ 'i', &ft_format_i }, { 'u', &ft_format_u },
 		{ 'o', &ft_format_o }, { 'x', &ft_format_x },
-		{ 'X', &ft_format_bigx }, { '%', &ft_format_percent }/*,
-		{ 'n', &ft_format_n }, { 'f', &ft_format_f },
-		{ 'g', &ft_format_g }, { 'e', &ft_format_e }*/ };
-	char		*format_list = "cspdiuoxX%";// <- need to add nfge
+		{ 'X', &ft_format_bigx }, { 'n', &ft_format_n }, 
+		{ 'f', &ft_format_f }, /*{ 'g', &ft_format_g }, 
+		{ 'e', &ft_format_e }, */{ '%', &ft_format_percent } };
+	char		*format_list = "cspdiuoxXnfge%";// <- need to add nfge
 	char		*s_flag;
 	int		j;
 	int		k;
@@ -48,7 +48,7 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		j++;
 	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
-     	ft_lstadd_back(ret, ft_lstnew((void *)form_func[k].fct(ap, s_flag)));
+     	ft_lstadd_back(ret, ft_lstnew((void *)form_func[k].fct(ap, s_flag, i)));
 	//ret->content = ft_flag_treatment(s_flag, ret->content, form_func->format);
 	//free(s_flag);
 	return (s + j + 1);

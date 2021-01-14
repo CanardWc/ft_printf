@@ -11,12 +11,12 @@ t_string	ft_format_size_bigx(int nb, char *flags)
 		ret.size++;
 	while (*flags)
 		ret.size = ret.size < ft_atoi(flags) ? ft_atoi(flags++) : ret.size;
-	if (ft_atoi(ft_strchr(tmp, '.') + 1 == ret.size))
+	if (ft_atoi(ft_strchr(tmp, '.') + 1) == ret.size)
 		if (ft_strchr(tmp, '#'))
 			ret.size += 2;
 	ret.size++;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
-		return (0);
+		return (ret);
 	return (ret);
 }
 
@@ -34,26 +34,27 @@ unsigned long long int	ft_get_ap_bigx(va_list ap, char *flags)
 		return((unsigned long long int)va_arg(ap, unsigned int));
 }
 
-char	*ft_format_bigx(va_list ap, char *flags)
+char	*ft_format_bigx(va_list ap, char *flags, int i)
 {
 	char			*base = "0123456789ABCDEF";
 	t_string		ret;
 	int			prec;
 	int			size;
-	unsigned long long int	i;
+	unsigned long long int	v;
 	
-	i = ft_get_ap_bigx(ap, flags);
-	//ret = ft_format_size_bigx(i, flags);
+	i = 0;
+	v = ft_get_ap_bigx(ap, flags);
+	ret = ft_format_size_bigx(v, flags);
 	prec = ft_atoi(ft_strchr(flags, '.') + 1);
 	size = ret.size - 1;
 	prec =  prec < 0 ? -1 : prec;
-	while (i > 15)
+	while (v > 15)
 	{
-		ret.str[--size] = base[i % 16];
-		i /= 16;
+		ret.str[--size] = base[v % 16];
+		v /= 16;
 		prec--;
 	}
-	ret.str[--size] = base[i % 16];
+	ret.str[--size] = base[v % 16];
 	while (--prec > 0)
 		ret.str[--size] = '0';
 	return (ret.str);
