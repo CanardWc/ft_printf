@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
-
+//#include <libftprintf.h>
+#include <libft.h>
+#include <unistd.h>
+#include <stdio.h>
 int			ft_check_asterisk(char *s, char *format)
 {
 	int		i;
@@ -74,17 +76,16 @@ char		*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb)
 	check = ft_strchr(s, '-');
 	check2 = ft_strchr(s, '+');
 	tmp = flag_clean;
+	printf("flag_clean after flagidic ==%s\n", tmp);
 	while (ft_strchr(flag, *s))
 	{
 		if (((!(*s == '0' && check)) && (!*tmp || !ft_strchr(tmp, *s))) || \
-				(!(*s == ' ' && check2) && (!*tmp || !ft_strchr(tmp, *s))))
-		{
-			*flag_clean = *s;
-			flag_clean++;
-		}
+				(!(*s == ' ' && check2) && !ft_strchr(tmp, *s)))
+			*flag_clean++ = *s;
 		s++;
 	}
-	ft_flag_indicator2(s, flag, nb);
+	ft_flag_indicator2(s, flag_clean, nb);
+	printf("flag_clean after flagidic ==%s\n", tmp);
 	return (tmp);
 }
 
@@ -95,7 +96,7 @@ int			ft_alloc_flag_clean(char *s, char *flag, char *format)
 	char	*check2;
 	char	*tmp;
 
-	i = 2;
+	i = 1;
 	check = ft_strchr(s, '-');
 	check2 = ft_strchr(s, '+');
 	tmp = s;

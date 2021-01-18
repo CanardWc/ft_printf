@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
+//#include <libftprintf.h>
+#include <libft.h>
+#include <stdio.h>
+#include <unistd.h>
+int			ft_alloc_flag_clean(char *s, char *flag, char *format);
+char		*ft_flag_indicator(char *s, char *flag, char *flag_clean/*, int *nb*/);
 
 char		*ft_error_gestion(char *new_s, char *flag_clean, char *error)
 {
@@ -21,7 +26,7 @@ char		*ft_error_gestion(char *new_s, char *flag_clean, char *error)
 	return (error);
 }
 
-int			ft_parse(char *s, char *flag, char *format)
+int		ft_parse(char *s, char *flag, char *format)
 {
 	while (ft_strchr(flag, *s))
 		if (*s++ == '#' && !ft_strchr("xXo", s[ft_strlen(s) - 1]))
@@ -66,31 +71,34 @@ void		ft_flag_order(char *s)
 	}
 }
 
-char		*flag_cleanse(char *s, va_list ap)
+char		*flag_cleanse(char *s/*, va_list ap*/)
 {
+//	va_list	ap;
 	char	*flag;
 	char	*format;
 	char	*flag_clean;
-	int		asterisk[3];
+//	int		asterisk[3];
 	int		i;
 
-	flag = "-0+#";
+	flag = "-0+# ";
 	format = "cspdiuoxXnfge%";
 	i = 0;
 	if (!(ft_parse(s, flag, format)))
 		return (ft_error_gestion(NULL, NULL, "error_2"));
-	asterisk[0] = ft_check_asterisk(s, format) ? va_arg(ap, int) : 0;
-	asterisk[1] = ft_check_asterisk(s, format) == 2 ? va_arg(ap, int) : 0;
-	asterisk[2] = asterisk[0];
-	while ((asterisk[2] /= 10) > 0)
-		i++;
-	asterisk[2] = asterisk[1];
-	while ((asterisk[2] /= 10) > 0)
-		i++;
+//	asterisk[0] = ft_check_asterisk(s, format) ? va_arg(ap, int) : 0;
+//	asterisk[1] = ft_check_asterisk(s, format) == 2 ? va_arg(ap, int) : 0;
+//	asterisk[2] = asterisk[0];
+//	while ((asterisk[2] /= 10) > 0)
+//		i++;
+//	asterisk[2] = asterisk[1];
+//	while ((asterisk[2] /= 10) > 0)
+//		i++;
 	i += ft_alloc_flag_clean(s, flag, format);
+	printf("%d\n", i);
+	printf("123456789abcdef\n");
 	if (!(flag_clean = ft_calloc(i, sizeof(char))))
 		return (NULL);
-	flag_clean = ft_flag_indicator(s, flag, flag_clean, asterisk);
+	flag_clean = ft_flag_indicator(s, flag, flag_clean/*, asterisk*/);
 	ft_flag_order(flag_clean);
 	return (flag_clean);
 }
