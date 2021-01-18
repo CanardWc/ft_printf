@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:12 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/14 18:03:58 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/01/18 15:12:27 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,9 @@ char		*flag_cleanse(char *s/*, va_list ap*/)
 //	while ((asterisk[2] /= 10) > 0)
 //		i++;
 	i += ft_alloc_flag_clean(s, flag, format);
-	printf("%d\n", i);
-	printf("123456789abcdef\n");
 	if (!(flag_clean = ft_calloc(i, sizeof(char))))
 		return (NULL);
 	flag_clean = ft_flag_indicator(s, flag, flag_clean/*, asterisk*/);
-	ft_flag_order(flag_clean);
+//	ft_flag_order(flag_clean);
 	return (flag_clean);
 }

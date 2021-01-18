@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:40:48 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/14 18:03:57 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/01/18 15:12:10 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <libft.h>
 #include <unistd.h>
 #include <stdio.h>
+
+void		ft_flag_order(char *s);
 int			ft_check_asterisk(char *s, char *format)
 {
 	int		i;
@@ -70,22 +72,19 @@ char		*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb)
 	char	*check;
 	char	*check2;
 	char	*tmp;
-	int		i;
 
-	i = 0;
 	check = ft_strchr(s, '-');
 	check2 = ft_strchr(s, '+');
 	tmp = flag_clean;
-	printf("flag_clean after flagidic ==%s\n", tmp);
 	while (ft_strchr(flag, *s))
 	{
-		if (((!(*s == '0' && check)) && (!*tmp || !ft_strchr(tmp, *s))) || \
-				(!(*s == ' ' && check2) && !ft_strchr(tmp, *s)))
+		if ((!(*s == '0' && check) && (!ft_strchr(tmp, *s))) && \
+				(!(*s == ' ' && check2) && (!*tmp || !ft_strchr(tmp, *s))))
 			*flag_clean++ = *s;
 		s++;
 	}
+	ft_flag_order(flag_clean);
 	ft_flag_indicator2(s, flag_clean, nb);
-	printf("flag_clean after flagidic ==%s\n", tmp);
 	return (tmp);
 }
 
