@@ -13,8 +13,8 @@ t_string 	ft_format_size_u(int i, char *flags)
 		tmp++;
 	while (*flags)
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	ret.size = ret.size > tmp ? ret.size : tmp;
-	if(!(ret.str = ft_calloc(ret.size + 1, sizeof(char))))
+	ret.size = ret.size > tmp ? ret.size + 1: tmp + 1;
+	if(!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
 	return (ret);
 }
@@ -48,11 +48,11 @@ char			*ft_format_u(va_list ap, char *flags, int i)
 	prec =  prec < 0 ? -1 : prec;
 	while (v > 9)
 	{
-		ret.str[--size] = v % 10;
+		ret.str[--size] = v % 10 + '0';
 		v /= 10;
 		prec--;
 	}
-	ret.str[--size] = v % 10;
+	ret.str[--size] = v % 10 + '0';
 	while (--prec > 0)
 		ret.str[--size] = '0';
 	return (ret.str);

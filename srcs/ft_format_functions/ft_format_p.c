@@ -5,13 +5,15 @@ t_string	ft_format_size_p(int nb, char *flags)
 	t_string		ret;
 	int				i;
 
+	flags = (void *)flags;
 	ret.size = 0;
 	i = 1;
 	while ((nb = nb >> 4)  > 0)
 		i++;
-	ret.size = ft_strchr(flags, '-') ? \
-			   ft_atoi(ft_strchr(flags, '-') + 1) + 1 : 0;
-	ret.size = ret.size < i ? i : ret.size;
+	//ret.size = ft_strchr(flags, '-') ? \
+	//		   ft_atoi(ft_strchr(flags, '-') + 1) + 1 : 0;
+	//ret.size = ret.size < i ? i : ret.size;
+	ret.size = i;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
 	return (ret);

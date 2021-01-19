@@ -49,16 +49,15 @@ char			*ft_format_d(va_list ap, char *flags, int i)
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 0;
 	size = ret.size - 1;
 	prec =  prec < 0 ? -1 : prec;
-	while (v > 9)
+	while (v > 9 || v < -9)
 	{
-		ret.str[--size] = v % 10 + '0';
+		ret.str[--size] = v < 0 ? (v * -1) % 10 + '0' : v % 10 + '0';
 		v /= 10;
 		prec--;
 	}
-	ret.str[--size] = v % 10 + '0';
+	ret.str[--size] = v < 0 ? (v * -1) % 10 + '0' : v % 10 + '0';
 	while (prec-- > 0)
 		ret.str[--size] = '0';
-	if (v < 0)
-		ret.str[--size] = '-';
+	ret.str[--size] = v < 0 ? '-' : ret.str[size];
 	return (ret.str);
 }

@@ -108,8 +108,7 @@ int	main(void)
 	char	*s;
 
 	s = (char *)malloc(sizeof(char) * 4);
-	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = \
-			%p\npercent = %%\ns = %s\nu = %u\nx = %x\nvi hende", \
-			42, 'z', 333, 1234, 123, 42, s, "vaginette", 1234, 42);
+	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\nvi hende", \
+			42, 'z', -333, -10, 123, s, "vaginette", 1234, 42);
 	return (0);
 }

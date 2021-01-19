@@ -6,15 +6,15 @@ t_string	ft_format_size_o(int i, char *flags)
 	char		*tmp;
 
 	tmp = flags;
-	ret.size = 0;
-	while ((i /= 16) < 0)
+	ret.size = 1;
+	while ((i /= 8) > 0)
 		ret.size++;
 	while (*flags)
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
 	if (ft_strchr(tmp, '.'))
 		if (ft_atoi(ft_strchr(tmp, '.') + 1) == ret.size)
 			if (ft_strchr(tmp, '#'))
-				ret.size += 1;
+				ret.size += 2;
 	ret.size++;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);

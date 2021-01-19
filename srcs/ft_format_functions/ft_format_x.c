@@ -6,8 +6,8 @@ t_string	ft_format_size_x(int nb, char *flags)
 	char		*tmp;
 
 	tmp = flags;
-	ret.size = 0;
-	while ((nb /= 16) < 0)
+	ret.size = 1;
+	while ((nb /= 16) > 0)
 		ret.size++;
 	while (*flags)
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;

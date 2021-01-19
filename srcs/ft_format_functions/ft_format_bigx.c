@@ -6,7 +6,7 @@ t_string	ft_format_size_bigx(int nb, char *flags)
 	char		*tmp;
 
 	tmp = flags;
-	ret.size = 0;
+	ret.size = 1;
 	while ((nb /= 16) > 0)
 		ret.size++;
 	while (*flags)
