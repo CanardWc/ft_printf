@@ -38,3 +38,62 @@ t_string	ft_format_size_e(long double nb, char *flags)
 		return (0);
 	return (ret);
 }
+
+long double	ft_get_ap_e(va_list ap, char *flags)
+{
+	if (ft_strchr(flags, 'l'))
+		return((long double)va_arg(ap, long double));
+	else
+		return((long double)va_arg(ap, double));
+}
+
+char	*ft_format_e(va_list ap, char *flags, int i)
+{
+	t_string	ret;
+	long double	prec;
+	long double	size;
+	long double	v;
+
+	i = 0;
+	v = ft_get_ap_e(ap, flags);
+	//ret = ft_format_size_e(v flags);
+	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 6;
+	size = (long double)(ret.size - 1);
+	if (prec > 0)
+		ret.str[(int)(size-- - prec)] = '.';
+	while (prec > 0)
+		ret.str[(int)size--] = ft_dmod((v * (10 * prec--)), 10) + '0';
+	while (i > 10)
+	{
+		ret.str[(int)--size] = ft_dmod(v, 10) + '0';
+		v /= 10;
+	}
+	ret.str[(int)--size] = ft_dmod(v, 10) + '0';
+	return (ret.str);
+}
+
+char	*ft_format_e(va_list ap, char *flags, int i)
+{
+	t_string	ret;
+	long double	prec;
+	long double	size;
+	long double	v;
+	long double	pow;
+
+	i = 0;
+	v = ft_get_ap_e(v, flags);
+	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 6;
+	ret = ft_format_size_e(v, flags);
+	size = (long double)(ret.size - 1);
+	pow = 0;
+	if (prec > 0)
+		ret.str[(int)(size-- - prec)] = '.';
+	if (v > 0)
+		while (v / (10 * pow) > 9)
+			pow++;
+	else
+		while (v * (10 * pow) <= 0)
+			pow++;
+	pow = prec > 0 ? pow - prec : pow;
+	
+}

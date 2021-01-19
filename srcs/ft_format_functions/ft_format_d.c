@@ -1,5 +1,6 @@
 #include <libftprintf.h>
-t_string 	ft_format_size_i(int i, char *flags)
+
+t_string 	ft_format_size_d(int i, char *flags)
 {
 	t_string	ret;
 	int		tmp;
@@ -9,18 +10,15 @@ t_string 	ft_format_size_i(int i, char *flags)
 	sign = i < 0 ? -1 : 1;
 	i *= sign;
 	tmp = 1;
-	while ((nb /= 10) > 0)
+	while ((i /= 10) > 0)
 		tmp++;
-	if(strchr(flags, '+') || strchr(flags, ' ') || sign == -1)
+	if(ft_strchr(flags, '+') || ft_strchr(flags, ' ') || sign == -1)
 		tmp++;
 	while (*flags)
-	{
-		ret.size = ret.size < ft_atoi(flags) ? ft_atoi(flags) : ret.size;
-		flags++;
-	}
-	ret.size = ret.size > tmp ? ret.size : tmp;
-	if(!(ret.str = ft_calloc(ret.size + 1, sizeof(char))))
-		return (0);
+		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
+	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
+	if(!(ret.str = ft_calloc(ret.size, sizeof(char))))
+		return (ret);
 	return (ret);
 }
 
@@ -48,17 +46,17 @@ char			*ft_format_d(va_list ap, char *flags, int i)
 	i = 0;
 	v = ft_get_ap_d(ap, flags);
 	ret = ft_format_size_d(v, flags);
-	prec = ft_atoi(ft_strchr(flags, '.') + 1);
+	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 0;
 	size = ret.size - 1;
 	prec =  prec < 0 ? -1 : prec;
-	while (v > 9)
+	while (v > 9 || v < -9)
 	{
-		ret.str[--size] = v % 10;
+		ret.str[--size] = v < 0 ? (v * -1) % 10 + '0' : v % 10 + '0';
 		v /= 10;
 		prec--;
 	}
-	ret.str[--size] = v % 10;
-	while (--prec > 0)
+	ret.str[--size] = v < 0 ? (v * -1) % 10 + '0' : v % 10 + '0';
+	while (prec-- > 0)
 		ret.str[--size] = '0';
 	ret.str[--size] = v < 0 ? '-' : ret.str[size];
 	return (ret.str);

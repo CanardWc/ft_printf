@@ -6,14 +6,15 @@ t_string	ft_format_size_bigx(int nb, char *flags)
 	char		*tmp;
 
 	tmp = flags;
-	ret.size = 0;
-	while ((nb /= 16) < 0)
+	ret.size = 1;
+	while ((nb /= 16) > 0)
 		ret.size++;
 	while (*flags)
-		ret.size = ret.size < ft_atoi(flags) ? ft_atoi(flags++) : ret.size;
-	if (ft_atoi(ft_strchr(tmp, '.') + 1) == ret.size)
-		if (ft_strchr(tmp, '#'))
-			ret.size += 2;
+		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
+	if (ft_strchr(tmp, '.'))
+		if (ft_atoi(ft_strchr(tmp, '.') + 1) == ret.size)
+			if (ft_strchr(tmp, '#'))
+				ret.size += 2;
 	ret.size++;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
@@ -41,11 +42,11 @@ char	*ft_format_bigx(va_list ap, char *flags, int i)
 	int			prec;
 	int			size;
 	unsigned long long int	v;
-	
+
 	i = 0;
 	v = ft_get_ap_bigx(ap, flags);
 	ret = ft_format_size_bigx(v, flags);
-	prec = ft_atoi(ft_strchr(flags, '.') + 1);
+	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 0;
 	size = ret.size - 1;
 	prec =  prec < 0 ? -1 : prec;
 	while (v > 15)
