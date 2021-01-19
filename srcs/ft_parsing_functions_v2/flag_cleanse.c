@@ -6,16 +6,14 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:12 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/18 15:12:27 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/01/19 14:26:53 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <libftprintf.h>
-#include <libft.h>
-#include <stdio.h>
-#include <unistd.h>
-int			ft_alloc_flag_clean(char *s, char *flag, char *format);
-char		*ft_flag_indicator(char *s, char *flag, char *flag_clean/*, int *nb*/);
+#include <libftprintf.h>
+
+char		*ft_flag_indicator(char *s, char *flag, char *flag_clean \
+		, int *nb);
 
 char		*ft_error_gestion(char *new_s, char *flag_clean, char *error)
 {
@@ -26,7 +24,7 @@ char		*ft_error_gestion(char *new_s, char *flag_clean, char *error)
 	return (error);
 }
 
-int		ft_parse(char *s, char *flag, char *format)
+int			ft_parse(char *s, char *flag, char *format)
 {
 	while (ft_strchr(flag, *s))
 		if (*s++ == '#' && !ft_strchr("xXo", s[ft_strlen(s) - 1]))
@@ -52,51 +50,60 @@ int		ft_parse(char *s, char *flag, char *format)
 	return ((int)ft_strchr(format, *s));
 }
 
-void		ft_flag_order(char *s)
+int			ft_alloc_flag_clean(char *s, char *flag, char *format)
 {
-	char	c;
+	int		i;
+	int		check;
+	int		check2;
 	char	*tmp;
-	char	*ref;
 
-	ref = "#0 +-";
-	while (ft_strchr(ref, *s))
+	i = 1;
+	tmp = s;
+	while (!ft_strchr(format, *tmp))
 	{
-		while (!ft_strchr(s, *ref))
-			ref++;
-		c = *s;
-		tmp = ft_strchr(s, *ref);
-		*s = *ref++;
-		*tmp = c;
-		s++;
+		check = *tmp == '-' || check == 1 ? 1 : 0;
+		check2 = *tmp++ == '+' || check2 == 1 ? 1 : 0;
 	}
+	while (!ft_strchr(format, *s))
+	{
+		if (*s == '*')
+			s++;
+		else
+		{
+			if ((!(*s == '0' && check && !ft_isdigit(s[-1]))) || \
+					(!(*s == ' ' && check2)))
+				i++;
+			s++;
+		}
+	}
+	return (i);
 }
 
-char		*flag_cleanse(char *s/*, va_list ap*/)
+char		*flag_cleanse(char *s/ va_list ap, char *format)
 {
-//	va_list	ap;
+	va_list	ap;
 	char	*flag;
-	char	*format;
 	char	*flag_clean;
-//	int		asterisk[3];
+	int		n[3];
 	int		i;
 
 	flag = "-0+# ";
-	format = "cspdiuoxXnfge%";
 	i = 0;
 	if (!(ft_parse(s, flag, format)))
 		return (ft_error_gestion(NULL, NULL, "error_2"));
-//	asterisk[0] = ft_check_asterisk(s, format) ? va_arg(ap, int) : 0;
-//	asterisk[1] = ft_check_asterisk(s, format) == 2 ? va_arg(ap, int) : 0;
-//	asterisk[2] = asterisk[0];
-//	while ((asterisk[2] /= 10) > 0)
-//		i++;
-//	asterisk[2] = asterisk[1];
-//	while ((asterisk[2] /= 10) > 0)
-//		i++;
+	n[0] = ft_check_asterisk(s, format) ? va_arg(ap, int) : 0;
+	n[1] = ft_check_asterisk(s, format) == 2 ? va_arg(ap, int) : 0;
+	n[1] = n[1] < 1 ? 0 : n[1];
+	n[2] = n[0] < 0 && *(ft_strchr(s, '*') -1) != '.' ? n[0] : n[0] * -10;
+	while ((n[2] /= 10) > 0)
+		i++;
+	n[2] = n[1];
+	while ((n[2] /= 10) > 0)
+		i++;
 	i += ft_alloc_flag_clean(s, flag, format);
 	if (!(flag_clean = ft_calloc(i, sizeof(char))))
 		return (NULL);
-	flag_clean = ft_flag_indicator(s, flag, flag_clean/*, asterisk*/);
-//	ft_flag_order(flag_clean);
+	flag_clean = ft_flag_indicator(s, flag, flag_clean, n);
+	flag_clean = ft_flag_indicator2(s, flag_clean, nb, format);
 	return (flag_clean);
 }
