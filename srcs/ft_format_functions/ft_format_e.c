@@ -25,7 +25,7 @@ t_string	ft_format_size_e(long double nb, char *flags)
 		while(nb < 1 && nb_exposant <= 110)
 		{
 			nb *= 10
-			nb_exposant++;
+				nb_exposant++;
 		}
 	}
 	prec = nb_exposant < 106 ? prec : prec++;
@@ -47,53 +47,48 @@ long double	ft_get_ap_e(va_list ap, char *flags)
 		return((long double)va_arg(ap, double));
 }
 
-char	*ft_format_e(va_list ap, char *flags, int i)
+int		ft_get_pow(long double v)
 {
-	t_string	ret;
-	long double	prec;
-	long double	size;
-	long double	v;
+	int	pow;
 
-	i = 0;
-	v = ft_get_ap_e(ap, flags);
-	//ret = ft_format_size_e(v flags);
-	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 6;
-	size = (long double)(ret.size - 1);
-	if (prec > 0)
-		ret.str[(int)(size-- - prec)] = '.';
-	while (prec > 0)
-		ret.str[(int)size--] = ft_dmod((v * (10 * prec--)), 10) + '0';
-	while (i > 10)
-	{
-		ret.str[(int)--size] = ft_dmod(v, 10) + '0';
-		v /= 10;
-	}
-	ret.str[(int)--size] = ft_dmod(v, 10) + '0';
-	return (ret.str);
+	pow = 0;
+	v = v < 0 ? v * -1 : v;
+	if (v == 0)
+		return (pow);
+	if ((int)v > 0)
+		while ((v /= 10) > 9)
+			pow++;
+	else
+		while ((int)(v *= 10) == 0)
+			pow--;
+	return (pow);
 }
 
 char	*ft_format_e(va_list ap, char *flags, int i)
 {
 	t_string	ret;
 	long double	prec;
-	long double	size;
 	long double	v;
-	long double	pow;
+	int			size;
+	int			pow;
 
 	i = 0;
 	v = ft_get_ap_e(v, flags);
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 6;
 	ret = ft_format_size_e(v, flags);
-	size = (long double)(ret.size - 1);
-	pow = 0;
+	size = ret.size - 1;
+	pow = ft_get_pow(v);
+	v = pow == 0 ? v : v * (10 * pow);
+	while (pow > 9 || (pow /= 10) < 9)
+		ret.str[--size] = pow % 10 + '0';
+	ret.str[--size] = pow % 10 + '0';
+	ret.str[--size] = pow < 0 ? '-' : ret.str[size];
+	ret.str[pow < 0 ? --size : size] = 'e';
+	v = prec > 0 ? v * (10 * prec) : v;	
+	while ((v /= 10) > 9)
+		ret.str[--size] = v % 10 + '0';
 	if (prec > 0)
-		ret.str[(int)(size-- - prec)] = '.';
-	if (v > 0)
-		while (v / (10 * pow) > 9)
-			pow++;
-	else
-		while (v * (10 * pow) <= 0)
-			pow++;
-	pow = prec > 0 ? pow - prec : pow;
-	
+		ret.str[--size] = '.';
+	ret.str[--size] = v % 10 + '0';
+	return (ret.str);
 }
