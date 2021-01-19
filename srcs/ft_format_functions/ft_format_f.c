@@ -35,23 +35,23 @@ char	*ft_format_f(va_list ap, char *flags, int i)
 {
 	t_string	ret;
 	long double	prec;
-	int		size;
+	long double	size;
 	long double	v;
 
 	i = 0;
 	v = ft_get_ap_f(ap, flags);
 	//ret = ft_format_size_f(v flags);
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 6;
-	size = ret.size - 1;
+	size = (long double)(ret.size - 1);
 	if (prec > 0)
-		ret.str[size-- - prec] = '.';
+		ret.str[(int)(size-- - prec)] = '.';
 	while (prec > 0)
-		ret.str[size--] = ((v * (10 * prec--)) % 10) + '0';
+		ret.str[(int)size--] = ft_dmod((v * (10 * prec--)), 10) + '0';
 	while (i > 10)
 	{
-		ret.str[--size] = v % 10 + '0';
+		ret.str[(int)--size] = ft_dmod(v, 10) + '0';
 		v /= 10;
 	}
-	ret.str[--size] = v % 10;
+	ret.str[(int)--size] = ft_dmod(v, 10) + '0';
 	return (ret.str);
 }

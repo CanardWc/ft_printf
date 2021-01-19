@@ -32,7 +32,7 @@ SRC_NAME = ft_atoi.c ft_strdup.c ft_bzero.c ft_putnbr_fd.c ft_strjoin.c \
 		ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
 		ft_lstmap.c ft_putmem_fd.c ft_putnbr_base_fd.c ft_atoi_base.c \
-		ft_itoa_base.c ft_itoa_mem.c
+		ft_itoa_base.c ft_itoa_mem.c ft_dmod.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

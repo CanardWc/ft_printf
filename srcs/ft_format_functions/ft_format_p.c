@@ -27,7 +27,7 @@ char	*ft_format_p(va_list ap, char *flags, int i)
 	i = 0;
 	v = va_arg(ap, unsigned long int);
 	flags = (void *)flags;
-	//ret = ft_format_size_p(v, flags);
+	ret = ft_format_size_p(v, flags);
 	size = ret.size - 1;
 	while (v > 15)
 	{

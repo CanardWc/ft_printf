@@ -10,18 +10,15 @@ t_string 	ft_format_size_i(int i, char *flags)
 	sign = i < 0 ? -1 : 1;
 	i *= sign;
 	tmp = 1;
-	while ((nb /= 10) > 0)
+	while ((i /= 10) > 0)
 		tmp++;
-	if(strchr(flags, '+') || strchr(flags, ' ') || sign == -1)
+	if(ft_strchr(flags, '+') || ft_strchr(flags, ' ') || sign == -1)
 		tmp++;
 	while (*flags)
-	{
-		ret.size = ret.size < ft_atoi(flags) ? ft_atoi(flags) : ret.size;
-		flags++;
-	}
-	ret.size = ret.size > tmp ? ret.size : tmp;
-	if(!(ret.str = ft_calloc(ret.size + 1, sizeof(char))))
-		return (0);
+		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
+	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
+	if(!(ret.str = ft_calloc(ret.size, sizeof(char))))
+		return (ret);
 	return (ret);
 }
 
@@ -44,30 +41,26 @@ char			*ft_format_i(va_list ap, char *flags, int i)
 	t_string	ret;
 	int		prec;
 	int		size;
-<<<<<<< HEAD
 	long long int	v;
 	
 	i = 0;
 	v = ft_get_ap_i(ap, flags);
 	ret = ft_format_size_i(v, flags);
-=======
-	long long int	i;
-
-	i = ft_get_ap_i(ap, flags);
-	ret = ft_format_size_i(i, flags);
->>>>>>> d8d7b529e8a2d043b1a7da2812c8c44a462a0522
-	prec = ft_atoi(ft_strchr(flags, '.') + 1);
+	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 0;
 	size = ret.size - 1;
+	ft_putnbr_fd(ret.size, 1);
+	write(1, "\n", 1);
 	prec =  prec < 0 ? -1 : prec;
 	while (v > 9 )
 	{
-		ret.str[--size] = v % 10;
+		ret.str[--size] = v % 10 + '0';
 		v /= 10;
 		prec--;
 	}
 	ret.str[--size] = v % 10;
 	while (--prec > 0)
 		ret.str[--size] = '0';
-	ret.str[--size] = v < 0 ? '-' : ret.str[size];
+	if (v < 0)
+		ret.str[--size] = '-';
 	return (ret.str);
 }

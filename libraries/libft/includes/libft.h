@@ -61,6 +61,8 @@ char	*ft_itoa_mem(unsigned long int nbr);
 int	ft_atoi_base(char *str, char *base);
 char	*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 
+long double	ft_dmod(long double a, long double b);
+
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);

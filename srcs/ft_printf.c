@@ -49,6 +49,7 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
      	ft_lstadd_back(ret, ft_lstnew((void *)form_func[k].fct(ap, s_flag, i)));
+	printf("hey\n");
 	//ret->content = ft_flag_treatment(s_flag, ret->content, form_func->format);
 	//free(s_flag);
 	return (s + j + 1);
@@ -107,6 +108,8 @@ int	main(void)
 	char	*s;
 
 	s = (char *)malloc(sizeof(char) * 4);
-	ft_printf("hey %s \n la bess ? \n %d \n %c\n %  p\n", "boloss", 123446, 'u', s);
+	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = \
+			%p\npercent = %%\ns = %s\nu = %u\nx = %x\nvi hende", \
+			42, 'z', 333, 1234, 123, 42, s, "vaginette", 1234, 42);
 	return (0);
 }
