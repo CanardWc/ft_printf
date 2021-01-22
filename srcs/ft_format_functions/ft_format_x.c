@@ -2,24 +2,28 @@
 
 t_string	ft_format_size_x(int nb, char *flags)
 {
-	t_string	ret;
-	char		*tmp;
+	int	ret;
+	char	*tmp;
+	int	t_ret;
 
 	tmp = flags;
-	ret.size = 1;
+	ret.sizt = 1;
 	while ((nb /= 16) > 0)
 		ret.size++;
-	while (*flags)
-		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	if (ft_strchr(tmp, '.'))
-		if (ft_atoi(ft_strchr(tmp, '.') + 1) == ret.size)
-			if (ft_strchr(tmp, '#'))
-				ret.size += 2;
+	t_ret = ret.size;
+	while (*flags && *flags != '.')
+		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret,size;
+	if (ft_strchr(tmp, '#') && t_ret + 1 >= ret.size)
+		ret.size = t_ret + 2;
+	if (ft_strchr(tmp, '.') && ft_atoi(strchr(tmp, '.') + 1) >= ret).size
+		if (ft_strchr(tmp, '#'))
+			ret.size += 2;
 	ret.size++;
-	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
-		return (ret);
+		if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
+			return (ret);
 	return (ret);
 }
+
 
 unsigned long long int	ft_get_ap_x(va_list ap, char *flags)
 {
