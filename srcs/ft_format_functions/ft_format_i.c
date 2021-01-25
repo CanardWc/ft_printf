@@ -3,24 +3,28 @@
 t_string 	ft_format_size_i(int i, char *flags)
 {
 	t_string	ret;
-	int		tmp;
-	int 		sign;
+	int	tmp;
+	int 	sign;
+	char	*t_flags;
 
+	t_flags = flags;
 	ret.size = 1;
 	sign = i < 0 ? -1 : 1;
 	i *= sign;
 	tmp = 1;
 	while ((i /= 10) > 0)
 		tmp++;
-	if(ft_strchr(flags, '+') || ft_strchr(flags, ' ') || sign == -1)
+	while (*flags && *flags != '.')
+		ret = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
+	tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
+	if (ft_strchr(t_flags, '+') || ft_strchr(t_flags, ' ') || sign == -1)
 		tmp++;
-	while (*flags)
-		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
-	if(!(ret.str = ft_calloc(ret.size, sizeof(char))))
+	ret.size = ret.szie > tmp ? ret.size + 1 : tmp + 1;
+	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
 	return (ret);
 }
+
 
 unsigned long long int	ft_get_ap_i(va_list ap, char *flags)
 {

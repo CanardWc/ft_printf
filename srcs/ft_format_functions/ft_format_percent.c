@@ -2,16 +2,11 @@
 
 t_string	ft_format_size_percent(char *flags)
 {
-	t_string	ret;
-	char		*tmp;
+	int	ret;
 
-	tmp = flags;
-	ret.size = 0;
-	while (*flags != '.' && *flags != '%')
-		flags++;
-	while (!ft_isdigit(*flags) && *flags != '.' && *flags != '%')
-		flags++;
-	ret.size = ft_atoi(flags) > 0 ? ft_atoi(flags) + 1: 2;
+	ret.size = 2;
+	while (*flags && *flags != '.')
+		ret.size = ft_atoi(flags++) > ret.size ? ft_atoi(flags - 1) + 1 : ret.size;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
 	return (ret);

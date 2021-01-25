@@ -1,19 +1,18 @@
 #include <libftprintf.h>
 
-t_string 	ft_format_size_u(int i, char *flags)
+t_string	ft_format_size_u(unsigned int i, char *flags)
 {
 	t_string	ret;
-	int		tmp;
+	int	tmp;
 
 	ret.size = 1;
 	tmp = 1;
 	while ((i /= 10) > 0)
 		tmp++;
-	if(ft_strchr(flags, '+') || ft_strchr(flags, ' '))
-		tmp++;
-	while (*flags)
+	while (*flags && *flags != '.')
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	ret.size = ret.size > tmp ? ret.size + 1: tmp + 1;
+	tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
+	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
 	if(!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
 	return (ret);

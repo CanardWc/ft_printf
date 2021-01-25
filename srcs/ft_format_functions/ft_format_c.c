@@ -4,8 +4,10 @@ t_string	ft_format_size_c(char *flags)
 {
 	t_string	ret;
 
-	ret.size = ft_strchr(flags, '-') ? \
-			   ft_atoi(ft_strchr(flags, '-') + 1) + 1 : 2;
+	ret.size = 0;
+	while (*flags != '.' && ret.size == 0 && *flags)
+		ret.size = ft_atoi(flags++);
+	ret.size = ret.size == 0 ? 2 : ret.size + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
 	return (ret);
