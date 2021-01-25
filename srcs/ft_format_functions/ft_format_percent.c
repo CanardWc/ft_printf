@@ -2,7 +2,7 @@
 
 t_string	ft_format_size_percent(char *flags)
 {
-	int	ret;
+	t_string	ret;
 
 	ret.size = 2;
 	while (*flags && *flags != '.')

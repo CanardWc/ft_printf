@@ -2,20 +2,20 @@
 
 t_string	ft_format_size_o(int i, char *flags)
 {
-	int	ret;
-	char	*tmp;
-	int	t_ret;
+	t_string	ret;
+	char		*tmp;
+	int			t_ret;
 
 	tmp = flags;
-	ret.sizt = 1;
-	while ((nb /= 16) > 0)
+	ret.size = 1;
+	while ((i /= 16) > 0)
 		ret.size++;
 	t_ret = ret.size;
 	while (*flags && *flags != '.')
-		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret,size;
+		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
 	if (ft_strchr(tmp, '#') && t_ret >= ret.size)
 		ret.size = t_ret + 1;
-	if (ft_strchr(tmp, '.') && ft_atoi(strchr(tmp, '.') + 1) >= ret).size
+	if (ft_strchr(tmp, '.') && ft_atoi(ft_strchr(tmp, '.') + 1) >= ret.size)
 		if (ft_strchr(tmp, '#'))
 			ret.size += 1;
 	ret.size++;

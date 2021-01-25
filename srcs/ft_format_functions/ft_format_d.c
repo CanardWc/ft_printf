@@ -15,11 +15,13 @@ t_string 	ft_format_size_d(int i, char *flags)
 	while ((i /= 10) > 0)
 		tmp++;
 	while (*flags && *flags != '.')
-		ret = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
+		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
+	if (ft_strchr(flags, '.'))
+		tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? \
+			  ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
 	if (ft_strchr(t_flags, '+') || ft_strchr(t_flags, ' ') || sign == -1)
 		tmp++;
-	ret.size = ret.szie > tmp ? ret.size + 1 : tmp + 1;
+	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
 	return (ret);

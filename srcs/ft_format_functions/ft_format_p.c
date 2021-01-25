@@ -13,7 +13,7 @@ t_string	ft_format_size_p(unsigned long int nb, char *flags)
 	while ((nb = nb >> 4)  > 0)
 		i++;
 	while (*flags && *flags != '.')
-		ret.size = ft_atoi(flags++) > ret,size ? ft_atoi(flags - 1) : ret.size;
+		ret.size = ft_atoi(flags++) > ret.size ? ft_atoi(flags - 1) : ret.size;
 	i = prec > i ? prec : i;
 	ret.size = ret.size < i + 2 ? i + 3 : ret.size + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))

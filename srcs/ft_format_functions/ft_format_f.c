@@ -8,10 +8,10 @@ t_string	ft_format_size_f(long double nb, char *flags)
 
 	ret.size = 0;
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) + 2 : 8;
-	sign = nb < 0 ? -1 : 1;
-	nb *= sign;
-	prec += nb > 9 ? 1 : 0;
-	while ((nb /= 10.0) > 9)
+	sign = nb < 0.0 ? -1 : 1;
+	nb *= (long double)sign;
+	prec += nb > 9.0 ? 1 : 0;
+	while ((nb /= 10.0) > 9.0)
 		prec++;
 	if (ft_strchr(flags, '+') || ft_strchr(flags, ' ') || sign == -1)
 		prec++;
@@ -22,6 +22,7 @@ t_string	ft_format_size_f(long double nb, char *flags)
 		return (ret);
 	return (ret);
 }
+
 long double	ft_get_ap_f(va_list ap, char *flags)
 {
 	if (ft_strchr(flags, 'l'))
@@ -39,7 +40,7 @@ char	*ft_format_f(va_list ap, char *flags, int i)
 
 	i = 0;
 	v = ft_get_ap_f(ap, flags);
-	//ret = ft_format_size_f(v flags);
+	ret = ft_format_size_f(v, flags);
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 6;
 	size = (long double)(ret.size - 1);
 	if (prec > 0)

@@ -47,9 +47,9 @@ char			*ft_format_bigx(va_list ap, char *flags, int i);
 char			*ft_format_percent(va_list ap, char *flags, int i);
 char			*ft_format_f(va_list ap, char *flags, int i);
 char			*ft_format_n(va_list ap, char *flags, int i);
+char			*ft_format_e(va_list ap, char *flags, int i);
 /*
 char			*ft_format_g(va_list ap, char *flags, int i);
-char			*ft_format_e(va_list ap, char *flags, int i);
  */
 
 /*
