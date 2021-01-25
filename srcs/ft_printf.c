@@ -32,8 +32,8 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		{ 'i', &ft_format_i }, { 'u', &ft_format_u },
 		{ 'o', &ft_format_o }, { 'x', &ft_format_x },
 		{ 'X', &ft_format_bigx }, { 'n', &ft_format_n }, 
-		{ 'f', &ft_format_f }, /*{ 'g', &ft_format_g }, 
-		{ 'e', &ft_format_e }, */{ '%', &ft_format_percent } };
+		{ 'f', &ft_format_f }, /*{ 'g', &ft_format_g },*/ 
+		{ 'e', &ft_format_e }, { '%', &ft_format_percent } };
 	char		*format_list = "cspdiuoxXnfge%";// <- need to add nfge
 	char		*s_flag;
 	int		j;
