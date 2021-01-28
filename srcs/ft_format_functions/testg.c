@@ -169,28 +169,44 @@ double	ft_exp_double(int n, int exp)
 		ret *= n;
 	return (ret);
 }
-
+/*
 int		ft_i(double nb, int pow, int prec, int i)
 {
 	int		ret;
 
 	printf("exp == %d\n", (ft_exp(10, pow) * 9));
 	printf("como\n");
-	if (pow >= 0 && (int)nb >= (ft_exp(10, pow) * 9) && i < (pow - prec))
+	if (pow >= 0 && (int)nb >= (ft_exp(10, pow) * 9) && --prec)
 	{
-	i++;
 		printf(" prec == %d\n", prec);
 		nb /= 10.0;
-		printf("quoi ==%f\n", nb);
-		printf(" i == %d\n", i);
-		i = ft_i(nb, pow - 1, prec, i);
+		i += ft_i(nb, pow - 1, prec, i);
 	}
-	if ((int)nb >= (ft_exp(10, i) * 9))
+	else if (prec == 0 && ((int)nb) >= (ft_exp(10, prec) * 9))
 	{
 		printf("oui\n");
-		return (prec);
+		return (0);
 	}
-	return (i);
+		printf("quoi ==%f\n", nb);
+		printf(" i == %d\n", i);
+	printf("expi == %d\n", (ft_exp(10, prec) * 9));
+	return (1);
+}*/
+int	ft_qqch(double nb, int pow, int prec)
+{
+	int	i;
+
+	i = 0;
+	while ((int)nb >= ft_exp(10, pow--) * 9 && pow)
+	{
+		i++;
+		printf("i ==%d\n", i);
+		nb -= (double)(ft_exp(10, pow + 1) * 9);
+		printf("%f\n", nb);
+	}
+	if (i > prec)
+		return (1);
+	return (0);
 }
 
 double	ft_round_up(double nb, int pow, int prec)
@@ -206,7 +222,7 @@ double	ft_round_up(double nb, int pow, int prec)
 	}
 	else if (i == prec)
 		nb = ft_exp_double(10, pow + 1);*/
-	if (ft_i(nb, pow, prec, i) == prec)
+	if (ft_qqch(nb, pow, prec))
 	{
 		printf("asdfg\n");
 			nb = ft_exp_double(10, pow + 1);
@@ -282,7 +298,7 @@ int main()
 	int i;
 	double j = 9990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00;
 	double f = 0.000099;
-	double k = 99990000.00;
+	double k = 99999000.00;
 //		while (1)
 //		{
 /*		i = ft_format_size_g(j, " .g");
