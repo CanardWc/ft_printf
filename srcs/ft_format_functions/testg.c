@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:46:41 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/27 17:45:13 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/01/28 17:23:11 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,18 +170,48 @@ double	ft_exp_double(int n, int exp)
 	return (ret);
 }
 
-double	ft_round_up(double nb, int pow, int prec, int i)
+int		ft_i(double nb, int pow, int prec, int i)
 {
+	int		ret;
+
+	printf("exp == %d\n", (ft_exp(10, pow) * 9));
+	printf("como\n");
+	if (pow >= 0 && (int)nb >= (ft_exp(10, pow) * 9) && i < (pow - prec))
+	{
+	i++;
+		printf(" prec == %d\n", prec);
+		nb /= 10.0;
+		printf("quoi ==%f\n", nb);
+		printf(" i == %d\n", i);
+		i = ft_i(nb, pow - 1, prec, i);
+	}
+	if ((int)nb >= (ft_exp(10, i) * 9))
+	{
+		printf("oui\n");
+		return (prec);
+	}
+	return (i);
+}
+
+double	ft_round_up(double nb, int pow, int prec)
+{
+	int		i;
+
+	i = 0;
 	printf("%d\n", (ft_exp(10, pow) * 9));
-	if ((int)nb >= (ft_exp(10, pow) * 9) && i > prec)
+/*	if ((int)nb >= (ft_exp(10, pow) * 9) && i > prec)
 	{
 		i++;
 		ft_round_up((int)nb / 10, pow - 1, prec, i);
 	}
 	else if (i == prec)
-		nb = ft_exp_double(10, pow + 1);
+		nb = ft_exp_double(10, pow + 1);*/
+	if (ft_i(nb, pow, prec, i) == prec)
+	{
+		printf("asdfg\n");
+			nb = ft_exp_double(10, pow + 1);
+	}
 	printf("%f\n", nb);
-	printf("%d\n", i);
 	return (nb);
 }
 /*
@@ -210,12 +240,10 @@ int		ft_format_size_g(double nb, char *flags)
 	int		pow;
 	int		sign;
 	int		prec;
-	int		i;
 
-	i = 0;
 	prec = strchr(flags, '.') ? atoi(strchr(flags, '.') + 1) : 6;
 	pow = ft_get_pow(nb);
-	nb = ft_round_up(nb, pow, prec, i);
+	nb = ft_round_up(nb, pow, prec);
 	sign = nb < 0.0 ? -1 : 1;
 	nb *= sign;
 	printf("pow == %d\n", pow);
@@ -254,26 +282,26 @@ int main()
 	int i;
 	double j = 9990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00;
 	double f = 0.000099;
-	double k = 99999000.00;
-	//	while (1)
-	//	{
-	/*	i = ft_format_size_g(j, " .g");
+	double k = 99990000.00;
+//		while (1)
+//		{
+/*		i = ft_format_size_g(j, " .g");
 		printf("%d\n", i);
 		i = printf("% .2g", j);
 		printf("\n%d\n", i);*/
 	printf("====E====\n");
-	i = ft_format_size_g(k, " .2g");
+	i = ft_format_size_g(k, ".4g");
 	printf("%d\n", i);
-	i = printf("% .4g", k);
+	i = printf("%.4g", k);
 	printf("\n%d\n", i);
-	/*	printf("====F====\n");
+/*		printf("====F====\n");
 		i = ft_format_size_g(0.0000999, " .g");
 		printf("%d\n", i);
 		i = printf("% .3g", 0.0000999);
 		printf("\n%d\n", i);*/
-	//	delay(2);
-	//	sleep(1000);
-	//	}
+//		delay(2);
+//		sleep(1000);
+//		}
 }
 /*if 10 % 10 exposant pow - precision == 9, arrondir, que des 9?
   si oui nb = 10 exposant pow + 1
