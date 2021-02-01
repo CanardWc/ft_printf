@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:46:41 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/28 17:23:11 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/01 16:10:02 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+long double	ft_dmod(long double a, long double b)
+{
+	long double	mod;
+
+	mod = a < 0 ? a * -1 : a;
+	b = b < 0 ? b * -1 : b;
+	while (mod >= b)
+		mod = mod - b;
+	return (a < 0 ? mod * -1 : mod);
+}
 
 int ft_get_pow(long double fl)
 {
@@ -55,7 +66,7 @@ int		ft_ignore_zero(double nb, int prec, int pow)
 			i++;
 		}
 	i = 0;
-	while (((int)nb % 10) == 0)
+	while (ft_dmod(nb, 10.0) == 0)
 	{
 		i++;
 		nb /= 10.0;
@@ -75,7 +86,7 @@ int		ft_size_g_e(char *flags, double nb, int pow, int sign)
 	else
 		prec = atoi(strchr(flags, '.') + 1) == 0 ? 1 : atoi(strchr(flags, '.') + 1);
 	if (pow > 0)
-		prec = ft_ignore_zero((int)nb, prec, pow);
+		prec = ft_ignore_zero(nb, prec, pow);
 	if (strchr(flags, '#'))
 		prec = atoi(strchr(flags, '.') + 1) ? atoi(strchr(flags, '.') + 1) + 1 : 7;
 	else
@@ -99,25 +110,23 @@ int		ft_neg_pow_f(double nb, int pow, int sign, int t_prec)
 		nb *= 10.0;
 		prec++;
 	}
-	if (((int)nb % 10) >= 5)
+	if (ft_dmod(nb, 10.0) >= 5)
 	{
 		nb /= 10.0;
-		while ((int)nb % 10 == 9)
+		while (ft_dmod(nb, 10.0) == 9)
 		{
 			prec--;
 			nb /= 10.0;
 		}
-		printf("prec == %d\n", prec);
 		return (prec);
 	}
 	nb /= 10.0;
 	prec--;
-	while ((int)nb % 10 == 0)
+	while (ft_dmod(nb, 10.0) == 0)
 	{
 		prec--;
 		nb /= 10.0;
 	}
-	printf("prec == %d\n", prec);
 	return (prec);
 }
 
@@ -151,59 +160,34 @@ int		ft_size_g_f(char *flags, double nb, int pow, int sign)
 	return (prec);
 }
 
-int		ft_exp(int n, int exp)
+double		ft_exp(double n, int exp)
 {
-	int		ret;
+	double		ret;
 
-	ret = 1;
-	while (exp--)
-		ret *= 10;
+	ret = n;
+	if (exp)
+		while (--exp)
+			ret *= n;
+	else
+		return (1);
 	return (ret);
 }
-double	ft_exp_double(int n, int exp)
-{
-	int		ret;
 
-	ret = 1;
-	while (exp--)
-		ret *= n;
-	return (ret);
-}
-/*
-int		ft_i(double nb, int pow, int prec, int i)
-{
-	int		ret;
-
-	printf("exp == %d\n", (ft_exp(10, pow) * 9));
-	printf("como\n");
-	if (pow >= 0 && (int)nb >= (ft_exp(10, pow) * 9) && --prec)
-	{
-		printf(" prec == %d\n", prec);
-		nb /= 10.0;
-		i += ft_i(nb, pow - 1, prec, i);
-	}
-	else if (prec == 0 && ((int)nb) >= (ft_exp(10, prec) * 9))
-	{
-		printf("oui\n");
-		return (0);
-	}
-		printf("quoi ==%f\n", nb);
-		printf(" i == %d\n", i);
-	printf("expi == %d\n", (ft_exp(10, prec) * 9));
-	return (1);
-}*/
-int	ft_qqch(double nb, int pow, int prec)
+int	ft_check_round_up_pos(double nb, int pow, int prec)
 {
 	int	i;
 
 	i = 0;
-	while ((int)nb >= ft_exp(10, pow--) * 9 && pow)
+	printf("dmod == %Lf\n", ft_dmod(nb, 1));
+	while (pow-- >= 0 && nb >= ft_exp(10.0, pow + 1) * 9)
 	{
+		printf("wtf%d\n", pow);
+		printf("exp == %f\n", ft_exp(10.0, pow + 1) * 9);
 		i++;
-		printf("i ==%d\n", i);
-		nb -= (double)(ft_exp(10, pow + 1) * 9);
-		printf("%f\n", nb);
+		nb -= (ft_exp(10, pow + 1) * 9);
 	}
+	printf("i == %d\n", i);
+	printf("nb == %f\n", nb);
 	if (i > prec)
 		return (1);
 	return (0);
@@ -214,42 +198,22 @@ double	ft_round_up(double nb, int pow, int prec)
 	int		i;
 
 	i = 0;
-	printf("%d\n", (ft_exp(10, pow) * 9));
-/*	if ((int)nb >= (ft_exp(10, pow) * 9) && i > prec)
+	if (pow > 0)
+	if (ft_check_round_up_pos(nb, pow, prec))
 	{
-		i++;
-		ft_round_up((int)nb / 10, pow - 1, prec, i);
+			nb = ft_exp(10, pow + 1);
+			printf("nb ==%f\n", nb);
 	}
-	else if (i == prec)
-		nb = ft_exp_double(10, pow + 1);*/
-	if (ft_qqch(nb, pow, prec))
+	else if (pow < 0)
 	{
-		printf("asdfg\n");
-			nb = ft_exp_double(10, pow + 1);
+		while (pow++ < 0)
+			nb *= 10.0;
+		while (prec-- > 0)
+			nb *= 10.0;
 	}
-	printf("%f\n", nb);
 	return (nb);
 }
-/*
-double	ft_round_up(double nb, int pow, int prec)
-{
-	int		i;
 
-	i = -1;
-	if (pow >= 0)
-		while (++i <= prec)
-			if ((int)(nb / ft_exp(10, prec)) % ft_exp(10, pow - (i + 1)) != 9)
-				break;
-	printf("i == %d\n", i);
-	printf("prec == %d\n", prec);
-	printf("pow == %d\n", pow);
-	if (i == prec + 1)
-		if ((int)nb % ft_exp(10, pow - prec - 1) == 9)
-			nb = ft_exp_double(10, pow + 1);
-	printf("oui ==%f\n", nb);
-	return (nb);
-}
-*/
 int		ft_format_size_g(double nb, char *flags)
 {
 	int		ret;
@@ -260,9 +224,10 @@ int		ft_format_size_g(double nb, char *flags)
 	prec = strchr(flags, '.') ? atoi(strchr(flags, '.') + 1) : 6;
 	pow = ft_get_pow(nb);
 	nb = ft_round_up(nb, pow, prec);
+	pow = ft_get_pow(nb);
+	printf("pow == %d\n", pow);
 	sign = nb < 0.0 ? -1 : 1;
 	nb *= sign;
-	printf("pow == %d\n", pow);
 	if (!strchr(flags, '.') || pow < 0)
 	{
 		if (pow >= 6 || pow <= -5)
@@ -298,7 +263,7 @@ int main()
 	int i;
 	double j = 9990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00;
 	double f = 0.000099;
-	double k = 99999000.00;
+	double k = 9999999.5555;
 //		while (1)
 //		{
 /*		i = ft_format_size_g(j, " .g");
@@ -306,9 +271,9 @@ int main()
 		i = printf("% .2g", j);
 		printf("\n%d\n", i);*/
 	printf("====E====\n");
-	i = ft_format_size_g(k, ".4g");
+	i = ft_format_size_g(k, ".7g");
 	printf("%d\n", i);
-	i = printf("%.4g", k);
+	i = printf("%.7g", k);
 	printf("\n%d\n", i);
 /*		printf("====F====\n");
 		i = ft_format_size_g(0.0000999, " .g");
