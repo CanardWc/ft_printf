@@ -1,32 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_e.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/02 13:24:58 by edassess          #+#    #+#             */
+/*   Updated: 2021/02/02 13:28:16 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 
-int ft_get_pow(long double fl)
+int				ft_get_pow(long double fl)
 {
-	int pow;
+	int			pow;
+
 	pow = 0;
 	if (fl < 1)
-		while((int)fl == 0)
+		while ((int)fl == 0)
 		{
 			fl *= 10.0;
 			pow--;
 		}
 	else if (fl > 1)
-		while((long long int)fl > 9)
+		while ((long long int)fl > 9)
 		{
-
 			fl /= 10.0;
 			pow++;
-
 		}
-	return(pow);
+	return (pow);
 }
-int		ft_format_size_e(long double nb, char *flags)
+
+t_string		ft_format_size_e(long double nb, char *flags)
 {
 	t_string	ret;
 	int			prec;
 	int			sign;
 	int			pow;
-	ret = 0;
+
+	ret.size = 0;
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) + 6 : 12;
 	sign = nb < 0 ? -1 : 1;
 	nb *= sign;
@@ -38,21 +51,21 @@ int		ft_format_size_e(long double nb, char *flags)
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
 	ret.size = prec < ret.size && ret.size != 0 ? ret.size + 1 : prec + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
-		return (ret.size);
+		return (ret);
 	return (ret);
 }
 
-long double	ft_get_ap_e(va_list ap, char *flags)
+long double		ft_get_ap_e(va_list ap, char *flags)
 {
 	if (ft_strchr(flags, 'l'))
-		return((long double)va_arg(ap, long double));
+		return ((long double)va_arg(ap, long double));
 	else
-		return((long double)va_arg(ap, double));
+		return ((long double)va_arg(ap, double));
 }
 
-int		ft_get_pow(long double v)
+int				ft_get_pow(long double v)
 {
-	int	pow;
+	int			pow;
 
 	pow = 0;
 	v = v < 0 ? v * -1 : v;
@@ -67,7 +80,7 @@ int		ft_get_pow(long double v)
 	return (pow);
 }
 
-char	*ft_format_e(va_list ap, char *flags, int i)
+char			*ft_format_e(va_list ap, char *flags, int i)
 {
 	t_string	ret;
 	long double	prec;
@@ -87,7 +100,7 @@ char	*ft_format_e(va_list ap, char *flags, int i)
 	ret.str[--size] = pow % 10 + '0';
 	ret.str[--size] = pow < 0 ? '-' : ret.str[size];
 	ret.str[pow < 0 ? --size : size] = 'e';
-	v = prec > 0 ? v * (10 * prec) : v;	
+	v = prec > 0 ? v * (10 * prec) : v;
 	while ((v /= 10) > 9)
 		ret.str[--size] = v % 10 + '0';
 	if (prec > 0)

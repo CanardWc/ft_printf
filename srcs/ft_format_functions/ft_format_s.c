@@ -1,12 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_s.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/02 13:40:05 by edassess          #+#    #+#             */
+/*   Updated: 2021/02/02 13:40:34 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 
 t_string	ft_format_size_s(char *s, char *flags)
 {
 	t_string	ret;
-	int	prec;
+	int			prec;
 
 	ret.size = 0;
-	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : ft_strlen(s);
+	prec = ft_strchr(flags, '.') ? \
+		ft_atoi(ft_strchr(flags, '.') + 1) : ft_strlen(s);
 	prec = prec > (int)ft_strlen(s) ? (int)ft_strlen(s) : prec;
 	while (*flags && *flags != '.')
 		ret.size = ft_atoi(flags++) > ret.size ? ft_atoi(flags - 1) : ret.size;
