@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:46:41 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/01 16:10:02 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/02 11:12:28 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int ft_get_pow(long double fl)
 			pow--;
 		}
 	else if (fl > 1.0)
-		while(fl >= 10.0)
+		while(fl >= 1.0)
 		{
 			fl /= 10.0;
 			pow++;
@@ -110,6 +110,9 @@ int		ft_neg_pow_f(double nb, int pow, int sign, int t_prec)
 		nb *= 10.0;
 		prec++;
 	}
+	prec -= ft_ignore_zero(nb, prec, pow + t_prec);
+	printf("nb neg pow f == %f\n", nb);
+	printf("t_prec == %d\n", t_prec);
 	if (ft_dmod(nb, 10.0) >= 5)
 	{
 		nb /= 10.0;
@@ -141,7 +144,7 @@ int		ft_size_g_f(char *flags, double nb, int pow, int sign)
 	prec = 0;
 	t_flags = flags;
 	if (strchr(flags, '.'))
-		t_prec = atoi(strchr(flags, '.') + 1) == 0 ? 1 : atoi(strchr(flags, '.') + 1); 
+		t_prec = atoi(strchr(flags, '.') + 1) == 0 ? 1 : atoi(strchr(flags, '.') + 1);
 	if (pow < 0)
 	{
 		if (strchr(flags, '#'))
@@ -150,13 +153,19 @@ int		ft_size_g_f(char *flags, double nb, int pow, int sign)
 		{
 			prec = ft_neg_pow_f(nb, pow, sign, t_prec);
 		}
-		prec += 3;
+		prec += 2;
 	}
-	/*	if (pow >= 0)
+		if (pow >= 0)
 		{
-
-		}*/
+			if (strchr(flags, '.'))
+				prec = atoi(strchr(flags, '.') + 1) == 0 ? 1 : atoi(strchr(flags, '.') + 1);
+			if (prec >= pow + 1)
+				prec += 1;
+		}
 	prec += sign == -1 || strchr(flags, ' ') || strchr(flags, '+') ? 1 : 0;
+	while (*flags && *flags != '.')
+		t_prec = t_prec < atoi(flags++) ? atoi(flags - 1) : t_prec;
+	prec = t_prec > prec ? t_prec + 1 : prec + 1;
 	return (prec);
 }
 
@@ -211,6 +220,7 @@ double	ft_round_up(double nb, int pow, int prec)
 		while (prec-- > 0)
 			nb *= 10.0;
 	}
+	printf("nb at end of round up == %f\n", nb);
 	return (nb);
 }
 
@@ -228,6 +238,7 @@ int		ft_format_size_g(double nb, char *flags)
 	printf("pow == %d\n", pow);
 	sign = nb < 0.0 ? -1 : 1;
 	nb *= sign;
+	printf("nb start format size == %f\n", nb);
 	if (!strchr(flags, '.') || pow < 0)
 	{
 		if (pow >= 6 || pow <= -5)
@@ -263,7 +274,7 @@ int main()
 	int i;
 	double j = 9990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00;
 	double f = 0.000099;
-	double k = 9999999.5555;
+	double k = -0.000000055555;
 //		while (1)
 //		{
 /*		i = ft_format_size_g(j, " .g");
@@ -271,9 +282,9 @@ int main()
 		i = printf("% .2g", j);
 		printf("\n%d\n", i);*/
 	printf("====E====\n");
-	i = ft_format_size_g(k, ".7g");
+	i = ft_format_size_g(k, "g");
 	printf("%d\n", i);
-	i = printf("%.7g", k);
+	i = printf("%.0g", k);
 	printf("\n%d\n", i);
 /*		printf("====F====\n");
 		i = ft_format_size_g(0.0000999, " .g");
@@ -284,12 +295,3 @@ int main()
 //		sleep(1000);
 //		}
 }
-/*if 10 % 10 exposant pow - precision == 9, arrondir, que des 9?
-  si oui nb = 10 exposant pow + 1
-  besoin  de functions exposant
-  voir comment faire pour exposant negatif
-  */
-// probleme pour exp negatif sur g_f
-// probleme # sur g_f
-// g_e normalement good
-//
