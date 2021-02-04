@@ -6,7 +6,7 @@
 #    By: fgrea <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/23 10:59:04 by fgrea             #+#    #+#              #
-#    Updated: 2021/01/20 16:27:20 by fgrea            ###   ########lyon.fr    #
+#    Updated: 2021/02/04 11:27:20 by edassess         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,14 @@ LFT_INC_PATH = ./libraries/libft/includes/
 OBJ_PATH = ./objs/
 INC_PATH = ./includes/
 SRC_PATH = ./srcs/
-SRC_PRG_PATH = ft_parsing_functions/
+SRC_PRG_PATH = ft_parsing_functions_v2/
 SRC_FRT_PATH = ft_format_functions/
 SRC_FLG_PATH = ft_flag_functions/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = libftprintf.h
 SRC_NAME = ft_printf.c \
-	   ft_parsing_functions/flag_cleanse.c ft_parsing_functions/flag_cleanse_ft.c \
+	   ft_parsing_functions_v2/flag_cleanse.c ft_parsing_functions/flag_cleanse_ft.c \
 	   ft_format_functions/ft_format_c.c ft_format_functions/ft_format_s.c \
 	   ft_format_functions/ft_format_p.c ft_format_functions/ft_format_d.c \
 	   ft_format_functions/ft_format_i.c ft_format_functions/ft_format_u.c \

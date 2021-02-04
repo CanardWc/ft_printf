@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:19:50 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/02 13:20:47 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 11:13:29 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 t_string				ft_format_size_bigx(int nb, char *flags)
 {
-	int						ret;
+	t_string				ret;
 	char					*tmp;
 	int						t_ret;
 
 	tmp = flags;
-	ret.sizt = 1;
+	ret.size = 1;
 	while ((nb /= 16) > 0)
 		ret.size++;
 	t_ret = ret.size;
@@ -27,7 +27,7 @@ t_string				ft_format_size_bigx(int nb, char *flags)
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
 	if (ft_strchr(tmp, '#') && t_ret + 1 >= ret.size)
 		ret.size = t_ret + 2;
-	if (ft_strchr(tmp, '.') && ft_atoi(strchr(tmp, '.') + 1) >= ret.size)
+	if (ft_strchr(tmp, '.') && ft_atoi(ft_strchr(tmp, '.') + 1) >= ret.size)
 		if (ft_strchr(tmp, '#'))
 			ret.size += 2;
 	ret.size++;

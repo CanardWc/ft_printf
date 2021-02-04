@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:31:18 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/02 13:34:45 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 11:11:17 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ t_string				ft_format_size_i(int i, char *flags)
 	while ((i /= 10) > 0)
 		tmp++;
 	while (*flags && *flags != '.')
-		ret = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
+		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
 	tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? \
 		ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
 	if (ft_strchr(t_flags, '+') || ft_strchr(t_flags, ' ') || sign == -1)
 		tmp++;
-	ret.size = ret.szie > tmp ? ret.size + 1 : tmp + 1;
+	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);
 	return (ret);

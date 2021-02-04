@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:39:50 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/02 13:39:51 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 11:14:02 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_string	ft_format_size_percent(char *flags)
 {
-	int	ret;
+	t_string	ret;
 
 	ret.size = 2;
 	while (*flags && *flags != '.')

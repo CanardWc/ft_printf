@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:42:47 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/02 13:44:38 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 11:13:45 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_string				ft_format_size_x(int nb, char *flags)
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
 	if (ft_strchr(tmp, '#') && t_ret + 1 >= ret.size)
 		ret.size = t_ret + 2;
-	if (ft_strchr(tmp, '.') && ft_atoi(strchr(tmp, '.') + 1) >= ret.size)
+	if (ft_strchr(tmp, '.') && ft_atoi(ft_strchr(tmp, '.') + 1) >= ret.size)
 		if (ft_strchr(tmp, '#'))
 			ret.size += 2;
 	ret.size++;

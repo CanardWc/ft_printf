@@ -6,13 +6,13 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:35:35 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/02 13:37:42 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/04 11:12:10 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
 
-t_string				ft_format_size_o(int i, char *flags)
+t_string				ft_format_size_o(int nb, char *flags)
 {
 	t_string		ret;
 	char			*tmp;
@@ -27,7 +27,7 @@ t_string				ft_format_size_o(int i, char *flags)
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
 	if (ft_strchr(tmp, '#') && t_ret >= ret.size)
 		ret.size = t_ret + 1;
-	if (ft_strchr(tmp, '.') && ft_atoi(strchr(tmp, '.') + 1) >= ret.size)
+	if (ft_strchr(tmp, '.') && ft_atoi(ft_strchr(tmp, '.') + 1) >= ret.size)
 		if (ft_strchr(tmp, '#'))
 			ret.size += 1;
 	ret.size++;
