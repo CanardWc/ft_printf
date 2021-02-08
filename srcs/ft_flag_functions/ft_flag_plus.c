@@ -6,7 +6,7 @@
 /*   By: mrochet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 15:52:52 by mrochet           #+#    #+#             */
-/*   Updated: 2021/02/02 16:08:59 by mrochet          ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 17:12:03 by mrochet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_flag_plus(char *flag, char *str, char format)
 	if (!(format == 'd' || format == 'i' || format == 'e' \
 			|| format == 'f' || format == 'g'))
 		return (str);
-	while (!str[i])
+	while (!str[i] || str[i] == ' ')
 		i++;
 	if (str[i] != '-')
 		str[i - 1] = '+';
