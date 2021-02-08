@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:40:48 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 14:21:12 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 16:54:07 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		ft_flag_order(char *s)
 	char	*tmp;
 	char	*ref;
 
-	ref = "#0 +-";
+	ref = "0-# +";
 	while (ft_strchr(ref, *s) && *s)
 	{
 		while (!ft_strchr(s, *ref))
