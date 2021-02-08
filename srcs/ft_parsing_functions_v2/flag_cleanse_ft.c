@@ -6,11 +6,11 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:40:48 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 13:25:22 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 13:34:57 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftrintf.h>
+#include <libftprintf.h>
 #include <libft.h>
 #include <unistd.h>
 #include <stdio.h>
