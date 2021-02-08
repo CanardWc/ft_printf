@@ -23,8 +23,9 @@ t_string				ft_format_size_u(unsigned int i, char *flags)
 		tmp++;
 	while (*flags && *flags != '.')
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	tmp = ft_atoi(ft_strchr(flags, '.') + 1) > \
-		tmp ? ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
+	if (*flags)
+		tmp = ft_atoi(ft_strchr(flags, '.') + 1) > \
+			tmp ? ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
 	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);

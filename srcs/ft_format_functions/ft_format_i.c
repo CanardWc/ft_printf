@@ -28,8 +28,9 @@ t_string				ft_format_size_i(int i, char *flags)
 		tmp++;
 	while (*flags && *flags != '.')
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? \
-		ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
+	if (*flags)
+		tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? \
+			ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
 	if (ft_strchr(t_flags, '+') || ft_strchr(t_flags, ' ') || sign == -1)
 		tmp++;
 	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
@@ -74,6 +75,7 @@ char					*ft_format_i(va_list ap, char *flags, int i)
 	ret.str[--size] = v < 0 ? (v * -1) % 10 + '0' : v % 10 + '0';
 	while (--prec > 0)
 		ret.str[--size] = '0';
-	ret.str[--size] = v < 0 ? '-' : ret.str[size];
+	size--;
+	ret.str[size] = v < 0 ? '-' : ret.str[size];
 	return (ret.str);
 }

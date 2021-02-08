@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:40:05 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/02 13:40:34 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 13:50:05 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char		*ft_format_s(va_list ap, char *flags, int i)
 	s = va_arg(ap, char *);
 	ret = ft_format_size_s(s, flags);
 	v = 0;
-	while (v < ret.size)
+	while (v < ret.size - 1)
 		ret.str[v++] = *s++;
 	return (ret.str);
 }
