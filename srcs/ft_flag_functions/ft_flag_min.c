@@ -6,13 +6,13 @@
 /*   By: mrochet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 14:08:16 by mrochet           #+#    #+#             */
-/*   Updated: 2021/02/02 16:07:50 by mrochet          ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 17:26:00 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_flag_minus(char *flag, char *str, char format)
+char	*ft_flag_min(char *flag, char *str, char format)
 {
 	int		size;
 	int		i;

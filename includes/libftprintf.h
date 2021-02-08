@@ -52,12 +52,13 @@ char			*ft_format_g(va_list ap, char *flags, int i);
 char			*ft_format_e(va_list ap, char *flags, int i);
  */
 
-/*
-char			*ft_flag_min(t_form s);
-char			*ft_flag_hash(t_form s);
-char			*ft_flag_spc(t_form s);
-char			*ft_flag_plus(t_form s);
-char			*ft_flag_zero(t_form s);
-*/
+
+char			*ft_flag_min(char *flag, char *str, char format);
+char			*ft_flag_hash(char *flag, char *str, char format);
+char			*ft_flag_spc(char *flag, char *str, char format);
+char			*ft_flag_plus(char *flag, char *str, char format);
+char			*ft_flag_zero(char *flag, char *str, char format);
+char			*ft_flag_number(char* flag, char* str, char format);
+
 
 #endif
