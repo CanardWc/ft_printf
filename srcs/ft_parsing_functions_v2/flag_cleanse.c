@@ -11,9 +11,14 @@
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-
+#include <stdio.h>
 char		*ft_flag_indicator(char *s, char *flag, char *flag_clean \
 		, int *nb);
+
+int			ft_check_asterisk(char *s, char *format);
+
+void		ft_flag_indicator2(char *s, char *flag_clean, int *asterisk\
+		, char *format);
 
 char		*ft_error_gestion(char *new_s, char *flag_clean, char *error)
 {
@@ -57,6 +62,7 @@ int			ft_alloc_flag_clean(char *s, char *flag, char *format)
 	int		check2;
 	char	*tmp;
 
+	(void)flag;
 	i = 1;
 	tmp = s;
 	while (!ft_strchr(format, *tmp))
@@ -76,17 +82,19 @@ int			ft_alloc_flag_clean(char *s, char *flag, char *format)
 			s++;
 		}
 	}
+	printf("i===%d\n", i);
 	return (i);
 }
 
-char		*flag_cleanse(char *s/ va_list ap, char *format)
+char		*flag_cleanse(char *s, va_list ap)
 {
-	va_list	ap;
 	char	*flag;
 	char	*flag_clean;
 	int		n[3];
 	int		i;
+	char 	*format;
 
+	format = "cpdiusxXonfge%";
 	flag = "-0+# ";
 	i = 0;
 	if (!(ft_parse(s, flag, format)))
@@ -94,16 +102,23 @@ char		*flag_cleanse(char *s/ va_list ap, char *format)
 	n[0] = ft_check_asterisk(s, format) ? va_arg(ap, int) : 0;
 	n[1] = ft_check_asterisk(s, format) == 2 ? va_arg(ap, int) : 0;
 	n[1] = n[1] < 1 ? 0 : n[1];
-	n[2] = n[0] < 0 && *(ft_strchr(s, '*') -1) != '.' ? n[0] : n[0] * -10;
-	while ((n[2] /= 10) > 0)
+	n[2] = n[0] < 0 && *(ft_strchr(s, '*') -1) != '.' ? n[0] * -10 : 0;
+	while (n[2] > 0)
+	{
+		n[2] /= 10;
 		i++;
+	}
 	n[2] = n[1];
-	while ((n[2] /= 10) > 0)
+	while (n[2] > 0)
+	{
+		n[2] /= 10;
 		i++;
+	}
 	i += ft_alloc_flag_clean(s, flag, format);
-	if (!(flag_clean = ft_calloc(i, sizeof(char))))
+	printf("i =================%d\n", i);
+	if (!(flag_clean = ft_calloc(i + 1, sizeof(char))))
 		return (NULL);
 	flag_clean = ft_flag_indicator(s, flag, flag_clean, n);
-	flag_clean = ft_flag_indicator2(s, flag_clean, nb, format);
+	ft_flag_indicator2(s, flag_clean, n, format);
 	return (flag_clean);
 }

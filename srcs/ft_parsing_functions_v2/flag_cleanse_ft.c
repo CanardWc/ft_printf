@@ -22,7 +22,7 @@ void		ft_flag_order(char *s)
 	char	*ref;
 
 	ref = "#0 +-";
-	while (ft_strchr(ref, *s))
+	while (ft_strchr(ref, *s) && *s)
 	{
 		while (!ft_strchr(s, *ref))
 			ref++;
@@ -53,17 +53,21 @@ char		*ft_asterisk(int nb, char *flag_clean)
 	int		i;
 	int		tmp;
 
-	i = 0;
+	i = 1;
 	if (nb < 0)
 		nb *= -1;
 	tmp = nb;
-	while ((tmp /= 10) > 9)
+	while ((tmp /= 10) > 0)
 		i++;
+	while (*flag_clean)
+		flag_clean++;
+		printf("nb ==%d\n", i);
 	while (i >= 0)
 	{
-		flag_clean[i--] = nb % 10 + '0';
+		flag_clean[--i] = nb % 10 + '0';
 		nb /= 10;
 	}
+	printf("flag_clean====%s\n", flag_clean);
 	return (flag_clean);
 }
 
@@ -79,6 +83,8 @@ void		ft_flag_indicator2(char *s, char *flag_clean, int *asterisk\
 		{
 			flag_clean = ft_asterisk(asterisk[i], flag_clean);
 			s++;
+			while (*flag_clean)
+				flag_clean++;
 			i++;
 		}
 		*flag_clean++ = *s++;

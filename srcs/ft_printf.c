@@ -41,7 +41,8 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 
 	j = 1;
 	k = 0;
-	s_flag = flag_cleanse(s + i + 1, ap);
+	s_flag = flag_cleanse((char *)s + i + 1, ap);
+	printf("s_flag==%s\n", s_flag);
 	if (!ft_strncmp(s_flag, "error", 5))
 		return ((err_chk->error = s_flag));
 	while (ft_strchr("-.*lh# +0123456789", s[i + j]))
@@ -49,7 +50,6 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
      	ft_lstadd_back(ret, ft_lstnew((void *)form_func[k].fct(ap, s_flag, i)));
-	printf("hey\n");
 	//ret->content = ft_flag_treatment(s_flag, ret->content, form_func->format);
 	//free(s_flag);
 	return (s + j + 1);
@@ -98,7 +98,6 @@ int	ft_printf(const char *s, ...)
 			if (!(s = ft_format_treatment(s, i, ap, &ret, &err_chk)) \
 					&& err_chk.error)
 				break;
-	printf("couc = %s\n", err_chk.error);
 	va_end(ap);
 	return (ft_display(err_chk, ret, i));
 }
@@ -108,7 +107,7 @@ int	main(void)
 	char	*s;
 
 	s = (char *)malloc(sizeof(char) * 4);
-	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\nvi hende", \
-			42, 'z', -333, -10, 123, s, "vaginette", 1234, 42);
+	ft_printf("X = %-X\nc = %c\nd = %*.*d\ni = %i\no = %o\np = %p\npercent = %%\ns = %.5s\nu = %u\nx = %x\nvi hende", \
+			42, 'z', -5 ,10, -333, -10, 123, s, "vaginette", 1234, 42);
 	return (0);
 }

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-
+#include <stdio.h>
 t_string				ft_format_size_d(int i, char *flags)
 {
 	t_string	ret;
@@ -26,11 +26,12 @@ t_string				ft_format_size_d(int i, char *flags)
 	tmp = 1;
 	while ((i /= 10) > 0)
 		tmp++;
-	while (*flags && *flags != '.')
+	while (*flags && *flags != '.' && *flags != 'd')
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? \
-		ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
-	if (ft_strchr(t_flags, '+') || ft_strchr(t_flags, ' ') || sign == -1)
+	if (*flags && ft_strchr(flags, '.'))	
+		tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? \
+			ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
+	if (*flags && (ft_strchr(t_flags, '+') || ft_strchr(t_flags, ' ') || sign == -1))
 		tmp++;
 	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
@@ -74,6 +75,7 @@ char					*ft_format_d(va_list ap, char *flags, int i)
 	ret.str[--size] = v < 0 ? (v * -1) % 10 + '0' : v % 10 + '0';
 	while (prec-- > 0)
 		ret.str[--size] = '0';
-	ret.str[--size] = v < 0 ? '-' : ret.str[size];
+	size--;
+	ret.str[size] = v < 0 ? '-' : ret.str[size];
 	return (ret.str);
 }

@@ -27,7 +27,7 @@ SRC_FLG_PATH = ft_flag_functions/
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = libftprintf.h
 SRC_NAME = ft_printf.c \
-	   ft_parsing_functions_v2/flag_cleanse.c ft_parsing_functions/flag_cleanse_ft.c \
+	   ft_parsing_functions_v2/flag_cleanse.c ft_parsing_functions_v2/flag_cleanse_ft.c \
 	   ft_format_functions/ft_format_c.c ft_format_functions/ft_format_s.c \
 	   ft_format_functions/ft_format_p.c ft_format_functions/ft_format_d.c \
 	   ft_format_functions/ft_format_i.c ft_format_functions/ft_format_u.c \
@@ -43,7 +43,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 						@make -C $(LFT_PATH)
-						@$(CC) -L $(LFT_PATH) -lft -o $@ $(OBJ)
+						@$(CC) -L $(LFT_PATH) -lft -o $@ $(OBJ) -fsanitize=address -g3
 						#@ranlib $@
 						@echo "Obj folder & files created"
 						@echo "Executable created"
