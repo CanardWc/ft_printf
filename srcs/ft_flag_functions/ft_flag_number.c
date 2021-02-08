@@ -1,44 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flag_min.c                                      :+:      :+:    :+:   */
+/*   ft_flag_number.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrochet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/01 14:08:16 by mrochet           #+#    #+#             */
-/*   Updated: 2021/02/02 16:07:50 by mrochet          ###   ########lyon.fr   */
+/*   Created: 2021/02/08 17:13:31 by mrochet           #+#    #+#             */
+/*   Updated: 2021/02/08 17:13:33 by mrochet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_flag_minus(char *flag, char *str, char format)
+char *push_to_end(char *str ,int size)
 {
-	int		size;
-	int		i;
-	int		y;
+	int i;
+
+	i = 0;
+	while (!str[i])
+		i++;
+	while(str[i])
+		i++;
+	while (str[i -1] && i >= 0)
+	{
+		str[size] = str[i - 1];
+		str[i-1] = '\0';
+		i--;
+		size--;
+	}
+	return(str);
+}
+
+char	*ft_flag_number(char *flag, char *str, char format)
+{
+	int 	size;
+	int 	i;
+	int 	y;
 
 	i = 0;
 	while (flag[i] && flag[i] != '.')
-		size = ft_atoi(strchr(flag, flag[i++])) > size ?\
-		ft_atoi(strchr(flag, flag[i - 1])) : size;
+		size =  ft_atoi(flagi + i++) > size ?\
+			  	ft_atoi(flag + i - 1) : size ;
+	str = push_to_end(str, size);
 	i = 0;
-	while (!str[i] && i < size)
-		i++;
-	while (i >= 1)
-	{
-		y = 0;
-		while (str[i + y])
-		{
-			str[(i + y) - 1] = str[i + y];
-			y++;
-		}
-		if (y != 0)
-			str[i + y - 1] = '\0';
-		i--;
-	}
-	i = ft_strlen(str);
-	while (i < size)
+	while(!str[i] && i < size )
 		str[i++] = ' ';
-	return (str);
+	return(str);
 }
