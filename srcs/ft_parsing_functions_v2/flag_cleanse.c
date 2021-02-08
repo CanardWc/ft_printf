@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:12 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/19 14:26:53 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 12:29:04 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int			ft_alloc_flag_clean(char *s, char *flag, char *format)
 			s++;
 		}
 	}
-	printf("i===%d\n", i);
 	return (i);
 }
 
@@ -115,7 +114,6 @@ char		*flag_cleanse(char *s, va_list ap)
 		i++;
 	}
 	i += ft_alloc_flag_clean(s, flag, format);
-	printf("i =================%d\n", i);
 	if (!(flag_clean = ft_calloc(i + 1, sizeof(char))))
 		return (NULL);
 	flag_clean = ft_flag_indicator(s, flag, flag_clean, n);

@@ -6,11 +6,11 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:40:48 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/19 14:28:18 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 13:25:22 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
+#include <libftrintf.h>
 #include <libft.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -61,13 +61,11 @@ char		*ft_asterisk(int nb, char *flag_clean)
 		i++;
 	while (*flag_clean)
 		flag_clean++;
-		printf("nb ==%d\n", i);
 	while (i >= 0)
 	{
 		flag_clean[--i] = nb % 10 + '0';
 		nb /= 10;
 	}
-	printf("flag_clean====%s\n", flag_clean);
 	return (flag_clean);
 }
 
@@ -87,6 +85,7 @@ void		ft_flag_indicator2(char *s, char *flag_clean, int *asterisk\
 				flag_clean++;
 			i++;
 		}
+		else
 		*flag_clean++ = *s++;
 	}
 	*flag_clean = *s;

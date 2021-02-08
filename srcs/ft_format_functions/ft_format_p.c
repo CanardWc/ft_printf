@@ -6,10 +6,10 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:38:16 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/02 13:39:06 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 13:23:20 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include <libftprintf.h>
 
 t_string	ft_format_size_p(unsigned long int nb, char *flags)
@@ -52,5 +52,8 @@ char		*ft_format_p(va_list ap, char *flags, int i)
 		v = v >> 4;
 	}
 	ret.str[--size] = base[v % 16];
+	// pour voir s'il affiche bien qqch
+	ret.str[--size] = 'x';
+	ret.str[--size] = '0';
 	return (ret.str);
 }
