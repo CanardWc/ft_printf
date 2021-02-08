@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 13:24:27 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 13:41:48 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 14:07:35 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int			main(void)
 	char	*s;
 
 	s = (char *)malloc(sizeof(char) * 4);
-	ft_printf("X = %-X\nc = %c\nd = %*d\ni = %i\no = %o\np = %p\npercent = %%\ns = %.15s\nu = %u\nx = %x\nvi hende", \
-			42, 'z', -50, -333, -10, 123, s, "vaginette", 1234, 42);
+	ft_printf("X = %-X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %.15s\nu = %u\nx = %x\nvi hende", \
+			42, 'z', -333, -10, 123, s, "vaginette", 1234, 42);
 	return (0);
 }

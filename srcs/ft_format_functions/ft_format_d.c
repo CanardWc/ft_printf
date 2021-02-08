@@ -6,12 +6,12 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:21:38 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/04 11:10:49 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 13:51:52 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-#include <stdio.h>
+
 t_string				ft_format_size_d(int i, char *flags)
 {
 	t_string	ret;
@@ -28,10 +28,11 @@ t_string				ft_format_size_d(int i, char *flags)
 		tmp++;
 	while (*flags && *flags != '.' && *flags != 'd')
 		ret.size = ret.size < ft_atoi(flags++) ? ft_atoi(flags - 1) : ret.size;
-	if (*flags && ft_strchr(flags, '.'))	
+	if (*flags && ft_strchr(flags, '.'))
 		tmp = ft_atoi(ft_strchr(flags, '.') + 1) > tmp ? \
 			ft_atoi(ft_strchr(flags, '.') + 1) : tmp;
-	if (*flags && (ft_strchr(t_flags, '+') || ft_strchr(t_flags, ' ') || sign == -1))
+	if (*flags && (ft_strchr(t_flags, '+') || ft_strchr(t_flags, ' ') \
+				|| sign == -1))
 		tmp++;
 	ret.size = ret.size > tmp ? ret.size + 1 : tmp + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))

@@ -6,10 +6,10 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:38:16 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 13:23:20 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 13:50:07 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
 #include <libftprintf.h>
 
 t_string	ft_format_size_p(unsigned long int nb, char *flags)

@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:40:48 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 13:34:57 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 14:21:12 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		ft_flag_indicator2(char *s, char *flag_clean, int *asterisk\
 			i++;
 		}
 		else
-		*flag_clean++ = *s++;
+			*flag_clean++ = *s++;
 	}
 	*flag_clean = *s;
 }
@@ -106,7 +106,7 @@ char		*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb)
 		check2 = *tmp++ == '+' ? 1 : check2;
 	}
 	tmp = flag_clean;
-	if (nb[0] < 0 && *(ft_strchr(s, '*') -1) != '.')
+	if (nb[0] < 0 && *(ft_strchr(s, '*') - 1) != '.')
 	{
 		*flag_clean++ = '-';
 		nb[0] *= -1;

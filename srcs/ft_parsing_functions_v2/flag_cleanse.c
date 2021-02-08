@@ -6,12 +6,12 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:12 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 12:29:04 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 14:21:44 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-#include <stdio.h>
+
 char		*ft_flag_indicator(char *s, char *flag, char *flag_clean \
 		, int *nb);
 
@@ -55,14 +55,13 @@ int			ft_parse(char *s, char *flag, char *format)
 	return ((int)ft_strchr(format, *s));
 }
 
-int			ft_alloc_flag_clean(char *s, char *flag, char *format)
+int			ft_alloc_flag_clean(char *s, char *format)
 {
 	int		i;
 	int		check;
 	int		check2;
 	char	*tmp;
 
-	(void)flag;
 	i = 1;
 	tmp = s;
 	while (!ft_strchr(format, *tmp))
@@ -89,32 +88,25 @@ char		*flag_cleanse(char *s, va_list ap)
 {
 	char	*flag;
 	char	*flag_clean;
-	int		n[3];
-	int		i;
-	char 	*format;
+	int		n[4];
+	char	*format;
 
 	format = "cpdiusxXonfge%";
 	flag = "-0+# ";
-	i = 0;
+	n[3] = 0;
 	if (!(ft_parse(s, flag, format)))
 		return (ft_error_gestion(NULL, NULL, "error_2"));
 	n[0] = ft_check_asterisk(s, format) ? va_arg(ap, int) : 0;
 	n[1] = ft_check_asterisk(s, format) == 2 ? va_arg(ap, int) : 0;
 	n[1] = n[1] < 1 ? 0 : n[1];
-	n[2] = n[0] < 0 && *(ft_strchr(s, '*') -1) != '.' ? n[0] * -10 : 0;
-	while (n[2] > 0)
-	{
+	n[2] = n[0] < 0 && *(ft_strchr(s, '*') - 1) != '.' ? n[0] * -10 : 0;
+	while (n[2] > 0 && n[3]++ != -1)
 		n[2] /= 10;
-		i++;
-	}
 	n[2] = n[1];
-	while (n[2] > 0)
-	{
+	while (n[2] > 0 && n[3]++ != -1)
 		n[2] /= 10;
-		i++;
-	}
-	i += ft_alloc_flag_clean(s, flag, format);
-	if (!(flag_clean = ft_calloc(i + 1, sizeof(char))))
+	n[3] += ft_alloc_flag_clean(s, format);
+	if (!(flag_clean = ft_calloc(n[3] + 1, sizeof(char))))
 		return (NULL);
 	flag_clean = ft_flag_indicator(s, flag, flag_clean, n);
 	ft_flag_indicator2(s, flag_clean, n, format);
