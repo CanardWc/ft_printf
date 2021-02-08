@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 13:24:27 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 14:07:35 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 16:50:10 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int			ft_printf(const char *s, ...)
 	va_end(ap);
 	return (ft_display(err_chk, ret, i));
 }
-
+/*
 int			main(void)
 {
 	char	*s;
@@ -121,4 +121,4 @@ int			main(void)
 	ft_printf("X = %-X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %.15s\nu = %u\nx = %x\nvi hende", \
 			42, 'z', -333, -10, 123, s, "vaginette", 1234, 42);
 	return (0);
-}
+}*/
