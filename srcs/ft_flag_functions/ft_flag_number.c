@@ -6,13 +6,13 @@
 /*   By: mrochet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 17:13:31 by mrochet           #+#    #+#             */
-/*   Updated: 2021/02/08 17:13:33 by mrochet          ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 14:55:46 by mrochet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <libftprintf.h>
 
-char *push_to_end(char *str ,int size)
+static char *push_to_end(char *str ,int size)
 {
 	int i;
 
@@ -35,11 +35,11 @@ char	*ft_flag_number(char *flag, char *str, char format)
 {
 	int 	size;
 	int 	i;
-	int 	y;
 
+	(void)format;
 	i = 0;
 	while (flag[i] && flag[i] != '.')
-		size =  ft_atoi(flagi + i++) > size ?\
+		size =  ft_atoi(flag + i++) > size ?\
 			  	ft_atoi(flag + i - 1) : size ;
 	str = push_to_end(str, size);
 	i = 0;

@@ -6,13 +6,12 @@
 /*   By: mrochet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 17:13:19 by mrochet           #+#    #+#             */
-/*   Updated: 2021/02/08 17:13:23 by mrochet          ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 14:55:36 by mrochet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-char *push_to_end(char *str, int prec,int width)
+#include <libftprintf.h>
+static char *push_to_end(char *str, int prec,int width)
 {
 	int i;
 	int size;
@@ -58,6 +57,7 @@ char *finish(char *str, char format)
 {
 	int i;
 
+	i = 0;
 	while (!str[i] || str[i] == ' ' || str[i] == '0')
 		i++;
 	str[0] = str[i - 1] == '-'? '-' : str[0];
@@ -79,7 +79,7 @@ char *ft_flag_zero(char *flag, char *str, char format)
 
 	while (*flag && *flag != '.')
 		if (*flag)
-			width = ft_ atoi(flag++) > width ?\
+			width = ft_atoi(flag++) > width ?\
 					ft_atoi(flag - 1) : width ;
 	while (*flag)
 		if (*flag)

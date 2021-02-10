@@ -71,10 +71,10 @@ char	*ft_format_e(va_list ap, char *flags, int i)
 	ret.str[--size] = pow < 0 ? '-' : ret.str[size];
 	ret.str[pow < 0 ? --size : size] = 'e';
 	v = prec > 0 ? v * (10 * prec) : v;	
-	while ((v /= 10) > 9)
+	/*while ((v /= 10) > 9)
 		ret.str[--size] = v % 10 + '0';
 	if (prec > 0)
 		ret.str[--size] = '.';
-	ret.str[--size] = v % 10 + '0';
+	ret.str[--size] = v % 10 + '0';*/
 	return (ret.str);
 }

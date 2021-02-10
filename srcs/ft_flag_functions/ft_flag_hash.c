@@ -6,7 +6,7 @@
 /*   By: mrochet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 15:56:45 by mrochet           #+#    #+#             */
-/*   Updated: 2021/02/02 16:18:04 by mrochet          ###   ########lyon.fr   */
+/*   Updated: 2021/02/10 14:49:47 by mrochet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ char	*ft_flag_hash(char *flag, char *str, char format)
 	i = 0;
 	size = 0;
 	while (flag[i] && flag[i] != '.')
-		size = ft_atoi(strchr(flag, flag[i++])) > size ? \
-		ft_atoi(strchr(flag, flag[i - 1])) : size;
+		size = ft_atoi(ft_strchr(flag, flag[i++])) > size ? \
+		ft_atoi(ft_strchr(flag, flag[i - 1])) : size;
 	if (format == 'g')
 		return (ft_flag_hash_g(str, size));
 	if (format == 'x')
