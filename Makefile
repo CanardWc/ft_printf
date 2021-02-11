@@ -6,7 +6,7 @@
 #    By: fgrea <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/23 10:59:04 by fgrea             #+#    #+#              #
-#    Updated: 2021/01/25 17:03:54 by fgrea            ###   ########lyon.fr    #
+#    Updated: 2021/02/10 14:53:05 by mrochet          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRC_NAME = ft_printf.c \
 	   ft_format_functions/ft_format_o.c ft_format_functions/ft_format_bigx.c \
 	   ft_format_functions/ft_format_x.c ft_format_functions/ft_format_percent.c \
 	   ft_format_functions/ft_format_n.c ft_format_functions/ft_format_f.c \
-	   ft_format_functions/ft_format_e.c
+	   ft_format_functions/ft_format_e.c ft_flag_functions/ft_flag_hash.c     ft_flag_functions/ft_flag_min.c      ft_flag_functions/ft_flag_number.c   ft_flag_functions/ft_flag_plus.c     ft_flag_functions/ft_flag_spc.c      ft_flag_functions/ft_flag_zero.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
