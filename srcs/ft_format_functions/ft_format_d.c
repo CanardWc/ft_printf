@@ -63,6 +63,7 @@ char			*ft_format_d(va_list ap, char *flags, int i)
 	ret.str[--size] = v < 0 ? (v * -1) % 10 + '0' : v % 10 + '0';
 	while (prec-- > 0)
 		ret.str[--size] = '0';
-	ret.str[--size] = v < 0 ? '-' : ret.str[size];
+	size--;
+	ret.str[size] = v < 0 ? '-' : ret.str[size];
 	return (ret.str);
 }
