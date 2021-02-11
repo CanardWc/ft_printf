@@ -5,39 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrochet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 15:54:35 by mrochet           #+#    #+#             */
-/*   Updated: 2021/02/02 16:15:00 by mrochet          ###   ########lyon.fr   */
+/*   Created: 2021/02/08 17:13:19 by mrochet           #+#    #+#             */
+/*   Updated: 2021/02/10 14:55:36 by mrochet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-char	*ft_flag_zero(char *flag, char *str, char format)
+#include <libftprintf.h>
+static char *push_to_end(char *str, int prec,int width)
 {
-	int		size;
-	int		i;
-	int		neg;
+	int i;
+	int size;
 
 	i = 0;
-	while (flag[i] && flag[i] != '.')
-		size = ft_atoi(strchr(flag, flag[i++])) > size ?\
-			ft_atoi(strchr(flag, flag[i - 1])) : size;
-	i = 0;
-	while (!str[i] && i < size)
-		i++;
-	neg = (format == 'i' || format == 'd') && str[i] == '-' ? 1 : 0;
-	i += (int)ft_strlen(str + i) - 1;
-	while (str[i] && i > 0)
-	{
-		str[size--] = str[i];
-		str[i--] = '\0';
-	}
-	i = 0;
+	size = prec > width ? prec : width;
 	while (!str[i])
+		i++;
+	while(str[i])
+		i++;
+	while (str[i -1] && i >= 0)
+	{
+		str[size] = str[i - 1];
+		str[i-1] = '\0';
+		i--;
+		size--;
+	//	printf("i = %d\n", i);
+	}
+	return(str);
+}
+
+char *fill_zero(char *str)
+{
+	int i;
+
+	i = 0;
+	while(!str[i])
 		str[i++] = '0';
-	str[0] = neg ? '-' : '0';
-	str[i] = neg ? '0' : str[i];
+	return(str);
+}
+
+char *fill_space(char *str)
+{
+	int i;
+
+	i = 0;
+	while(!str[i])
+		str[i++] = ' ';
+	return(str);
+}
+
+char *finish(char *str, char format)
+{
+	int i;
+
+	i = 0;
+	while (!str[i] || str[i] == ' ' || str[i] == '0')
+		i++;
+	str[0] = str[i - 1] == '-'? '-' : str[0];
+	str[i - 1] = str[i - 1] == '-' ? '0' : str[i - 1];
 	str[1] = format == 'p' ? 'x' : str[1];
 	str[i + 1] = format == 'p' ? '0' : str[i + 1];
-	return (str);
+	return (str);	
+}
+
+char *ft_flag_zero(char *flag, char *str, char format)
+{
+	int		prec;
+	int		width;
+	int 	i;
+
+	i = 0;
+	prec = 0;
+	width = 0;
+
+	while (*flag && *flag != '.')
+		if (*flag)
+			width = ft_atoi(flag++) > width ?\
+					ft_atoi(flag - 1) : width ;
+	while (*flag)
+		if (*flag)
+			prec =  ft_atoi(flag++) > prec ?\
+					 ft_atoi(flag - 1) : prec ;
+	str = push_to_end(str, prec, width);
+	if (width < prec)
+		str = fill_space(str);
+	else
+	{	
+		str = fill_zero(str);
+		str = finish(str, format);
+	}
+	return(str);
 }
