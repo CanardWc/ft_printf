@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf
+NAME = libftprintf.a
 
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror
@@ -44,8 +44,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 						@make -C $(LFT_PATH)
-						@$(CC) -L $(LFT_PATH) -lft -o $@ $(OBJ)
-						#@ranlib $@
+						@ar rcs $@ $(OBJ)
 						@echo "Obj folder & files created"
 						@echo "Executable created"
 						@echo "Compilation finished"
