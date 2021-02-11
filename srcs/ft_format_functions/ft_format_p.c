@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_p.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/02 13:38:16 by edassess          #+#    #+#             */
+/*   Updated: 2021/02/08 13:50:07 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 
 t_string	ft_format_size_p(unsigned long int nb, char *flags)
 {
 	t_string		ret;
-	int		i;
-	int		prec;
+	int				i;
+	int				prec;
 
 	flags = (void *)flags;
 	ret.size = 0;
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 0;
 	i = 1;
-	while ((nb = nb >> 4)  > 0)
+	while ((nb = nb >> 4) > 0)
 		i++;
 	while (*flags && *flags != '.')
 		ret.size = ft_atoi(flags++) > ret.size ? ft_atoi(flags - 1) : ret.size;
@@ -21,13 +33,14 @@ t_string	ft_format_size_p(unsigned long int nb, char *flags)
 	return (ret);
 }
 
-char	*ft_format_p(va_list ap, char *flags, int i)
+char		*ft_format_p(va_list ap, char *flags, int i)
 {
-	char			*base = "0123456789abcdef";
-	t_string		ret;
-	int			size;
+	char				*base;
+	t_string			ret;
+	int					size;
 	unsigned long int	v;
 
+	base = "0123456789abcdef";
 	i = 0;
 	v = va_arg(ap, unsigned long int);
 	flags = (void *)flags;
@@ -39,5 +52,8 @@ char	*ft_format_p(va_list ap, char *flags, int i)
 		v = v >> 4;
 	}
 	ret.str[--size] = base[v % 16];
+	// pour voir s'il affiche bien qqch
+	ret.str[--size] = 'x';
+	ret.str[--size] = '0';
 	return (ret.str);
 }

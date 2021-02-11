@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_e.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/02 13:24:58 by edassess          #+#    #+#             */
+/*   Updated: 2021/02/02 13:28:16 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
+
 
 int		ft_get_pow(long double v)
 {
@@ -40,12 +53,12 @@ t_string	ft_format_size_e(long double nb, char *flags)
 	return (ret);
 }
 
-long double	ft_get_ap_e(va_list ap, char *flags)
+long double		ft_get_ap_e(va_list ap, char *flags)
 {
 	if (ft_strchr(flags, 'l'))
-		return((long double)va_arg(ap, long double));
+		return ((long double)va_arg(ap, long double));
 	else
-		return((long double)va_arg(ap, double));
+		return ((long double)va_arg(ap, double));
 }
 
 char	*ft_format_e(va_list ap, char *flags, int i)
@@ -70,7 +83,7 @@ char	*ft_format_e(va_list ap, char *flags, int i)
 	ret.str[--size] = pow % 10 + '0';
 	ret.str[--size] = pow < 0 ? '-' : ret.str[size];
 	ret.str[pow < 0 ? --size : size] = 'e';
-	v = prec > 0 ? v * (10 * prec) : v;	
+	v = prec > 0 ? v * (10 * prec) : v;
 	while ((v /= 10) > 9)
 		ret.str[--size] = ft_dmod(v, 10) + '0';
 	if (prec > 0)
