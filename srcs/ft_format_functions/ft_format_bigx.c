@@ -14,9 +14,9 @@
 
 t_string				ft_format_size_bigx(int nb, char *flags)
 {
-	t_string				ret;
-	char					*tmp;
-	int						t_ret;
+	t_string	ret;
+	char		*tmp;
+	int			t_ret;
 
 	tmp = flags;
 	ret.size = 1;

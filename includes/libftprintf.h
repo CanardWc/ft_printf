@@ -13,7 +13,7 @@ typedef struct		s_string
 typedef struct	s_flag_f 
 {
 	char		flag;
-	char		*(*fct)(char *, char);
+	char		*(*fct)(char *, char *, char);
 }			t_flag_f;
 
 typedef struct		s_form_f
@@ -47,11 +47,10 @@ char			*ft_format_bigx(va_list ap, char *flags, int i);
 char			*ft_format_percent(va_list ap, char *flags, int i);
 char			*ft_format_f(va_list ap, char *flags, int i);
 char			*ft_format_n(va_list ap, char *flags, int i);
+char			*ft_format_e(va_list ap, char *flags, int i);
 /*
 char			*ft_format_g(va_list ap, char *flags, int i);
-char			*ft_format_e(va_list ap, char *flags, int i);
  */
-
 
 char			*ft_flag_min(char *flag, char *str, char format);
 char			*ft_flag_hash(char *flag, char *str, char format);
@@ -59,6 +58,5 @@ char			*ft_flag_spc(char *flag, char *str, char format);
 char			*ft_flag_plus(char *flag, char *str, char format);
 char			*ft_flag_zero(char *flag, char *str, char format);
 char			*ft_flag_number(char* flag, char* str, char format);
-
 
 #endif

@@ -12,27 +12,25 @@
 
 #include <libftprintf.h>
 
-int				ft_get_pow(long double fl)
+
+int		ft_get_pow(long double v)
 {
-	int			pow;
+	int	pow;
 
 	pow = 0;
-	if (fl < 1)
-		while ((int)fl == 0)
-		{
-			fl *= 10.0;
-			pow--;
-		}
-	else if (fl > 1)
-		while ((long long int)fl > 9)
-		{
-			fl /= 10.0;
+	v = v < 0 ? v * -1 : v;
+	if (v == 0)
+		return (pow);
+	if ((int)v > 0)
+		while ((v /= 10.0) > 9)
 			pow++;
-		}
+	else
+		while ((int)(v *= 10.0) == 0)
+			pow--;
 	return (pow);
 }
 
-t_string		ft_format_size_e(long double nb, char *flags)
+t_string	ft_format_size_e(long double nb, char *flags)
 {
 	t_string	ret;
 	int			prec;
@@ -63,24 +61,7 @@ long double		ft_get_ap_e(va_list ap, char *flags)
 		return ((long double)va_arg(ap, double));
 }
 
-int				ft_get_pow(long double v)
-{
-	int			pow;
-
-	pow = 0;
-	v = v < 0 ? v * -1 : v;
-	if (v == 0)
-		return (pow);
-	if ((int)v > 0)
-		while ((v /= 10) > 9)
-			pow++;
-	else
-		while ((int)(v *= 10) == 0)
-			pow--;
-	return (pow);
-}
-
-char			*ft_format_e(va_list ap, char *flags, int i)
+char	*ft_format_e(va_list ap, char *flags, int i)
 {
 	t_string	ret;
 	long double	prec;
@@ -89,7 +70,9 @@ char			*ft_format_e(va_list ap, char *flags, int i)
 	int			pow;
 
 	i = 0;
-	v = ft_get_ap_e(v, flags);
+	write(1, "coucou\n", 7);
+	v = ft_get_ap_e(ap, flags);
+	write(1, "coucou\n", 7);
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 6;
 	ret = ft_format_size_e(v, flags);
 	size = ret.size - 1;
@@ -102,9 +85,9 @@ char			*ft_format_e(va_list ap, char *flags, int i)
 	ret.str[pow < 0 ? --size : size] = 'e';
 	v = prec > 0 ? v * (10 * prec) : v;
 	while ((v /= 10) > 9)
-		ret.str[--size] = v % 10 + '0';
+		ret.str[--size] = ft_dmod(v, 10) + '0';
 	if (prec > 0)
 		ret.str[--size] = '.';
-	ret.str[--size] = v % 10 + '0';
+	ret.str[--size] = ft_dmod(v, 10) + '0';
 	return (ret.str);
 }

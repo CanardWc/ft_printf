@@ -20,10 +20,10 @@ t_string	ft_format_size_f(long double nb, char *flags)
 
 	ret.size = 0;
 	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) + 2 : 8;
-	sign = nb < 0 ? -1 : 1;
-	nb *= sign;
-	prec += nb > 9 ? 1 : 0;
-	while ((nb /= 10.0) > 9)
+	sign = nb < 0.0 ? -1 : 1;
+	nb *= (long double)sign;
+	prec += nb > 9.0 ? 1 : 0;
+	while ((nb /= 10.0) > 9.0)
 		prec++;
 	if (ft_strchr(flags, '+') || ft_strchr(flags, ' ') || sign == -1)
 		prec++;

@@ -6,11 +6,11 @@
 #    By: fgrea <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/23 10:59:04 by fgrea             #+#    #+#              #
-#    Updated: 2021/02/04 11:27:20 by edassess         ###   ########lyon.fr    #
+#    Updated: 2021/02/10 14:53:05 by mrochet          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf
+NAME = libftprintf.a
 
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror
@@ -33,7 +33,8 @@ SRC_NAME = ft_printf.c \
 	   ft_format_functions/ft_format_i.c ft_format_functions/ft_format_u.c \
 	   ft_format_functions/ft_format_o.c ft_format_functions/ft_format_bigx.c \
 	   ft_format_functions/ft_format_x.c ft_format_functions/ft_format_percent.c \
-	   ft_format_functions/ft_format_n.c ft_format_functions/ft_format_f.c
+	   ft_format_functions/ft_format_n.c ft_format_functions/ft_format_f.c \
+	   ft_format_functions/ft_format_e.c ft_flag_functions/ft_flag_hash.c     ft_flag_functions/ft_flag_min.c      ft_flag_functions/ft_flag_number.c   ft_flag_functions/ft_flag_plus.c     ft_flag_functions/ft_flag_spc.c      ft_flag_functions/ft_flag_zero.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -43,8 +44,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 						@make -C $(LFT_PATH)
-						@$(CC) -L $(LFT_PATH) -lft -o $@ $(OBJ) -fsanitize=address -g3
-						#@ranlib $@
+						@ar rcs $@ $(OBJ)
 						@echo "Obj folder & files created"
 						@echo "Executable created"
 						@echo "Compilation finished"
