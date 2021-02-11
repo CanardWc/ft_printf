@@ -41,29 +41,29 @@ INC = $(addprefix -I,$(INC_PATH))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-						@ar rc $@ $(OBJ)
-						@ranlib $@
-						@echo "Obj folder & files created"
-						@echo "Executable created"
-						@echo "Compilation finished"
+	@ar rc $@ $(OBJ)
+	@ranlib $@
+	@echo "Obj folder & files created"
+	@echo "Executable created"
+	@echo "Compilation finished"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-						@mkdir $(OBJ_PATH) 2> /dev/null || true
-						@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
 
 clean:
-						@rm -rf $(OBJ_PATH)	2> /dev/null || true
-						@echo "Obj folder & files suppressed"
+	@rm -rf $(OBJ_PATH)	2> /dev/null || true
+	@echo "Obj folder & files suppressed"
 
 fclean: clean
-						@rm -f $(NAME)
-						@echo "Executable suppressed"
+	@rm -f $(NAME)
+	@echo "Executable suppressed"
 
 re: fclean
-						@$(MAKE) all
+	@$(MAKE) all
 
 norme:
-						@norminette -R CheckForbiddenSourceHeader $(SRC)
-						@echo "C files norme check finished"
-						@norminette -R CheckDefine $(INC_PATH)
-						@echo "Header files norme check finished"
+	@norminette -R CheckForbiddenSourceHeader $(SRC)
+	@echo "C files norme check finished"
+	@norminette -R CheckDefine $(INC_PATH)
+	@echo "Header files norme check finished"

@@ -43,36 +43,37 @@ INC = $(addprefix -I,$(INC_PATH)) $(addprefix -I,$(LFT_INC_PATH))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-						@make -C $(LFT_PATH)
-						@ar rcs $@ $(OBJ)
-						@echo "Obj folder & files created"
-						@echo "Executable created"
-						@echo "Compilation finished"
+	@make -C $(LFT_PATH)
+	@ar rcs  $@ $(OBJ)
+	@ar rcsT $(LFT_PATH)libft.a $@
+	@echo "Obj folder & files created"
+	@echo "Executable created"
+	@echo "Compilation finished"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(OBJ_PATH)
-						@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
+	@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
 
 $(OBJ_PATH):
-						@mkdir $(OBJ_PATH) 2> /dev/null || true
-						@mkdir $(OBJ_PATH)$(SRC_PRG_PATH) 2> /dev/null || true
-						@mkdir $(OBJ_PATH)$(SRC_FRT_PATH) 2> /dev/null || true
-						@mkdir $(OBJ_PATH)$(SRC_FLG_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH)$(SRC_PRG_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH)$(SRC_FRT_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH)$(SRC_FLG_PATH) 2> /dev/null || true
 
 clean:
-						@make clean -C $(LFT_PATH)
-						@rm -rf $(OBJ_PATH) 2> /dev/null || true
-						@echo "Obj folder & files suppressed"
+	@make clean -C $(LFT_PATH)
+	@rm -rf $(OBJ_PATH) 2> /dev/null || true
+	@echo "Obj folder & files suppressed"
 
 fclean: clean
-						@make fclean -C $(LFT_PATH)
-						@rm -f $(NAME)
-						@echo "Executable suppressed"
+	@make fclean -C $(LFT_PATH)
+	@rm -f $(NAME)
+	@echo "Executable suppressed"
 
 re: fclean
-						@$(MAKE) all
+	@$(MAKE) all
 
 norme:
-						@norminette -R CheckForbiddenSourceHeader $(SRC)
-						@echo "C files norme check finished"
-						@norminette -R CheckDefine $(INC_PATH)
-						@echo "Header files norme check finished"
+	@norminette -R CheckForbiddenSourceHeader $(SRC)
+	@echo "C files norme check finished"
+	@norminette -R CheckDefine $(INC_PATH)
+	@echo "Header files norme check finished"
