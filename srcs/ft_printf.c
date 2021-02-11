@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 13:24:27 by edassess          #+#    #+#             */
+/*   Updated: 2021/02/08 16:50:10 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 #include <stdio.h>
 
 
-char	*ft_flag_treatment(const char *s, char *format, char type)
+char		*ft_flag_treatment(const char *s, char *format, char type)
 {
 	t_flag_f	flag_func[] = { { '-', ft_flag_minus },
 		{ ' ', ft_flag_spc },{ '+', ft_flag_plus  }, 
@@ -36,12 +48,12 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		{ '%', &ft_format_percent } };
 	char		*format_list = "cspdiuoxXnfge%";// <- need to add nfge
 	char		*s_flag;
-	int		j;
-	int		k;
+	int			j;
+	int			k;
 
 	j = 1;
 	k = 0;
-	s_flag = flag_cleanse(s + i + 1, ap);
+	s_flag = flag_cleanse((char *)s + i + 1, ap);
 	if (!ft_strncmp(s_flag, "error", 5))
 		return ((err_chk->error = s_flag));
 	while (ft_strchr("-.*lh# +0123456789", s[i + j]))
@@ -53,7 +65,7 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 	return (s + j + 1);
 }
 
-int	ft_display(t_check err_chk, t_list *ret, int i)
+int			ft_display(t_check err_chk, t_list *ret, int i)
 {
 	char		*form = "cspdiuoxXnfge%";
 	char		*flag = "-.*lh# +0123456789";
@@ -79,7 +91,7 @@ int	ft_display(t_check err_chk, t_list *ret, int i)
 	return (i);
 }
 
-int	ft_printf(const char *s, ...)
+int			ft_printf(const char *s, ...)
 {
 	va_list		ap;
 	t_list		*ret;
@@ -96,12 +108,11 @@ int	ft_printf(const char *s, ...)
 			if (!(s = ft_format_treatment(s, i, ap, &ret, &err_chk)) \
 					&& err_chk.error)
 				break;
-	printf("couc = %s\n", err_chk.error);
 	va_end(ap);
 	return (ft_display(err_chk, ret, i));
 }
-
-int	main(void)
+/*
+int			main(void)
 {
 	char	*s;
 

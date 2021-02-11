@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:40:48 by edassess          #+#    #+#             */
-/*   Updated: 2021/01/19 14:28:18 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/08 16:54:07 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void		ft_flag_order(char *s)
 	char	*tmp;
 	char	*ref;
 
-	ref = "#0 +-";
-	while (ft_strchr(ref, *s))
+	ref = "0-# +";
+	while (ft_strchr(ref, *s) && *s)
 	{
 		while (!ft_strchr(s, *ref))
 			ref++;
@@ -53,15 +53,17 @@ char		*ft_asterisk(int nb, char *flag_clean)
 	int		i;
 	int		tmp;
 
-	i = 0;
+	i = 1;
 	if (nb < 0)
 		nb *= -1;
 	tmp = nb;
-	while ((tmp /= 10) > 9)
+	while ((tmp /= 10) > 0)
 		i++;
+	while (*flag_clean)
+		flag_clean++;
 	while (i >= 0)
 	{
-		flag_clean[i--] = nb % 10 + '0';
+		flag_clean[--i] = nb % 10 + '0';
 		nb /= 10;
 	}
 	return (flag_clean);
@@ -79,9 +81,12 @@ void		ft_flag_indicator2(char *s, char *flag_clean, int *asterisk\
 		{
 			flag_clean = ft_asterisk(asterisk[i], flag_clean);
 			s++;
+			while (*flag_clean)
+				flag_clean++;
 			i++;
 		}
-		*flag_clean++ = *s++;
+		else
+			*flag_clean++ = *s++;
 	}
 	*flag_clean = *s;
 }
@@ -101,7 +106,7 @@ char		*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb)
 		check2 = *tmp++ == '+' ? 1 : check2;
 	}
 	tmp = flag_clean;
-	if (nb[0] < 0 && *(ft_strchr(s, '*') -1) != '.')
+	if (nb[0] < 0 && *(ft_strchr(s, '*') - 1) != '.')
 	{
 		*flag_clean++ = '-';
 		nb[0] *= -1;
