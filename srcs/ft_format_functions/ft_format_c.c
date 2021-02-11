@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_c.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/02 13:21:15 by edassess          #+#    #+#             */
+/*   Updated: 2021/02/02 13:21:17 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 
 t_string	ft_format_size_c(char *flags)
@@ -13,7 +25,7 @@ t_string	ft_format_size_c(char *flags)
 	return (ret);
 }
 
-char	*ft_format_c(va_list ap, char *flags, int i)
+char		*ft_format_c(va_list ap, char *flags, int i)
 {
 	t_string	ret;
 

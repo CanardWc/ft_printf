@@ -42,7 +42,6 @@ char *fill_zero(char *str)
 		str[i++] = '0';
 	return(str);
 }
-
 char *fill_space(char *str)
 {
 	int i;

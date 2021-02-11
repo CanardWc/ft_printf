@@ -30,9 +30,9 @@ typedef struct		s_check
 
 int			ft_printf(const char *s, ...);
 
-char			*flag_cleanse(const char *s, va_list ap);
+char			*flag_cleanse(char *s, va_list ap);
 char			*ft_arg(const char *s, char *format);
-char			*ft_flag_indicator(char *s, char *flag);
+char			*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb);
 char			*ft_flag_len(va_list ap, char *s, char *flag);
 
 char			*ft_format_c(va_list ap, char *flags, int i);
@@ -52,12 +52,11 @@ char			*ft_format_e(va_list ap, char *flags, int i);
 char			*ft_format_g(va_list ap, char *flags, int i);
  */
 
-
-char			*ft_flag_minus(char *flag, char *str, char format);
-//char			*ft_flag_hash(orm s);
+char			*ft_flag_min(char *flag, char *str, char format);
+char			*ft_flag_hash(char *flag, char *str, char format);
 char			*ft_flag_spc(char *flag, char *str, char format);
 char			*ft_flag_plus(char *flag, char *str, char format);
 char			*ft_flag_zero(char *flag, char *str, char format);
-
+char			*ft_flag_number(char* flag, char* str, char format);
 
 #endif
