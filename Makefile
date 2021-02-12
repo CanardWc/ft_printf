@@ -44,8 +44,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LFT_PATH)
-	@ar rcs  $@ $(OBJ)
-	@ar rcsT $(LFT_PATH)libft.a $@
+	@ar rc $@ $(OBJ)
+	@libtool -static -o $@ $@ $(LFT_PATH)libft.a
+	@ranlib $@
 	@echo "Obj folder & files created"
 	@echo "Executable created"
 	@echo "Compilation finished"
