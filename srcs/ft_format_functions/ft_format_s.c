@@ -6,10 +6,11 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:40:05 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 13:50:05 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 11:23:18 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <libftprintf.h>
 
 t_string	ft_format_size_s(char *s, char *flags)

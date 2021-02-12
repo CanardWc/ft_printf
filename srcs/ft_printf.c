@@ -6,29 +6,34 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 13:24:27 by edassess          #+#    #+#             */
-/*   Updated: 2021/02/08 16:50:10 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/02/12 12:24:04 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
 #include <stdio.h>
 
+const	t_flag_f	flag_func[] = { { '-', ft_flag_min },
+	{ ' ', ft_flag_spc },{ '+', ft_flag_plus }, 
+	{ '0', ft_flag_zero }, {'#', ft_flag_hash }, { '\0' , NULL} };
+
 
 char		*ft_flag_treatment(const char *s, char *format, char type)
 {
-	t_flag_f	flag_func[] = { { '-', ft_flag_min },
-		{ ' ', ft_flag_spc },{ '+', ft_flag_plus }, 
-		{ '0', ft_flag_zero }, };
-	char		*flag_list = "-# +0";
+	char		*flag_list = "- +0#";
 	int		i;
 
 	while (*s)
 	{
 		i = 0;
-		while (flag_func[i].flag != *ft_strchr(flag_list, *s))
-			i++;
-		format = flag_func[i].fct((char *)s, format, type);
-		printf("|||||||||coucou|||||||||||\n");
+		if (ft_strchr(flag_list, *s))
+		{
+			i = ft_strchr(flag_list, *s) - flag_list;
+			format = flag_func[i].fct((char *)s, format, type);
+		}
+		s++;
+		if (!ft_strchr(flag_list, *s))
+			break;
 		s++;
 	}
 	(void)type;
@@ -60,35 +65,43 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		j++;
 	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
-     	ft_lstadd_back(ret, ft_lstnew(ft_flag_treatment(s_flag, (void *)form_func[k].fct(ap, s_flag, i), s[i + j])));
-	printf("hey\n");
+	ft_lstadd_back(ret, ft_lstnew(ft_flag_treatment(s_flag, (void *)form_func[k].fct(ap, s_flag, i), s[i + j])));
+	free(s_flag);
 	return (s + j + 1);
 }
 
 int			ft_display(t_check err_chk, t_list *ret, int i)
 {
-	char		*form = "cspdiuoxXnfge%";
+	//	char		*form = "cspdiuoxXnfge%";
 	char		*flag = "-.*lh# +0123456789";
+	t_list		*tmp;
+	int			j;
 
+	j = 0;
+	(void)i;
+	tmp = ret;
 	while (*(err_chk.aff) && !err_chk.error)
 	{
 		if (*err_chk.aff == '%')
 		{
 			while (ft_strchr(flag, *(++err_chk.aff)))
 				;
-			while (ft_strchr(form, *err_chk.aff))
-				err_chk.aff++;
+			err_chk.aff++;
 			ft_putstr_fd((char *)ret->content, 1);
-			i += ft_strlen((char *)ret->content);
+			j += ft_strlen((char *)ret->content);
 			ret = ret->next;
 		}
-		ft_putchar_fd(*err_chk.aff, 1);
-		err_chk.aff++;
+		if (*err_chk.aff)
+		{
+			ft_putchar_fd(*err_chk.aff, 1);
+			err_chk.aff++;
+			j++;
+		}
 	}
-	ft_lstclear(&ret, &free);
+	ft_lstclear(&tmp, &free);
 	//if (err_chk.error)
 	//	return (ft_error_gestion());
-	return (i);
+	return (j);
 }
 
 int			ft_printf(const char *s, ...)
@@ -104,22 +117,24 @@ int			ft_printf(const char *s, ...)
 	err_chk.aff = s;
 	err_chk.error = NULL;
 	while (s[++i])
+	{
 		if (s[i] == '%')
 			if (!(s = ft_format_treatment(s, i, ap, &ret, &err_chk)) \
 					&& err_chk.error)
 				break;
+	}
 	va_end(ap);
 	return (ft_display(err_chk, ret, i));
 }
 /*
-int			main(void)
-{
-	char	*s;
+   int			main(void)
+   {
+   char	*s;
 
-	s = (char *)malloc(sizeof(char) * 4);
-	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\n", \
-			   42,         'z',    -333,   -10,    123,     s,              "vaginette", 1234,   42);
-	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\nf = %f\ne = %e\nvi hende", \
-			42, 'z', -333, -10, 123, s, "vaginette", 1234, 42, 123.123, 0.00000005);
-	return (0);
-}*/
+   s = (char *)malloc(sizeof(char) * 4);
+   ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\n", \
+   42,         'z',    -333,   -10,    123,     s,              "vaginette", 1234,   42);
+   ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\nf = %f\ne = %e\nvi hende", \
+   42, 'z', -333, -10, 123, s, "vaginette", 1234, 42, 123.123, 0.00000005);
+   return (0);
+   }*/
