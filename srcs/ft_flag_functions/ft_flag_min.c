@@ -12,7 +12,7 @@
 #include <libftprintf.h>
 
 
-char	*ft_flag_minus(char *flag, char *str, char format)
+char	*ft_flag_min(char *flag, char *str, char format)
 {
 	int		size;
 	int		i;
