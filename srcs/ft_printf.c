@@ -16,10 +16,10 @@
 
 char		*ft_flag_treatment(const char *s, char *format, char type)
 {
-	t_flag_f	flag_func[] = { { '-', ft_flag_minus },
-		{ ' ', ft_flag_spc },{ '+', ft_flag_plus  }, 
+	t_flag_f	flag_func[] = { { '-', ft_flag_min },
+		{ ' ', ft_flag_spc },{ '+', ft_flag_plus }, 
 		{ '0', ft_flag_zero }, };
-	char		*flag_list = "-.*lh# +0";
+	char		*flag_list = "-# +0";
 	int		i;
 
 	while (*s)
@@ -119,7 +119,7 @@ int			main(void)
 	s = (char *)malloc(sizeof(char) * 4);
 	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\n", \
 			   42,         'z',    -333,   -10,    123,     s,              "vaginette", 1234,   42);
-/*	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\nf = %f\ne = %e\nvi hende", \
-			42, 'z', -333, -10, 123, s, "vaginette", 1234, 42, 123.123, 0.00000005);*/
+	ft_printf("X = %X\nc = %c\nd = %d\ni = %i\no = %o\np = %p\npercent = %%\ns = %s\nu = %u\nx = %x\nf = %f\ne = %e\nvi hende", \
+			42, 'z', -333, -10, 123, s, "vaginette", 1234, 42, 123.123, 0.00000005);
 	return (0);
-}
+}*/
