@@ -1,7 +1,7 @@
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
 
-# include <libft.h>
+# include "../libraries/libft/includes/libft.h"
 # include <stdarg.h>
 
 typedef struct		s_string
@@ -52,6 +52,7 @@ char			*ft_format_e(va_list ap, char *flags, int i);
 char			*ft_format_g(va_list ap, char *flags, int i);
  */
 
+char			*ft_flag_number(char *flag, char *str, char format);
 char			*ft_flag_min(char *flag, char *str, char format);
 char			*ft_flag_hash(char *flag, char *str, char format);
 char			*ft_flag_spc(char *flag, char *str, char format);

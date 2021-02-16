@@ -39,7 +39,7 @@ char	*ft_flag_number(char *flag, char *str, char format)
 	(void)format;
 	i = 0;
 	while (flag[i] && flag[i] != '.')
-		size =  ft_atoi(flag + i++) > size ?\
+		size = ft_atoi(flag + i++) > size ?\
 			  	ft_atoi(flag + i - 1) : size ;
 	str = push_to_end(str, size);
 	i = 0;

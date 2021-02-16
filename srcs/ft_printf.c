@@ -13,37 +13,12 @@
 #include <libftprintf.h>
 #include <stdio.h>
 
-const	t_flag_f	flag_func[] = { { '-', ft_flag_min },
-	{ ' ', ft_flag_spc },{ '+', ft_flag_plus }, 
-	{ '0', ft_flag_zero }, {'#', ft_flag_hash }, { '\0' , NULL} };
+const	t_flag_f	flag_fct[] = { { '1', ft_flag_number }, 
+		{ '-', ft_flag_min }, { ' ', ft_flag_spc }, 
+		{ '+', ft_flag_plus }, { '0', ft_flag_zero }, 
+		{'#', ft_flag_hash }, };
 
-
-char		*ft_flag_treatment(const char *s, char *format, char type)
-{
-	char		*flag_list = "- +0#";
-	int		i;
-
-	while (*s)
-	{
-		i = 0;
-		if (ft_strchr(flag_list, *s))
-		{
-			i = ft_strchr(flag_list, *s) - flag_list;
-			format = flag_func[i].fct((char *)s, format, type);
-		}
-		s++;
-		if (!ft_strchr(flag_list, *s))
-			break;
-		s++;
-	}
-	(void)type;
-	return (format);
-}
-
-const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, \
-		t_check *err_chk)
-{
-	t_form_f	form_func[] = {
+const	t_form_f	form_fct[] = {
 		{ 'c', &ft_format_c }, { 's', &ft_format_s },
 		{ 'p', &ft_format_p }, { 'd', &ft_format_d },
 		{ 'i', &ft_format_i }, { 'u', &ft_format_u },
@@ -51,10 +26,28 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		{ 'X', &ft_format_bigx }, { 'n', &ft_format_n }, 
 		{ 'f', &ft_format_f }, { 'e', &ft_format_e }, 
 		{ '%', &ft_format_percent } };
-	char		*format_list = "cspdiuoxXnfge%";// <- need to add nfge
+
+char		*ft_flag_treatment(char *s_flag, char *format, char type)
+{
+	char		*flag_list = "- +0#";
+	char		*stock;
+
+	if (ft_strchr("123456789", *s_flag))
+		return (format = flag_fct[0].fct(s_flag, format, type));
+	while ((stock = ft_strchr(flag_list, *s_flag)))
+		format = flag_fct[stock - flag_list].fct(\
+				s_flag++, format, type);
+	return (format);
+}
+
+const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, \
+		t_check *err_chk)
+{
+	char		*format_list = "cspdiuoxXnfge%";
 	char		*s_flag;
-	int			j;
-	int			k;
+	char		*str;
+	int		j;
+	int		k;
 
 	j = 1;
 	k = 0;
@@ -63,11 +56,14 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 		return ((err_chk->error = s_flag));
 	while (ft_strchr("-.*lh# +0123456789", s[i + j]))
 		j++;
-	while (form_func[k].format != *ft_strchr(format_list, s[i + j]))
+	while (form_fct[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
-	ft_lstadd_back(ret, ft_lstnew(ft_flag_treatment(s_flag, (void *)form_func[k].fct(ap, s_flag, i), s[i + j])));
+	str = form_fct[k].fct(ap, s_flag, i);
+	str = ft_flag_treatment(s_flag, str, form_fct[k].format);
+	ft_lstadd_back(ret, ft_lstnew(str));
 	free(s_flag);
-	return (s + j + 1);
+//	printf("%c\n", *(s + j));
+	return (s + j);
 }
 
 int			ft_display(t_check err_chk, t_list *ret, int i)
