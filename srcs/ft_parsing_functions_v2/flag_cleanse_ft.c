@@ -75,8 +75,8 @@ void		ft_flag_indicator2(char *s, char *flag_clean, int *asterisk\
 	int		i;
 
 	i = 0;
-	while (*flag_clean++)
-		;
+	while (*flag_clean)
+		flag_clean++;
 	while (ft_strchr("-0 +#", *s))
 		s++;
 	while (!ft_strchr(format, *s))
