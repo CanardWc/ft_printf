@@ -75,6 +75,10 @@ void		ft_flag_indicator2(char *s, char *flag_clean, int *asterisk\
 	int		i;
 
 	i = 0;
+	while (*flag_clean++)
+		;
+	while (ft_strchr("-0 +#", *s))
+		s++;
 	while (!ft_strchr(format, *s))
 	{
 		if (*s == '*')
@@ -96,16 +100,20 @@ char		*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb)
 {
 	int		check;
 	int		check2;
+	int		check3;
 	char	*tmp;
 
 	check = 0;
 	check2 = 0;
+	check3 = 0;
 	tmp = s;
 	while (!ft_strchr("cpdiusxXonfge%", *tmp))
 	{
 		check = *tmp == '-' ? 1 : check;
 		check2 = *tmp++ == '+' ? 1 : check2;
 	}
+	if (*tmp == 'c' || *tmp == 's' || *tmp == '#')
+		check3 = 1;
 	tmp = flag_clean;
 	if (nb[0] < 0 && *(ft_strchr(s, '*') - 1) != '.')
 	{
@@ -113,10 +121,14 @@ char		*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb)
 		nb[0] *= -1;
 		check = 1;
 	}
-	while (ft_strchr(flag, *(++s - 1)))
+	while (ft_strchr(flag, *s))
+	{
 		if ((!(*s == '0' && check) && (!ft_strchr(tmp, *s))) && \
-				(!(*s == ' ' && check2) && (!*tmp || !ft_strchr(tmp, *s))))
+				(!(*s == ' ' && check2) && (!*tmp || !ft_strchr(tmp, *s))) &&\
+				(!((*s == ' ' || *s == '+') && check3)))
 			*flag_clean++ = *s;
+		s++;
+	}
 	ft_flag_order(tmp);
 	return (tmp);
 }

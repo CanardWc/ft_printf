@@ -60,8 +60,10 @@ int			ft_alloc_flag_clean(char *s, char *format)
 	int		i;
 	int		check;
 	int		check2;
+	int		check3;
 	char	*tmp;
 
+	check3 = 0;
 	i = 1;
 	tmp = s;
 	while (!ft_strchr(format, *tmp))
@@ -69,6 +71,8 @@ int			ft_alloc_flag_clean(char *s, char *format)
 		check = *tmp == '-' || check == 1 ? 1 : 0;
 		check2 = *tmp++ == '+' || check2 == 1 ? 1 : 0;
 	}
+	if (*tmp == 'c' || *tmp == 's')
+		check3 = 1;
 	while (!ft_strchr(format, *s))
 	{
 		if (*s == '*')
@@ -76,7 +80,8 @@ int			ft_alloc_flag_clean(char *s, char *format)
 		else
 		{
 			if ((!(*s == '0' && check && !ft_isdigit(s[-1]))) || \
-					(!(*s == ' ' && check2)))
+					(!(*s == ' ' && check2)) || \
+					(!((*s == ' ' || *s == '+') && check3)))
 				i++;
 			s++;
 		}
