@@ -61,7 +61,7 @@ char		*ft_asterisk(int nb, char *flag_clean)
 		i++;
 	while (*flag_clean)
 		flag_clean++;
-	while (i >= 0)
+	while (i > 0)
 	{
 		flag_clean[--i] = nb % 10 + '0';
 		nb /= 10;

@@ -9,7 +9,7 @@
 /*   Updated: 2021/02/08 14:21:44 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include <libftprintf.h>
 
 char		*ft_flag_indicator(char *s, char *flag, char *flag_clean \
