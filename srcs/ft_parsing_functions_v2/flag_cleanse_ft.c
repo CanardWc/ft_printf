@@ -88,7 +88,8 @@ void		ft_flag_indicator2(char *s, char *flag_clean, int *asterisk\
 		else
 			*flag_clean++ = *s++;
 	}
-	*flag_clean = *s;
+	*flag_clean++ = *s;
+	*flag_clean = '\0';
 }
 
 char		*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb)
