@@ -12,38 +12,38 @@
 
 #include <libftprintf.h>
 
-static char *push_to_end(char *str ,int size)
+static char *place_space(char *str ,int i)
 {
-	int i;
+	int	j;
 
-	i = 0;
-	while (!str[i])
-		i++;
-	while(str[i])
-		i++;
-	while (str[i -1] && i >= 0)
+	if (str[i])
 	{
-		str[size] = str[i - 1];
-		str[i-1] = '\0';
-		i--;
-		size--;
+		j = ft_strlen(str + i) + 1;
+		while (--j > 0)
+			str[i + j] = str[i + j - 1];
 	}
+	str[i] = ' ';
 	return(str);
 }
 
 char	*ft_flag_number(char *flag, char *str, char format)
 {
+	int	o_size;
 	int 	size;
-	int 	i;
+	int	i;
 
 	(void)format;
+	o_size = 0;
 	i = 0;
-	while (flag[i] && flag[i] != '.')
-		size = ft_atoi(flag + i++) > size ?\
-			  	ft_atoi(flag + i - 1) : size ;
-	str = push_to_end(str, size);
+	size = ft_atoi(flag);
+	while (!str[i] && size-- > 0)
+		i++;
+	while (str[i++])
+		o_size++;
+	o_size = o_size ? o_size : 1;
 	i = 0;
-	while(!str[i] && i < size )
-		str[i++] = ' ';
+	size = ft_atoi(flag) - o_size;
+	while (i < size)
+		str = place_space(str, i++);
 	return(str);
 }

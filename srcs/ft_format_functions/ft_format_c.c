@@ -11,14 +11,16 @@
 /* ************************************************************************** */
 
 #include <libftprintf.h>
+#include <stdio.h>
 
 t_string	ft_format_size_c(char *flags)
 {
 	t_string	ret;
 
 	ret.size = 0;
-	while (*flags != '.' && ret.size == 0 && *flags)
-		ret.size = ft_atoi(flags++);
+	while (*flags != '.' && *flags)
+		ret.size = ft_atoi(flags++) < ret.size ? ret.size : \
+			   ft_atoi(flags - 1);
 	ret.size = ret.size == 0 ? 2 : ret.size + 1;
 	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
 		return (ret);

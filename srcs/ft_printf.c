@@ -35,7 +35,7 @@ char		*ft_flag_treatment(char *s_flag, char *format, char type)
 	if (ft_strchr("123456789", *s_flag))
 		return (format = flag_fct[0].fct(s_flag, format, type));
 	while ((stock = ft_strchr(flag_list, *s_flag)))
-		format = flag_fct[stock - flag_list].fct(\
+		format = flag_fct[(stock + 1) - flag_list].fct(\
 				s_flag++, format, type);
 	return (format);
 }
@@ -51,11 +51,16 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 
 	j = 1;
 	k = 0;
+	//write(1, "yo\n", 3);
+	//printf("s + i = %s\n", s + i);
 	s_flag = flag_cleanse((char *)s + i + 1, ap);
+	//printf("s_flag = %s\n", s_flag);
 	if (!ft_strncmp(s_flag, "error", 5))
 		return ((err_chk->error = s_flag));
 	while (ft_strchr("-.*lh# +0123456789", s[i + j]))
 		j++;
+	//printf("j = %d\n", j);
+	//printf("s + i + j = %s\n", s + i + j);
 	while (form_fct[k].format != *ft_strchr(format_list, s[i + j]))
 		k++;
 	str = form_fct[k].fct(ap, s_flag, i);
@@ -66,15 +71,32 @@ const char	*ft_format_treatment(const char *s, int i, va_list ap, t_list **ret, 
 	return (s + j);
 }
 
-int			ft_display(t_check err_chk, t_list *ret, int i)
+int			ft_print_c(const char *s, void *ret)
 {
-	//	char		*form = "cspdiuoxXnfge%";
+	char	*flags = "123456789";
+	char	*formats = "cspdiuoxXnfge%";
+	int	size;
+	int	ret_size;
+
+	size = 1;
+	while (*(s - 1) != '%')
+		s--;
+	while (*s != '.' && !ft_strchr(formats, *s))
+		if (ft_strchr(flags, *s++))
+			size = ft_atoi(s - 1);
+	ret_size = size;
+	while (size-- + 1 > 0)
+		ft_putchar_fd(*(char *)(ret++), 1);
+	return (ret_size);
+}
+
+int			ft_display(t_check err_chk, t_list *ret)
+{
 	char		*flag = "-.*lh# +0123456789";
 	t_list		*tmp;
 	int			j;
 
 	j = 0;
-	(void)i;
 	tmp = ret;
 	while (*(err_chk.aff) && !err_chk.error)
 	{
@@ -83,11 +105,16 @@ int			ft_display(t_check err_chk, t_list *ret, int i)
 			while (ft_strchr(flag, *(++err_chk.aff)))
 				;
 			err_chk.aff++;
-			ft_putstr_fd((char *)ret->content, 1);
-			j += ft_strlen((char *)ret->content);
+			if (*(err_chk.aff - 1) == 'c')
+				j += ft_print_c(err_chk.aff - 1, ret->content);
+			else
+			{
+				ft_putstr_fd((char *)ret->content, 1);
+				j += ft_strlen((char *)ret->content);
+			}
 			ret = ret->next;
 		}
-		if (*err_chk.aff)
+		else
 		{
 			ft_putchar_fd(*err_chk.aff, 1);
 			err_chk.aff++;
@@ -120,7 +147,7 @@ int			ft_printf(const char *s, ...)
 				break;
 	}
 	va_end(ap);
-	return (ft_display(err_chk, ret, i));
+	return (ft_display(err_chk, ret));
 }
 /*
    int			main(void)
