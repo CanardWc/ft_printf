@@ -32,6 +32,6 @@ char	*ft_flag_min(char *flag, char *str, char format)
 	while (*(str++ + i))
 		*(str - 1) = str[i - 1];
 	while (o_size-- > 0)
-		*(str++) = ' ';
+		*(str++ - 1) = ' ';
 	return (ret);
 }
