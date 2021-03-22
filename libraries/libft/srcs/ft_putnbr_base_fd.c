@@ -17,17 +17,13 @@ unsigned int	check(char *str)
 	return (0);
 }
 
-void			ft_putnbr_base_fd(int nbr, char *base, int fd)
+void			ft_putnbr_base_fd(unsigned long long nbr, char *base, int fd)
 {
 	unsigned int	s;
-	unsigned int	n;
 
 	if ((s = ft_strlen(base)) < 2 || check(base))
 		return ;
-	if (nbr < 0)
-		write(1, "-", 1);
-	n = nbr < 0 ? nbr * -1 : nbr;
-	if (n > s - 1)
-		ft_putnbr_base_fd(n / s, base, fd);
-	write(fd, &base[n % s], 1);
+	if (nbr > (s - 1))
+		ft_putnbr_base_fd(nbr / s, base, fd);
+	write(fd, &base[nbr % s], 1);
 }

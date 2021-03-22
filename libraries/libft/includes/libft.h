@@ -68,7 +68,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putmem_fd(unsigned long int pt_addr, int fd);
-void	ft_putnbr_base_fd(int nnbr, char *basee, int fd);
+void	ft_putnbr_base_fd(unsigned long long nbr, char *base, int fd);
 
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **alst, t_list *new);

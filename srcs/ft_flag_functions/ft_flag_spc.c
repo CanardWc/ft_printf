@@ -12,18 +12,7 @@
 
 #include <libftprintf.h>
 
-char	*ft_flag_spc(char *flag, char *str, char format)
+void	ft_flag_spc(void)
 {
-	int i;
-
-	(void)flag;
-	i = 0;
-	if (!(format == 'd' || format == 'i' || format == 'e' \
-				|| format == 'f' || format == 'g'))
-		return (str);
-	while (!str[i] || str[i] == ' ')
-		i++;
-	if (str[i] != '-')
-		str[i - 1] = ' ';
-	return (str);
+	ft_putchar_fd(' ', 1);
 }

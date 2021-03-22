@@ -11,29 +11,14 @@
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-#include <stdio.h>
 
-t_string	ft_format_size_c(char *flags)
+int		ft_format_c(t_printf data, t_flags flags, va_list ap)
 {
-	t_string	ret;
-
-	ret.size = 0;
-	while (*flags != '.' && *flags)
-		ret.size = ft_atoi(flags++) < ret.size ? ret.size : \
-			   ft_atoi(flags - 1);
-	ret.size = ret.size == 0 ? 2 : ret.size + 1;
-	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
-		return (ret);
-	return (ret);
-}
-
-char		*ft_format_c(va_list ap, char *flags, int i)
-{
-	t_string	ret;
-
-	i = 0;
-	ret = ft_format_size_c(flags);
-	flags = (void *)flags;
-	ret.str[0] = (unsigned char)va_arg(ap, int);
-	return (ret.str);
+	data.s = (void *)data.s;
+	if (flags.nbr > 1)
+		data.ret += ft_flag_number(flags, 1);
+	ft_putchar_fd(va_arg(ap, int), 1);
+	if (flags.min > 1)
+		data.ret += ft_flag_min(flags, 1);
+	return (data.ret + 1);
 }

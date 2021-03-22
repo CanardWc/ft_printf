@@ -4,60 +4,49 @@
 # include "../libraries/libft/includes/libft.h"
 # include <stdarg.h>
 
-typedef struct		s_string
+typedef struct		s_printf
 {
-	char		*str;
-	int		size;
-}			t_string;
+	const char	*s;
+	int		ret;
+}			t_printf;
 
-typedef struct	s_flag_f 
+typedef struct		s_flags
 {
-	char		flag;
-	char		*(*fct)(char *, char *, char);
-}			t_flag_f;
+	int		nbr;
+	int		min;
+	int		prec;
+	int		zero;
+}			t_flags;
 
 typedef struct		s_form_f
 {
 	char		format;
-	char		*(*fct)(va_list, char *, int);
+	int		(*fct)(t_printf, t_flags, va_list);
 }			t_form_f;
-
-typedef struct		s_check
-{
-	const char	*aff;
-	char		*error;
-}			t_check;
 
 int			ft_printf(const char *s, ...);
 
-char			*flag_cleanse(char *s, va_list ap);
-char			*ft_arg(const char *s, char *format);
-char			*ft_flag_indicator(char *s, char *flag, char *flag_clean, int *nb);
-char			*ft_flag_len(va_list ap, char *s, char *flag);
+char			*ft_search(const char *s, char *pos);
 
-char			*ft_format_c(va_list ap, char *flags, int i);
-char			*ft_format_s(va_list ap, char *flags, int i);
-char			*ft_format_p(va_list ap, char *flags, int i);
-char			*ft_format_d(va_list ap, char *flags, int i);
-char			*ft_format_i(va_list ap, char *flags, int i);
-char			*ft_format_u(va_list ap, char *flags, int i);
-char			*ft_format_o(va_list ap, char *flags, int i);
-char			*ft_format_x(va_list ap, char *flags, int i);
-char			*ft_format_bigx(va_list ap, char *flags, int i);
-char			*ft_format_percent(va_list ap, char *flags, int i);
-char			*ft_format_f(va_list ap, char *flags, int i);
-char			*ft_format_n(va_list ap, char *flags, int i);
-char			*ft_format_e(va_list ap, char *flags, int i);
+int			ft_format_c(t_printf data, t_flags flags, va_list ap);
+int			ft_format_s(t_printf data, t_flags flags, va_list ap);
+int			ft_format_int(t_printf data, t_flags flags, va_list ap);
+int			ft_format_uint(t_printf data, t_flags flags, va_list ap);
+int			ft_format_percent(t_printf data, t_flags flags, va_list ap);
 /*
-char			*ft_format_g(va_list ap, char *flags, int i);
- */
+int			ft_format_f(t_printf data, t_flags flags, va_list ap);
+int			ft_format_n(t_printf data, t_flags flags, va_list ap);
+int			ft_format_e(t_printf data, t_flags flags, va_list ap);
+int			ft_format_g(t_printf data, t_flags flags, va_list ap);
+*/
 
-char			*ft_flag_number(char *flag, char *str, char format);
-char			*ft_flag_min(char *flag, char *str, char format);
-char			*ft_flag_hash(char *flag, char *str, char format);
-char			*ft_flag_spc(char *flag, char *str, char format);
-char			*ft_flag_plus(char *flag, char *str, char format);
-char			*ft_flag_zero(char *flag, char *str, char format);
-char			*ft_flag_number(char* flag, char* str, char format);
+t_flags			ft_flag_asterisk(const char *s, va_list ap);
+int			ft_flag_number(t_flags flags, int size);
+int			ft_flag_min(t_flags flags, int size);
+void			ft_flag_zero(t_flags flags);
+void			ft_flag_prec(t_flags);
+void			ft_flag_plus(void);
+void			ft_flag_spc(void);
+void			ft_flag_hash(char format);
 
 #endif

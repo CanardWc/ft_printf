@@ -12,6 +12,8 @@
 
 #include <libftprintf.h>
 
+const char	*hash[] = { "0x", "0x", "0X", "0" };
+/*
 char	*ft_flag_hash_g(char *str, int size)
 {
 	int i;
@@ -39,46 +41,14 @@ char	*ft_flag_hash_g(char *str, int size)
 	}
 	return (str);
 }
+*/
 
-char	*ft_flag_hash_x(char *str)
+void	ft_flag_hash(char format)
 {
-	int i;
-
-	i = 0;
-	while (!str[i])
-		i++;
-	str[i - 1] = 'x';
-	str[i - 2] = '0';
-	return (str);
-}
-
-char	*ft_flag_hash_bigx(char *str)
-{
-	int i;
-
-	i = 0;
-	while (!str[i])
-		i++;
-	str[i - 1] = 'X';
-	str[i - 2] = '0';
-	return (str);
-}
-
-char	*ft_flag_hash(char *flag, char *str, char format)
-{
-	int size;
-	int i;
-
-	i = 0;
-	size = 0;
-	while (flag[i] && flag[i] != '.')
-		size = ft_atoi(ft_strchr(flag, flag[i++])) > size ? \
-		ft_atoi(ft_strchr(flag, flag[i - 1])) : size;
-	if (format == 'g')
-		return (ft_flag_hash_g(str, size));
-	if (format == 'x')
-		return (ft_flag_hash_x(str));
-	if (format == 'X')
-		return (ft_flag_hash_bigx(str));
-	return (str);
+	char	*form = "pxXo";
+	char	*good_hash;
+	
+	good_hash = (char *)hash[ft_strchr(form, format) - form];
+	if (ft_strchr(form, format))
+		ft_putstr_fd(good_hash, 1);
 }

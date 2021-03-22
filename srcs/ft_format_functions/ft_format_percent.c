@@ -12,27 +12,19 @@
 
 #include <libftprintf.h>
 
-t_string	ft_format_size_percent(char *flags)
+int	ft_format_percent(t_printf data, t_flags flags, va_list ap)
 {
-	t_string	ret;
-
-	ret.size = 2;
-	while (*flags && *flags != '.')
-		ret.size = ft_atoi(flags++) > \
-				ret.size ? ft_atoi(flags - 1) + 1 : ret.size;
-	if (!(ret.str = ft_calloc(ret.size, sizeof(char))))
-		return (ret);
-	return (ret);
-}
-
-char		*ft_format_percent(va_list ap, char *flags, int i)
-{
-	t_string	ret;
-
-	i = 0;
 	ap = (void *)ap;
-	flags = (void *)flags;
-	ret = ft_format_size_percent(flags);
-	ret.str[0] = '%';
-	return (ret.str);
+	if (flags.nbr > 1)
+		data.ret += ft_flag_number(flags, 1);
+	if (flags.zero > 1 && flags.min == 0)
+	{
+		flags.zero -= 1;
+		ft_flag_zero(flags);
+		data.ret += flags.zero;
+	}
+	ft_putchar_fd('%', 1);
+	if (flags.min > 1)
+		data.ret += ft_flag_min(flags, 1);
+	return (data.ret + 1);
 }
