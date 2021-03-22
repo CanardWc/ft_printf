@@ -3,6 +3,7 @@
 
 # include "../libraries/libft/includes/libft.h"
 # include <stdarg.h>
+# include <stdio.h>
 
 typedef struct		s_printf
 {
