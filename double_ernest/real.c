@@ -8,42 +8,29 @@ char	*ft_qqch(char *s, int exp)
 	char	*tmp;
 	int		save;
 	int		add;
-	int		size_s;
-	int		exp_s;
 
-	exp_s = exp;
-	size_s = strlen(s);
-	save = 0;
-	add = 0;
-	memmove(s + 340 - size_s, s, size_s);
-	bzero(s, strlen(s));
-	while (exp_s--)
+	size = strlen(s);
+	memmove(s + 340 - size, s, size); //ira dans autre fonction
+	bzero(s, size); // ira dans autre fonction
+	while (exp--)
 	{
-		size = size_s;
 		tmp = s + 340;
-		while (size-- >= 0 || save)
+		while (*--tmp || save == 38)
 		{
-			tmp--;
-			if (save)
-			{
-				add = 1;
-				save = 0;
-			}
+			add = save == 38;
+			save = 48;
 			if (*tmp && *tmp > '4')
-				save = 1;
+				save = 38;
 			if (*tmp)
-				*tmp = save ? ((*tmp - 48) * 2) + 38 + add : ((*tmp - 48) * 2) + 48 + add;
+				*tmp = ((*tmp - 48) * 2) + save + add;
 			else
 				*tmp = 48 + add;
-			add = 0;
 		}
 	}
 	while (!*s)
 		s++;
-	dprintf(1, "%s\n", tmp);
-	exp = strlen(s) - size_s;
-	printf("exp==%d\n", exp);
-	return (tmp);
+	exp = strlen(s) - size;
+	return (tmp + 1);
 }
 
 int main()
@@ -53,5 +40,5 @@ int main()
 
 	s = calloc(340, (sizeof(char)));
 	memcpy(s, str, strlen(str));
-	printf("%s\n", ft_qqch(s, 4));
+	printf("%s\n", ft_qqch(s, 9));
 }
