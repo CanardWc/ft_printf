@@ -11,53 +11,39 @@ typedef struct		s_dbl_data
 
 t_dbl_data	ft_dbl_negexp(t_dbl_data ret)
 {
-	int		size;
 	int		add;
 	int		div;
 	char	*tmp;
-	int		pow_s;
 
-	pow_s = ret.pow;
-	size = strlen(ret.decimal);
 	add = 0;
-	while (pow_s++ < 0)
+	while (ret.pow++ < 0)
 	{
 		tmp = ret.decimal;
 		while (*tmp || add)
 		{
+			div = 0;
 			if (*tmp)
 				div = ((*tmp - 48) * 10) / 2;
-			else
-				div = 0;
 			*tmp = ((div / 10) + add) + 48;
 			add = div % 10;
 			tmp++;
 		}
 	}
 	tmp = ret.decimal;
-	dprintf(1, "tmp==%s\n", tmp);
 	while (*tmp == '0')
 		tmp++;
-	dprintf(1, "tmp==%s\n", tmp);
 	ret.pow = ret.decimal - tmp;
-	bzero(ret.decimal, tmp - ret.decimal);
-	dprintf(1, "help %s\n", tmp);
-	dprintf(1, "help %d\n", ret.pow);
+	memmove(ret.decimal, tmp, strlen(tmp));
+	bzero(ret.decimal + strlen(tmp), 340 - strlen(tmp));
 	return (ret);
 }
 
-t_dbl_data	ft_dbl_posexp(t_dbl_data ret)
+void	ft_posexp_calc(t_dbl_data ret)
 {
-	int		size;
 	char	*tmp;
-	int		save;
 	int		add;
-	int		pow_s;
+	int		save;
 
-	pow_s = ret.pow;
-	size = strlen(ret.decimal);
-	memmove(ret.decimal + 340 - size, ret.decimal, size);
-	bzero(ret.decimal, size);
 	while (ret.pow--)
 	{
 		tmp = ret.decimal + 340;
@@ -73,10 +59,25 @@ t_dbl_data	ft_dbl_posexp(t_dbl_data ret)
 				*tmp = 48 + add;
 		}
 	}
-	while (!*ret.decimal)
-		ret.decimal++;
-	ret.pow = pow_s + strlen(ret.decimal) - size;
-	dprintf(1,"pow==%d\n", ret.pow);
+}
+
+t_dbl_data	ft_dbl_posexp(t_dbl_data ret)
+{
+	int		size;
+	char	*tmp;
+	int		pow_s;
+
+	pow_s = ret.pow;
+	size = strlen(ret.decimal);
+	memmove(ret.decimal + 340 - size, ret.decimal, size);
+	bzero(ret.decimal, size);
+	ft_posexp_calc(ret);
+	tmp = ret.decimal;
+	while (!*tmp)
+		tmp++;
+	ret.pow = pow_s + strlen(tmp) - size;
+	memmove(ret.decimal, tmp, strlen(tmp));
+	bzero(ret.decimal + strlen(tmp), 340 - strlen(tmp));
 	return (ret);
 }
 
@@ -93,12 +94,12 @@ int main()
 {
 	t_dbl_data	ret;
 	t_dbl_data	ret2;
-	char		*str = "011101011";
+	char		*str = "11";
 
 	ret.sign = 1;
 	ret2.sign = -1;
-	ret.pow = 10;
-	ret2.pow = -10;
+	ret.pow = 2;
+	ret2.pow = -2;
 	ret.decimal = (char *)calloc(340, sizeof(char));
 	ret2.decimal = (char *)calloc(340, sizeof(char));
 	memmove(ret.decimal, str, strlen(str));
