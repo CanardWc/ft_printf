@@ -25,16 +25,17 @@ SRC_FLG_PATH = ft_flag_functions/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = libftprintf.h
-SRC_NAME = ft_printf.c ft_search.c \
+SRC_NAME = ft_printf.c ft_search.c ft_getdbl.c ft_getdbl_exponent.c \
+	   ft_getdbl_fraction.c \
 	   ft_format_functions/ft_format_c.c ft_format_functions/ft_format_s.c \
 	   ft_format_functions/ft_format_int.c ft_format_functions/ft_format_uint.c \
 	   ft_format_functions/ft_format_percent.c ft_flag_functions/ft_flag_min.c \
 	   ft_flag_functions/ft_flag_number.c ft_flag_functions/ft_flag_asterisk.c \
 	   ft_flag_functions/ft_flag_hash.c ft_flag_functions/ft_flag_plus.c \
 	   ft_flag_functions/ft_flag_spc.c ft_flag_functions/ft_flag_zero.c \
-	   ft_flag_functions/ft_flag_prec.c
-	   #ft_format_functions/ft_format_n.c ft_format_functions/ft_format_f.c \
-	   ft_format_functions/ft_format_e.c 
+	   ft_flag_functions/ft_flag_prec.c ft_format_functions/ft_format_f.c \
+	   ft_format_functions/ft_format_g.c ft_format_functions/ft_format_e.c \
+	   #ft_format_functions/ft_format_n.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

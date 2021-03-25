@@ -18,9 +18,9 @@ const	t_form_f	form_fct[] = {
 	{ 'p', &ft_format_uint }, { 'd', &ft_format_int },
 	{ 'i', &ft_format_int }, { 'u', &ft_format_uint },
 	{ 'o', &ft_format_uint }, { 'x', &ft_format_uint },
-	{ 'X', &ft_format_uint }, /*{ 'n', &ft_format_n }, 
-				    { 'f', &ft_format_f }, { 'e', &ft_format_e }, */
-	{ '%', &ft_format_percent } };
+	{ 'X', &ft_format_uint }, /*{ 'n', &ft_format_n }, */
+	{ 'f', &ft_format_f }, { 'g', &ft_format_g },
+	{ 'e', &ft_format_e }, { '%', &ft_format_percent } };
 
 static t_printf	ft_format_treatment(t_printf data, va_list ap)
 {

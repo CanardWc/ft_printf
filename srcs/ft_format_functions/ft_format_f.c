@@ -12,30 +12,22 @@
 
 #include <libftprintf.h>
 
-long double	ft_get_ap_f(va_list ap, const char *s)
+double		ft_get_ap_f(va_list ap, const char *s)
 {
-	if (ft_strchr(s, "l"))
-		return ((long double)va_arg(ap, long double));
+	if (ft_search(s, "l"))
+		return ((double)va_arg(ap, double));
 	else
-		return ((long double)va_arg(ap, double));
+		return ((double)va_arg(ap, double));
 }
 
-int		ft_format_f(va_list ap, const char *s, int i)
+int		ft_format_f(t_printf data, t_flags flags, va_list ap)
 {
-	long double	prec;
-	long double	v;
+	t_dbl	v;
+	int	size;
 
-	v = ft_get_ap_f(ap, flags);
-	prec = ft_strchr(flags, '.') ? ft_atoi(ft_strchr(flags, '.') + 1) : 6;
-	if (prec > 0)
-		ret.str[(int)(size-- - prec)] = '.';
-	while (prec > 0)
-		ft_putnbr_fd(ft_dmod((v * (10 * prec--)), 10) + '0', 1);
-	while (i > 10)
-	{
-		ret.str[(int)--size] = ft_dmod(v, 10) + '0';
-		v /= 10;
-	}
-	ret.str[(int)--size] = ft_dmod(v, 10) + '0';
-	return (ret.str);
+	size = 1;
+	flags.min = 0;
+	v = ft_getdbl(ft_get_ap_f(ap, data.s));
+	ft_putstr_fd(v.decimal, 1);
+	return (data.ret + size);
 }

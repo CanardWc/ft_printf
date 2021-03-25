@@ -1,37 +1,4 @@
-/*#include <stdio.h>
-
-typedef union			s_dbl_pars
-{
-	unsigned long long	sign : 1;
-	unsigned long long	exp : 11;
-	unsigned long long	fract : 52;
-}				t_dbl_pars;
-
-typedef struct			s_dlb_data
-{
-	int	sign;
-	char	*decimal;
-	int	pow;
-}				t_dbl_data;
-*/
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-
-typedef union			s_dbl_pars
-{
-	unsigned long long	sign : 1;
-	unsigned long long	exp : 11;
-	unsigned long long	fract : 52;
-}				t_dbl_pars;
-
-typedef struct			s_dlb_data
-{
-	int	sign;
-	char	*decimal;
-	int	pow;
-}				t_dbl_data;
+#include <libftprintf.h>
 
 char	*ft_binary_pow(char *tmp, int i)
 {
@@ -44,7 +11,7 @@ char	*ft_binary_pow(char *tmp, int i)
 	tmp[0] = '1';
 	while (i > 0)
 	{
-		while (isdigit(tmp[j]) || remnant != 0)
+		while (ft_isdigit(tmp[j]) || remnant != 0)
 		{
 			if (tmp[j])
 				div = ((tmp[j] - '0') * 10) / 2;
@@ -63,11 +30,10 @@ char	*ft_binary_pow(char *tmp, int i)
 char	*ft_add_tmp(char *ret, char *tmp)
 {
 	int	i;
-	int	j;
 	int	add;
 	int	remnant;
 
-	i = strlen(tmp);
+	i = ft_strlen(tmp);
 	add = 0;
 	remnant = 0;
 	while (--i >= 0)
@@ -88,7 +54,7 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 	int	y;
 
 	y = 1;
-	if (!(ret = (char *)calloc(340, sizeof(char))))
+	if (!(ret = (char *)ft_calloc(340, sizeof(char))))
 		return (ret);
 	i = 11;
 	ret[0] = exp == 0 ? '0' : '1';
@@ -96,18 +62,13 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 	{
 		if ((parsed_dbl >> (63 - i) & 1))
 		{
-			printf("1");
-			if (!(tmp = (char *)calloc(50, sizeof(char))))
+			if (!(tmp = (char *)ft_calloc(50, sizeof(char))))
 				return (ret);
 			tmp = ft_binary_pow(tmp, y);
 			ret = ft_add_tmp(ret, tmp);
 			free(tmp);
 		}
-		else
-			printf("0");
 		y++;
 	}
-	printf("\n");
-	printf("ret = %s\n", ret);
 	return (ret);
 }
