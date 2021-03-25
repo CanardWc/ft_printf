@@ -5,25 +5,18 @@
 typedef struct		s_dbl_data
 {
 	int		sign;
+	char		*decimal;
 	int		pow;
-	char	*decimal;
-}					t_dbl_data;
+}			t_dbl_data;
 
-typedef struct		s_dbl_pars
-{
-	unsigned long long	sign : 1;
-	long long	exp : 11;
-	unsigned long long	fract : 52;
-}					t_dbl_pars;
-
-t_dbl_data	ft_dbl_negexp(t_dbl_data data, t_dbl_pars pars)
+t_dbl_data	ft_dbl_negexp(t_dbl_data data, int exp)
 {
 	int		add;
 	int		div;
 	char	*tmp;
 
 	add = 0;
-	while (pars.exp++ < 0)
+	while (exp++ < 0)
 	{
 		tmp = data.decimal;
 		while (*tmp || add)
@@ -45,13 +38,13 @@ t_dbl_data	ft_dbl_negexp(t_dbl_data data, t_dbl_pars pars)
 	return (data);
 }
 
-void	ft_posexp_calc(t_dbl_data data, t_dbl_pars pars)
+void	ft_posexp_calc(t_dbl_data data, int exp)
 {
 	char	*tmp;
 	int		add;
 	int		save;
 
-	while (pars.exp--)
+	while (exp--)
 	{
 		tmp = data.decimal + 340;
 		while (*--tmp || save == 38)
@@ -68,7 +61,7 @@ void	ft_posexp_calc(t_dbl_data data, t_dbl_pars pars)
 	}
 }
 
-t_dbl_data	ft_dbl_posexp(t_dbl_data data, t_dbl_pars pars)
+t_dbl_data	ft_dbl_posexp(t_dbl_data data, int exp)
 {
 	int		size;
 	char	*tmp;
@@ -78,7 +71,7 @@ t_dbl_data	ft_dbl_posexp(t_dbl_data data, t_dbl_pars pars)
 	size = strlen(data.decimal);
 	memmove(data.decimal + 340 - size, data.decimal, size);
 	bzero(data.decimal, size);
-	ft_posexp_calc(data, pars);
+	ft_posexp_calc(data, exp);
 	tmp = data.decimal;
 	while (!*tmp)
 		tmp++;
@@ -88,15 +81,15 @@ t_dbl_data	ft_dbl_posexp(t_dbl_data data, t_dbl_pars pars)
 	return (data);
 }
 
-t_dbl_data	ft_getdbl_exponent(t_dbl_data data, t_dbl_pars pars)
+t_dbl_data	ft_getdbl_exponent(t_dbl_data data, int exp)
 {
-	if (pars.exp < 0)
-		return (ft_dbl_negexp(data, pars));
-	else if (pars.exp > 0)
-		return (ft_dbl_posexp(data, pars));
+	if (exp < 0)
+		return (ft_dbl_negexp(data, exp));
+	else if (exp > 0)
+		return (ft_dbl_posexp(data, exp));
 	return (data);
 }
-
+/*
 int main()
 {
 	t_dbl_data	ret;
@@ -119,4 +112,4 @@ int main()
 	ret2 =  ft_getdbl_exponent(ret2, pars2);
 	dprintf(1, "ret==%s\n", ret.decimal);
 	dprintf(1, "ret2==%s\n", ret2.decimal);
-}
+}*/

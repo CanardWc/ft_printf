@@ -1,96 +1,35 @@
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 
-typedef union			s_dbl_pars
+typedef struct			s_dlb_data
 {
-	unsigned long long	sign : 1;
-	unsigned long long	exp : 11;
-	unsigned long long	fract : 52;
-}				t_dbl_pars;
-
-char	*ft_binary_pow(char *tmp, int i)
-{
-	int	j;
-	int	div;
-	int	remnant;
-
-	remnant = 0;
-	tmp[0] = '1';
-	while (i > 0)
-	{
-		j = 0;
-		while (isdigit(tmp[j]) || remnant)
-		{
-			if (tmp[j])
-				div = ((tmp[j] - '0') * 10) / 2;
-			else
-				div = 0;
-			tmp[j] = ((div / 10) + remnant) + '0';
-			remnant = div % 10;
-			j++;
-		}
-		i--;
-	}
-	//printf("tmp = %s\n", tmp);
-	return (tmp);
-}
-
-char	*ft_add_tmp(char *ret, char *tmp)
-{
-	int	i;
-	int	j;
-	int	add;
-	int	remnant;
-
-	i = strlen(tmp);
-	add = 0;
-	remnant = 0;
-	while (--i >= 0)
-	{
-		add = ret[i] ? ret[i] - '0' : 0;
-		add += tmp[i] - '0' + remnant;
-		ret[i] = add % 10 + '0';
-		remnant = add / 10;
-		/*if (!ret[i])
-			add = tmp[i] - '0';
-		else
-			add = (ret[i] - '0') + (tmp[i] - '0');
-		if ((add % 10 + remnant) < 10)
-			ret[i] = (add % 10 + remnant) + '0';
-		else
-			ret[i] = '0';
-		remnant = add / 10 ? 1 : 0;*/
-	}
-	printf("ret = %s\n", ret);
-	return (ret);
-}
+	int	sign;
+	char	*decimal;
+	int	pow;
+}				t_dbl_data;
 
 int	main(void)
 {
-	int	i;
-	char	*lol = "1111";
-	char	*ret;
-	char	*tmp;
+	t_dbl_data	dbl;
+	unsigned long long	value;
+	unsigned long long	base;
+	unsigned long long	exp;
+	double		d;
+	int		i;
 
-	if (!(ret = (char *)calloc(340, sizeof(char))))
-		return (0);
-	i = 0;
-	ret[0] = '1';
-	printf("len = %d\n", strlen(lol));
-	while (lol[i])
+	i = 12;
+	d = 4.0;
+	base = 1;
+	exp = 0;
+	memcpy(&value, &d, sizeof(double));
+	dbl.sign = value & 0x1 ? -1 : 1;
+	while (--i > 0)
 	{
-		if (lol[i] == '1')
-		{
-			if (!(tmp = (char *)calloc(50, sizeof(char))))
-			return (0);
-			tmp = ft_binary_pow(tmp, i + 1);
-			ret = ft_add_tmp(ret, tmp);
-			free(tmp);
-		}
-		i++;
+		exp += ((value >> (63 - i)) & 1)  ? 1 * base : 0;
+		base *= 2;
 	}
-	printf("ret = %s\n", ret);
+	printf("exp = %llu\n", exp);
 	return (0);
 }

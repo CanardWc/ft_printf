@@ -6,7 +6,7 @@
 #include <limits.h>
 #include <float.h>
 int main() {
-    double d = DBL_MIN / 2;
+    double d = 4.0;
 
     typedef union {
         unsigned long long sign : 1;

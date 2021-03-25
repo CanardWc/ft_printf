@@ -80,27 +80,34 @@ char	*ft_add_tmp(char *ret, char *tmp)
 	return (ret);
 }
 
-char	*ft_getdbl_fraction(t_dbl_pars parsed_dbl)
+char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 {
 	char	*ret;
 	char	*tmp;
 	int	i;
+	int	y;
 
+	y = 1;
 	if (!(ret = (char *)calloc(340, sizeof(char))))
 		return (ret);
-	i = 0;
-	ret[0] = parsed_dbl.exp == 0 ? 0 : 1;
-	while (++i < 52)
+	i = 11;
+	ret[0] = exp == 0 ? '0' : '1';
+	while (++i < 64)
 	{
-		if ((parsed_dbl.fract & 0x1))
+		if ((parsed_dbl >> (63 - i) & 1))
 		{
+			printf("1");
 			if (!(tmp = (char *)calloc(50, sizeof(char))))
 				return (ret);
-			tmp = ft_binary_pow(tmp, i);
+			tmp = ft_binary_pow(tmp, y);
 			ret = ft_add_tmp(ret, tmp);
 			free(tmp);
 		}
-		parsed_dbl.fract >>= 1;
+		else
+			printf("0");
+		y++;
 	}
+	printf("\n");
+	printf("ret = %s\n", ret);
 	return (ret);
 }
