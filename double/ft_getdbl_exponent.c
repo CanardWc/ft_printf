@@ -9,16 +9,23 @@ typedef struct		s_dbl_data
 	char	*decimal;
 }					t_dbl_data;
 
-t_dbl_data	ft_dbl_negexp(t_dbl_data ret)
+typedef struct		s_dbl_pars
+{
+	unsigned long long	sign : 1;
+	long long	exp : 11;
+	unsigned long long	fract : 52;
+}					t_dbl_pars;
+
+t_dbl_data	ft_dbl_negexp(t_dbl_data data, t_dbl_pars pars)
 {
 	int		add;
 	int		div;
 	char	*tmp;
 
 	add = 0;
-	while (ret.pow++ < 0)
+	while (pars.exp++ < 0)
 	{
-		tmp = ret.decimal;
+		tmp = data.decimal;
 		while (*tmp || add)
 		{
 			div = 0;
@@ -29,24 +36,24 @@ t_dbl_data	ft_dbl_negexp(t_dbl_data ret)
 			tmp++;
 		}
 	}
-	tmp = ret.decimal;
+	tmp = data.decimal;
 	while (*tmp == '0')
 		tmp++;
-	ret.pow = ret.decimal - tmp;
-	memmove(ret.decimal, tmp, strlen(tmp));
-	bzero(ret.decimal + strlen(tmp), 340 - strlen(tmp));
-	return (ret);
+	data.pow = data.decimal - tmp;
+	memmove(data.decimal, tmp, strlen(tmp));
+	bzero(data.decimal + strlen(tmp), 340 - strlen(tmp));
+	return (data);
 }
 
-void	ft_posexp_calc(t_dbl_data ret)
+void	ft_posexp_calc(t_dbl_data data, t_dbl_pars pars)
 {
 	char	*tmp;
 	int		add;
 	int		save;
 
-	while (ret.pow--)
+	while (pars.exp--)
 	{
-		tmp = ret.decimal + 340;
+		tmp = data.decimal + 340;
 		while (*--tmp || save == 38)
 		{
 			add = save == 38;
@@ -61,41 +68,45 @@ void	ft_posexp_calc(t_dbl_data ret)
 	}
 }
 
-t_dbl_data	ft_dbl_posexp(t_dbl_data ret)
+t_dbl_data	ft_dbl_posexp(t_dbl_data data, t_dbl_pars pars)
 {
 	int		size;
 	char	*tmp;
 	int		pow_s;
 
-	pow_s = ret.pow;
-	size = strlen(ret.decimal);
-	memmove(ret.decimal + 340 - size, ret.decimal, size);
-	bzero(ret.decimal, size);
-	ft_posexp_calc(ret);
-	tmp = ret.decimal;
+	pow_s = data.pow;
+	size = strlen(data.decimal);
+	memmove(data.decimal + 340 - size, data.decimal, size);
+	bzero(data.decimal, size);
+	ft_posexp_calc(data, pars);
+	tmp = data.decimal;
 	while (!*tmp)
 		tmp++;
-	ret.pow = pow_s + strlen(tmp) - size;
-	memmove(ret.decimal, tmp, strlen(tmp));
-	bzero(ret.decimal + strlen(tmp), 340 - strlen(tmp));
-	return (ret);
+	data.pow = pow_s + strlen(tmp) - size;
+	memmove(data.decimal, tmp, strlen(tmp));
+	bzero(data.decimal + strlen(tmp), 340 - strlen(tmp));
+	return (data);
 }
 
-t_dbl_data	ft_getdbl_exponent(t_dbl_data ret)
+t_dbl_data	ft_getdbl_exponent(t_dbl_data data, t_dbl_pars pars)
 {
-	if (ret.sign < 0)
-		return (ft_dbl_negexp(ret));
-	else if (ret.sign > 0)
-		return (ft_dbl_posexp(ret));
-	return (ret);
+	if (pars.exp < 0)
+		return (ft_dbl_negexp(data, pars));
+	else if (pars.exp > 0)
+		return (ft_dbl_posexp(data, pars));
+	return (data);
 }
 
 int main()
 {
 	t_dbl_data	ret;
 	t_dbl_data	ret2;
-	char		*str = "11";
+	char		*str = "4";
+	t_dbl_pars	pars;
+	t_dbl_pars	pars2;
 
+	pars.exp = 2;
+	pars2.exp = -1;
 	ret.sign = 1;
 	ret2.sign = -1;
 	ret.pow = 2;
@@ -104,8 +115,8 @@ int main()
 	ret2.decimal = (char *)calloc(340, sizeof(char));
 	memmove(ret.decimal, str, strlen(str));
 	memmove(ret2.decimal, str, strlen(str));
-	ret =  ft_getdbl_exponent(ret);
-	ret2 =  ft_getdbl_exponent(ret2);
+	ret =  ft_getdbl_exponent(ret, pars);
+	ret2 =  ft_getdbl_exponent(ret2, pars2);
 	dprintf(1, "ret==%s\n", ret.decimal);
 	dprintf(1, "ret2==%s\n", ret2.decimal);
 }
