@@ -1,4 +1,23 @@
+/*#include <stdio.h>
+
+typedef union			s_dbl_pars
+{
+	unsigned long long	sign : 1;
+	unsigned long long	exp : 11;
+	unsigned long long	fract : 52;
+}				t_dbl_pars;
+
+typedef struct			s_dlb_data
+{
+	int	sign;
+	char	*decimal;
+	int	pow;
+}				t_dbl_data;
+*/
+#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 typedef union			s_dbl_pars
 {
@@ -67,7 +86,7 @@ char	*ft_getdbl_fraction(t_dbl_pars parsed_dbl)
 	char	*tmp;
 	int	i;
 
-	if ((ret = (char *)calloc(340, sizeof(char))))
+	if (!(ret = (char *)calloc(340, sizeof(char))))
 		return (ret);
 	i = 0;
 	ret[0] = parsed_dbl.exp == 0 ? 0 : 1;
@@ -75,7 +94,7 @@ char	*ft_getdbl_fraction(t_dbl_pars parsed_dbl)
 	{
 		if ((parsed_dbl.fract & 0x1))
 		{
-			if ((tmp = (char *)calloc(50, sizeof(char))))
+			if (!(tmp = (char *)calloc(50, sizeof(char))))
 				return (ret);
 			tmp = ft_binary_pow(tmp, i);
 			ret = ft_add_tmp(ret, tmp);
