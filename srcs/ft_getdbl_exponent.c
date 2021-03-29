@@ -25,7 +25,7 @@ t_dbl	ft_dbl_negexp(t_dbl data, int exp)
 		tmp++;
 	data.pow = data.decimal - tmp;
 	ft_memmove(data.decimal, tmp, ft_strlen(tmp));
-	ft_bzero(data.decimal + ft_strlen(tmp), 340 - ft_strlen(tmp));
+	ft_bzero(data.decimal + ft_strlen(tmp), 2000 - ft_strlen(tmp));
 	return (data);
 }
 
@@ -37,7 +37,7 @@ void	ft_posexp_calc(t_dbl data, int exp)
 
 	while (exp--)
 	{
-		tmp = data.decimal + 340;
+		tmp = data.decimal + 2000;
 		while (*--tmp || save == 38)
 		{
 			add = save == 38;
@@ -60,7 +60,7 @@ t_dbl	ft_dbl_posexp(t_dbl data, int exp)
 
 	pow_s = data.pow;
 	size = ft_strlen(data.decimal);
-	ft_memmove(data.decimal + 340 - size, data.decimal, size);
+	ft_memmove(data.decimal + 2000 - size, data.decimal, size);
 	ft_bzero(data.decimal, size);
 	ft_posexp_calc(data, exp);
 	tmp = data.decimal;
@@ -68,7 +68,7 @@ t_dbl	ft_dbl_posexp(t_dbl data, int exp)
 		tmp++;
 	data.pow = pow_s + ft_strlen(tmp) - size;
 	ft_memmove(data.decimal, tmp, ft_strlen(tmp));
-	ft_bzero(data.decimal + ft_strlen(tmp), 340 - ft_strlen(tmp));
+	ft_bzero(data.decimal + ft_strlen(tmp), 2000 - ft_strlen(tmp));
 	return (data);
 }
 

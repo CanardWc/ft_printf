@@ -81,7 +81,9 @@ t_flags		ft_flag_asterisk(const char *s, va_list ap)
 	if (flags.min == 0 && flags.nbr == 0)
 		flags = ft_zero(s, ap, flags);
 	flags = ft_prec(s, ap, flags);
-	if (flags.prec > -1 && flags.zero > 0)
+	while (ft_strchr("0123456789 +-.#", *s))
+		s++;
+	if (flags.prec > -1 && flags.zero > 0 && !ft_strchr("fge", *s))
 	{
 		flags.nbr = flags.zero;
 		flags.zero = 0;

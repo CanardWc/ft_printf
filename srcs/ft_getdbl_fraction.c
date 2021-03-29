@@ -54,7 +54,7 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 	int	y;
 
 	y = 1;
-	if (!(ret = (char *)ft_calloc(340, sizeof(char))))
+	if (!(ret = (char *)ft_calloc(2000, sizeof(char))))
 		return (ret);
 	i = 11;
 	ret[0] = exp == 0 ? '0' : '1';
