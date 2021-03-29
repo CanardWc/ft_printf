@@ -1,4 +1,5 @@
 #include <libftprintf.h>
+#include <stdio.h>
 
 t_dbl	ft_dbl_negexp(t_dbl data, int exp)
 {
@@ -56,9 +57,7 @@ t_dbl	ft_dbl_posexp(t_dbl data, int exp)
 {
 	int	size;
 	char	*tmp;
-	int	pow_s;
 
-	pow_s = data.pow;
 	size = ft_strlen(data.decimal);
 	ft_memmove(data.decimal + 2000 - size, data.decimal, size);
 	ft_bzero(data.decimal, size);
@@ -66,7 +65,7 @@ t_dbl	ft_dbl_posexp(t_dbl data, int exp)
 	tmp = data.decimal;
 	while (!*tmp)
 		tmp++;
-	data.pow = pow_s + ft_strlen(tmp) - size;
+	data.pow = ft_strlen(tmp) - size;
 	ft_memmove(data.decimal, tmp, ft_strlen(tmp));
 	ft_bzero(data.decimal + ft_strlen(tmp), 2000 - ft_strlen(tmp));
 	return (data);
