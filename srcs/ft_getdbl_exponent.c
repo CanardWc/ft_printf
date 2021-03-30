@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_getdbl_exponent.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/30 14:31:43 by edassess          #+#    #+#             */
+/*   Updated: 2021/03/30 15:30:06 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 #include <stdio.h>
 
@@ -33,8 +45,8 @@ t_dbl	ft_dbl_negexp(t_dbl data, int exp)
 void	ft_posexp_calc(t_dbl data, int exp)
 {
 	char	*tmp;
-	int	add;
-	int	save;
+	int		add;
+	int		save;
 
 	while (exp--)
 	{
@@ -55,7 +67,7 @@ void	ft_posexp_calc(t_dbl data, int exp)
 
 t_dbl	ft_dbl_posexp(t_dbl data, int exp)
 {
-	int	size;
+	int		size;
 	char	*tmp;
 
 	size = ft_strlen(data.decimal);
