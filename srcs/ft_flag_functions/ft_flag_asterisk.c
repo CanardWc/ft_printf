@@ -65,8 +65,6 @@ static t_flags	ft_zero(const char *s, va_list ap, t_flags flags)
 	return (flags);
 }
 
-#include <stdio.h>
-
 t_flags		ft_flag_asterisk(const char *s, va_list ap)
 {
 	t_flags	flags;
@@ -89,6 +87,5 @@ t_flags		ft_flag_asterisk(const char *s, va_list ap)
 		flags.zero = 0;
 	}
 	flags.min *= flags.min < 0 ? -1 : 1;
-	//printf("nbr = %d, min = %d, zero = %d, prec = %d\n", flags.nbr, flags.min, flags.zero, flags.prec);
 	return (flags);
 }
