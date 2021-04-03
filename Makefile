@@ -26,7 +26,7 @@ SRC_FLG_PATH = ft_flag_functions/
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = libftprintf.h
 SRC_NAME = ft_printf.c ft_search.c ft_getdbl.c ft_getdbl_exponent.c \
-	   ft_getdbl_fraction.c \
+	   ft_getdbl_fraction.c ft_round_dbl.c\
 	   ft_format_functions/ft_format_c.c ft_format_functions/ft_format_s.c \
 	   ft_format_functions/ft_format_int.c ft_format_functions/ft_format_uint.c \
 	   ft_format_functions/ft_format_percent.c ft_flag_functions/ft_flag_min.c \

@@ -20,6 +20,8 @@ double		ft_get_ap_e(va_list ap, const char *s)
 		return ((double)va_arg(ap, double));
 }
 
+#include <stdio.h>
+
 int		ft_format_e(t_printf data, t_flags flags, va_list ap)
 {
 	t_dbl	v;
@@ -28,21 +30,24 @@ int		ft_format_e(t_printf data, t_flags flags, va_list ap)
 	int	div;
 
 	v = ft_getdbl(ft_get_ap_e(ap, data.s));
-	to_free = v.decimal;	
+//	printf("v.sign = %d\n", v.sign);
+//	printf("v.decimal = %s\n", v.decimal);
+//	printf("v.pow = %d\n", v.pow);
 	// getting size
 
 	div = 1;
-	size = 4;
-	if (v.pow > 99 || v.pow < -99)
-		size++;
-	else if (flags.prec == 0 && !ft_search(data.s, "#"))
-		size++;
-	else
-		size += 2;
+	size = 1;
 	if (flags.prec >= 0)
 		size += flags.prec;
 	else
 		size += 6;
+	v = ft_round_dbl(v, size);
+	to_free = v.decimal;	
+	size += 4;
+	if (v.pow > 99 || v.pow < -99)
+		size++;
+	if (flags.prec != 0 || ft_search(data.s, "#"))
+		size++;
 	if (v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " "))
 		size++;
 	flags.zero -= size;

@@ -29,6 +29,7 @@ int	ft_negexp_f(t_printf data, t_flags flag, t_dbl v, int size)
 		size += flag.prec;
 	if (flag.prec == -1)
 		size += 6;
+	v = ft_round_dbl(v, size);
 	flag.zero -= size;
 	if (flag.nbr > size)
 		data.ret += ft_flag_number(flag, size);
@@ -69,6 +70,7 @@ int	ft_posexp_f(t_printf data, t_flags flag, t_dbl v, int size)
 	size += flag.prec;
 	if (ft_search(data.s, " ") || ft_search(data.s, "+") || v.sign < 0)
 		size++;
+	v = ft_round_dbl(v, size);
 	flag.zero -= size;
 	if (flag.nbr > size)
 		data.ret += ft_flag_number(flag, size);

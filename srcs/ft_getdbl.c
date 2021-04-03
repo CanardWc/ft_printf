@@ -1,5 +1,7 @@
 #include <libftprintf.h>
 
+#include <stdio.h>
+
 t_dbl	ft_getdbl(double d)
 {
 	t_dbl			dbl;
@@ -9,7 +11,7 @@ t_dbl	ft_getdbl(double d)
 	int			i;
 
 	i = 12;
-	exp = -1023;
+	exp = 0;
 	base = 1;
 	ft_memcpy(&parsed_dbl, &d, sizeof(double));
 	dbl.sign = (parsed_dbl >> 63) & 1 ? -1 : 1;
@@ -18,12 +20,14 @@ t_dbl	ft_getdbl(double d)
 		exp += (parsed_dbl >> (63 - i) & 1) ? 1 * base : 0;
 		base *= 2;
 	}
-	exp = exp == -1023 ? 0 : exp;
+	// if exp = 2047 it's infinity
+	// if exp = 2047 and there's 1 bite in the fraction then it's nan
+	if (exp == 0)
+		exp++;
+	exp -= 1023;
 	dbl.decimal = ft_getdbl_fraction(parsed_dbl, exp);
-	//ft_putnbr_fd(exp, 1);
-	//write(1, "\n", 1);
-	//ft_putstr_fd(dbl.decimal, 1);
-	//write(1, "\n", 1);
+	//printf("ret = %s\n", dbl.decimal);
 	dbl = ft_getdbl_exponent(dbl, exp);
+	//printf("ret = %s\n", dbl.decimal);
 	return (dbl);
 }

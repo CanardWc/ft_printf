@@ -70,6 +70,7 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 	if (!(ret = (char *)ft_calloc(2000, sizeof(char))))
 		return (ret);
 	i = 11;
+	ret[0] = exp == -1022 ? '0' : '1';
 	while (++i < 64)
 	{
 		if ((parsed_dbl >> (63 - i) & 1))
@@ -82,6 +83,5 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 		}
 		y++;
 	}
-	ret[0] = exp == 0 && !*tmp ? '0' : '1';
 	return (ret);
 }

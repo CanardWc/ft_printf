@@ -39,6 +39,7 @@ t_dbl			ft_getdbl(double d);
 t_dbl			ft_getdbl_exponent(t_dbl data, int exp);
 char			*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp);
 
+t_dbl			ft_round_dbl(t_dbl value, int size);
 
 int			ft_format_c(t_printf data, t_flags flags, va_list ap);
 int			ft_format_s(t_printf data, t_flags flags, va_list ap);
