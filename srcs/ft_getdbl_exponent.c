@@ -87,7 +87,7 @@ t_dbl	ft_getdbl_exponent(t_dbl data, int exp)
 {
 	if (exp < 0)
 		return (ft_dbl_negexp(data, exp));
-	else if (exp > 0)
+	else if (exp >= 0)
 		return (ft_dbl_posexp(data, exp));
 	return (data);
 }

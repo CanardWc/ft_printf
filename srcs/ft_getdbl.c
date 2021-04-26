@@ -26,8 +26,6 @@ t_dbl	ft_getdbl(double d)
 		exp++;
 	exp -= 1023;
 	dbl.decimal = ft_getdbl_fraction(parsed_dbl, exp);
-	//printf("ret = %s\n", dbl.decimal);
 	dbl = ft_getdbl_exponent(dbl, exp);
-	//printf("ret = %s\n", dbl.decimal);
 	return (dbl);
 }
