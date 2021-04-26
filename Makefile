@@ -6,7 +6,7 @@
 #    By: fgrea <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/23 10:59:04 by fgrea             #+#    #+#              #
-#    Updated: 2021/04/22 15:29:29 by fgrea            ###   ########lyon.fr    #
+#    Updated: 2021/04/26 17:17:43 by fgrea            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC_NAME = ft_printf.c ft_search.c ft_getdbl.c ft_getdbl_exponent.c \
 	   ft_flag_functions/ft_flag_spc.c ft_flag_functions/ft_flag_zero.c \
 	   ft_flag_functions/ft_flag_prec.c ft_format_functions/ft_format_f.c \
 	   ft_format_functions/ft_format_g.c ft_format_functions/ft_format_e.c \
+	   ft_round_dbl.c
 	   #ft_format_functions/ft_format_n.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
@@ -46,7 +47,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@make -C $(LFT_PATH)
 	@ar rc $@ $(OBJ)
-	@libtool -static -o $@ $(LFT_PATH)libft.a
+	@libtool -static -o $@ $@ $(LFT_PATH)libft.a
 	@ranlib $@
 	@echo "Obj folder & files created"
 	@echo "Executable created"
@@ -72,6 +73,8 @@ fclean: clean
 
 re: fclean
 	@$(MAKE) all
+
+bonus: all
 
 norme:
 	@norminette -R CheckForbiddenSourceHeader $(SRC)

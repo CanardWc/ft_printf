@@ -4,6 +4,7 @@
 t_dbl	ft_new_decimal(t_dbl value, int size)
 {
 	free(value.decimal);
+	value.decimal = NULL;
 	//printf("coucou\n");
 	if (size == 0)
 	{
