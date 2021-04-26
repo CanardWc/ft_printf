@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:24:58 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/26 16:29:39 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 17:37:18 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int		ft_format_e(t_printf data, t_flags flags, va_list ap)
 
 	if (flags.zero > 0)
 		ft_flag_zero(flags);
+	if (flags.zero > 0)
+		data.ret += flags.zero;
 	ft_putchar_fd(*v.decimal++, 1);
 
 	// hash flag / precision flag
