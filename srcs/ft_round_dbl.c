@@ -4,6 +4,7 @@
 t_dbl	ft_new_decimal(t_dbl value, int size)
 {
 	free(value.decimal);
+	value.decimal = NULL;
 	//printf("coucou\n");
 	if (size == 0)
 	{
@@ -23,11 +24,34 @@ t_dbl	ft_new_decimal(t_dbl value, int size)
 	return (value);
 }
 
+int		ft_check_bankers(char *s)
+{
+	while (*++s)
+		if (*s != '0' && *s)
+			return (0);
+	return (1);
+}
+
+void	ft_bankers_rounding(char *s, int i)
+{
+	s[i - 1] = s[i - 1] + 1;
+	s[i] = '0';
+}
+
 t_dbl	ft_round_dbl(t_dbl value, int size)
 {
 	int	i;
 
 	i = 0;
+	if (value.decimal[size] == '5')
+	{
+		if (ft_check_bankers(value.decimal + size))
+		{
+			if (ft_strchr("13579", value.decimal[size - 1]))
+				ft_bankers_rounding(value.decimal, size);
+			return (value);
+		}
+	}
 	while (value.decimal[i] == '9' && i < size && value.decimal[i])
 		i++;
 	if (!value.decimal[i])
