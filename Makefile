@@ -6,7 +6,7 @@
 #    By: fgrea <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/23 10:59:04 by fgrea             #+#    #+#              #
-#    Updated: 2021/02/12 10:07:07 by edassess         ###   ########lyon.fr    #
+#    Updated: 2021/04/22 15:29:29 by fgrea            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC_FLG_PATH = ft_flag_functions/
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = libftprintf.h
 SRC_NAME = ft_printf.c ft_search.c ft_getdbl.c ft_getdbl_exponent.c \
-	   ft_getdbl_fraction.c ft_round_dbl.c\
+	   ft_getdbl_fraction.c \
 	   ft_format_functions/ft_format_c.c ft_format_functions/ft_format_s.c \
 	   ft_format_functions/ft_format_int.c ft_format_functions/ft_format_uint.c \
 	   ft_format_functions/ft_format_percent.c ft_flag_functions/ft_flag_min.c \
@@ -46,7 +46,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@make -C $(LFT_PATH)
 	@ar rc $@ $(OBJ)
-	@libtool -static -o $@ $@ $(LFT_PATH)libft.a
+	@libtool -static -o $@ $(LFT_PATH)libft.a
 	@ranlib $@
 	@echo "Obj folder & files created"
 	@echo "Executable created"
