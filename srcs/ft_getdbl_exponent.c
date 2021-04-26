@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:31:43 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/26 12:56:26 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 17:19:54 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_dbl	ft_dbl_negexp(t_dbl data, int exp)
 	int		div;
 	char	*tmp;
 
-	add = 0;
+	data.pow = 0;
 	while (exp++ < 0)
 	{
 		tmp = data.decimal;
@@ -70,6 +70,7 @@ t_dbl	ft_dbl_posexp(t_dbl data, int exp)
 	int		size;
 	char	*tmp;
 
+	data.pow = 0;
 	size = ft_strlen(data.decimal);
 	ft_memmove(data.decimal + 2000 - size, data.decimal, size);
 	ft_bzero(data.decimal, size);
@@ -85,7 +86,14 @@ t_dbl	ft_dbl_posexp(t_dbl data, int exp)
 
 t_dbl	ft_getdbl_exponent(t_dbl data, int exp)
 {
-	if (exp < 0)
+	char	*tmp;
+
+	tmp = data.decimal;
+	while (*tmp == '0')
+		tmp++;
+	if (!*tmp)
+		data.pow = 0;
+	else if (exp < 0)
 		return (ft_dbl_negexp(data, exp));
 	else if (exp >= 0)
 		return (ft_dbl_posexp(data, exp));
