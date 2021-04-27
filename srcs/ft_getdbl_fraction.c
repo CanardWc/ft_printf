@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 12:13:57 by edassess          #+#    #+#             */
-/*   Updated: 2021/03/30 14:51:23 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 16:16:59 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,16 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 		return (ret);
 	i = 11;
 	ret[0] = exp == -1022 ? '0' : '1';
-	while (++i < 64)
+   	while (++i < 64)
 	{
 		if ((parsed_dbl >> (63 - i) & 1))
 		{
-			if (!(tmp = (char *)ft_calloc(50, sizeof(char))))
+			if (!(tmp = (char *)ft_calloc(60, sizeof(char))))
 				return (ret);
 			tmp = ft_binary_pow(tmp, y);
 			ret = ft_add_tmp(ret, tmp);
 			free(tmp);
+			tmp = NULL;
 		}
 		y++;
 	}

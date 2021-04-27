@@ -2,6 +2,21 @@
 
 #include <stdio.h>
 
+t_dbl	ft_inf_cases(t_dbl dbl, unsigned long long parsed_dbl)
+{
+	int	i;
+
+	i = 11;
+	dbl.pow = 401;
+	dbl.decimal = NULL;
+	if (dbl.sign == -1)
+		dbl.pow = 402;
+	while (++i < 64)
+		if ((parsed_dbl >> (63 - i) & 1))
+			dbl.pow = 400;
+	return (dbl);
+}
+
 t_dbl	ft_getdbl(double d)
 {
 	t_dbl			dbl;
@@ -20,6 +35,8 @@ t_dbl	ft_getdbl(double d)
 		exp += (parsed_dbl >> (63 - i) & 1) ? 1 * base : 0;
 		base *= 2;
 	}
+	if (exp == 2047)
+		return (ft_inf_cases(dbl, parsed_dbl));
 	// if exp = 2047 it's infinity
 	// if exp = 2047 and there's 1 bite in the fraction then it's nan
 	if (exp == 0)
@@ -27,5 +44,6 @@ t_dbl	ft_getdbl(double d)
 	exp -= 1023;
 	dbl.decimal = ft_getdbl_fraction(parsed_dbl, exp);
 	dbl = ft_getdbl_exponent(dbl, exp);
+	//printf("coucou dbl.dec = %s", dbl.decimal);
 	return (dbl);
 }

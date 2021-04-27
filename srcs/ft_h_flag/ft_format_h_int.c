@@ -1,27 +1,9 @@
 #include <libftprintf.h>
 
-static int	ft_flag_h(t_printf data, t_flags flags, va_list ap)
-{
-	if (ft_search(data.s, "h") && *(ft_search(data.s, "h") - 1) == 'h')
-		return (ft_format_hh_int(data, flags, ap));
-	else
-		return (ft_format_h_int(data, flags, ap));
-}
-
-static long long int	ft_get_ap_int(va_list ap, const char *s)
-{
-	if (ft_search(s, "l") && *(ft_search(s, "l") - 1) == 'l')
-		return (va_arg(ap, long long int));
-	else if (ft_search(s, "l"))
-		return ((long long int)va_arg(ap, long int));
-	else
-		return ((long long int)va_arg(ap, int));
-}
-
-static int		ft_format_int_size(long long int value, t_printf data, t_flags *flags)
+static int		ft_format_int_size(short value, t_printf data, t_flags *flags)
 {
 	int			size;
-	unsigned long long int	v;
+	unsigned short	v;
 
 	size = value == 0 && flags->prec == 0 ? 0 : 1;
 	v = value < 0 ? value * -1 : value;
@@ -41,21 +23,19 @@ static int		ft_format_int_size(long long int value, t_printf data, t_flags *flag
 	return (size);
 }
 
-static void		ft_putllu_fd(unsigned long long int nbr, int fd)
+static void		ft_putllu_fd(unsigned short nbr, int fd)
 {
 	if (nbr > 9)
 		ft_putllu_fd(nbr / 10, fd);
 	ft_putchar_fd(nbr % 10 + '0', fd);
 }
 
-int			ft_format_int(t_printf data, t_flags flags, va_list ap)
+int			ft_format_h_int(t_printf data, t_flags flags, va_list ap)
 {
-	long long int	v;
+	short	v;
 	int		size;
 
-	if (ft_search(data.s, "h"))
-		return (ft_flag_h(data, flags, ap));
-	v = ft_get_ap_int(ap, data.s);
+	v = (short)va_arg(ap, int);
 	size = ft_format_int_size(v, data, &flags);
 	if (flags.nbr > size)
 		data.ret += ft_flag_number(flags, size);
