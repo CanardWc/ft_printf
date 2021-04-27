@@ -1,35 +1,13 @@
 #include <libftprintf.h>
 
-const char	*bases[] =  { 
+const char	*h_bases[] =  { 
 	"0123456789", 
 	"01234567", 
 	"0123456789abcdef", 
 	"0123456789ABCDEF",
 	"0123456789abcdef" }; 
 
-static int	ft_flag_h(t_printf data, t_flags flags, va_list ap)
-{
-	if (ft_search(data.s, "h") && *(ft_search(data.s, "h") - 1) == 'h')
-		return (ft_format_hh_uint(data, flags, ap));
-	else
-		return (ft_format_h_uint(data, flags, ap));
-}
-
-static unsigned long long int	ft_get_ap_uint(va_list ap, const char *s)
-{
-	if (ft_search(s, "l") && *(ft_search(s, "l") - 1) == 'l')
-		return (va_arg(ap, unsigned long long int));
-	else if (ft_search(s, "l"))
-		return ((unsigned long long int)va_arg(ap, unsigned long int));
-	else if (ft_search(s, "h") && *(ft_search(s, "h") - 1) == 'h')
-		return ((unsigned long long int)va_arg(ap, unsigned int));
-	else if (ft_search(s, "h"))
-		return ((unsigned long long int)va_arg(ap, unsigned int));
-	else
-		return ((unsigned long long int)va_arg(ap, unsigned int));
-}
-
-static int		ft_uint_size(unsigned long long int value, \
+static int		ft_uint_size(unsigned short value, \
 		const char *base, t_printf data, t_flags *flags)
 {
 	int	size;
@@ -53,27 +31,22 @@ static int		ft_uint_size(unsigned long long int value, \
 	return (*(data.s) == 'p' ? size + 2 : size);
 }
 
-static void		ft_putllu_fd(unsigned long long int nbr, const char *base, int fd)
+static void		ft_putllu_fd(unsigned short nbr, const char *base, int fd)
 {
 	if (nbr > (ft_strlen(base) - 1))
 		ft_putllu_fd(nbr / ft_strlen(base), base, fd);
 	ft_putchar_fd(base[nbr % ft_strlen(base)], fd);
 }
 
-int			ft_format_uint(t_printf data, t_flags flags, va_list ap)
+int			ft_format_h_uint(t_printf data, t_flags flags, va_list ap)
 {
 	char			*form = "uoxXp";
 	const char		*base;
 	int			size;
-	unsigned long long int	v;
+	unsigned short	v;
 
-	if (ft_search(data.s, "h"))
-		return (ft_flag_h(data, flags, ap));
-	base = bases[ft_strchr(form, *(data.s)) - form];
-	if (*(data.s) == 'p')
-		v = va_arg(ap, unsigned long long int);
-	else
-		v = ft_get_ap_uint(ap, data.s);
+	base = h_bases[ft_strchr(form, *(data.s)) - form];
+	v = (unsigned short)va_arg(ap, unsigned int);
 	size = ft_uint_size(v, base, data, &flags);
 	if (flags.nbr > size)
 		data.ret += ft_flag_number(flags, size);

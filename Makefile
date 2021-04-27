@@ -6,7 +6,7 @@
 #    By: fgrea <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/23 10:59:04 by fgrea             #+#    #+#              #
-#    Updated: 2021/04/26 17:17:43 by fgrea            ###   ########lyon.fr    #
+#    Updated: 2021/04/27 14:45:10 by fgrea            ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ INC_PATH = ./includes/
 SRC_PATH = ./srcs/
 SRC_FRT_PATH = ft_format_functions/
 SRC_FLG_PATH = ft_flag_functions/
+SRC_FLG_H_PATH = ft_h_flag/
+SRC_FLG_HH_PATH = ft_hh_flag/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = libftprintf.h
@@ -35,7 +37,8 @@ SRC_NAME = ft_printf.c ft_search.c ft_getdbl.c ft_getdbl_exponent.c \
 	   ft_flag_functions/ft_flag_spc.c ft_flag_functions/ft_flag_zero.c \
 	   ft_flag_functions/ft_flag_prec.c ft_format_functions/ft_format_f.c \
 	   ft_format_functions/ft_format_g.c ft_format_functions/ft_format_e.c \
-	   ft_round_dbl.c
+	   ft_round_dbl.c ft_h_flag/ft_format_h_int.c ft_h_flag/ft_format_h_uint.c \
+	   ft_hh_flag/ft_format_hh_int.c ft_hh_flag/ft_format_hh_uint.c 
 	   #ft_format_functions/ft_format_n.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
@@ -60,6 +63,8 @@ $(OBJ_PATH):
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@mkdir $(OBJ_PATH)$(SRC_FRT_PATH) 2> /dev/null || true
 	@mkdir $(OBJ_PATH)$(SRC_FLG_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH)$(SRC_FLG_H_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH)$(SRC_FLG_HH_PATH) 2> /dev/null || true
 
 clean:
 	@make clean -C $(LFT_PATH)
