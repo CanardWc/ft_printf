@@ -12,12 +12,21 @@
 
 #include <libftprintf.h>
 
+static char	*ft_get_ap_s(va_list ap, const char *s)
+{
+	if (ft_search(s, "l"))
+		return ((char *)va_arg(ap, wchar_t *));
+	else
+		return (va_arg(ap, char *));
+}
+
 int	ft_format_s(t_printf data, t_flags flags, va_list ap)
 {
 	char	*str;
 	int	size;
 
-	if(!(str = va_arg(ap, char *)))
+	str = ft_get_ap_s(ap, data.s);
+	if (!str)
 		str = "(null)";
 	size = ft_strlen(str);
 	if (flags.prec > 0 || (flags.prec == 0 && ft_search(data.s, ".")))

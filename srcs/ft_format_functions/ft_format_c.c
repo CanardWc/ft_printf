@@ -12,12 +12,22 @@
 
 #include <libftprintf.h>
 
+static int	ft_get_ap_c(va_list ap, const char *s)
+{
+	if (ft_search(s, "l"))
+		return ((int)va_arg(ap, wint_t));
+	else
+		return (va_arg(ap, int));
+}
+
 int		ft_format_c(t_printf data, t_flags flags, va_list ap)
 {
-	data.s = (void *)data.s;
+	int	v;
+
+	v = ft_get_ap_c(ap, data.s);
 	if (flags.nbr > 1)
 		data.ret += ft_flag_number(flags, 1);
-	ft_putchar_fd(va_arg(ap, int), 1);
+	ft_putchar_fd(v, 1);
 	if (flags.min > 1)
 		data.ret += ft_flag_min(flags, 1);
 	return (data.ret + 1);

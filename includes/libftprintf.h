@@ -15,6 +15,7 @@
 
 # include "../libraries/libft/includes/libft.h"
 # include <stdarg.h>
+# include <wchar.h>
 
 typedef struct		s_dbl
 {
