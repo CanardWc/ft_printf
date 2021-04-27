@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_round_dbl.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/27 11:28:41 by edassess          #+#    #+#             */
+/*   Updated: 2021/04/27 11:28:55 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 #include <stdio.h>
 
@@ -5,7 +17,6 @@ t_dbl	ft_new_decimal(t_dbl value, int size)
 {
 	free(value.decimal);
 	value.decimal = NULL;
-	//printf("coucou\n");
 	if (size == 0)
 	{
 		value.decimal = (char *)ft_calloc(2, sizeof(char));
@@ -19,12 +30,11 @@ t_dbl	ft_new_decimal(t_dbl value, int size)
 		value.decimal = ft_memset(value.decimal, '0', size - 1);
 		*(value.decimal) = '1';
 	}
-	//	dprintf(1, "value.decimal==%s\n", value.decimal);
 	value.pow++;
 	return (value);
 }
 
-int		ft_check_bankers(char *s)
+int	ft_check_bankers(char *s)
 {
 	while (*++s)
 		if (*s != '0' && *s)
