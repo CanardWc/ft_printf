@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 13:24:27 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/22 17:47:36 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 15:27:47 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ const	t_form_f	form_fct[] = {
 	{ 'p', &ft_format_uint }, { 'd', &ft_format_int },
 	{ 'i', &ft_format_int }, { 'u', &ft_format_uint },
 	{ 'o', &ft_format_uint }, { 'x', &ft_format_uint },
-	{ 'X', &ft_format_uint }, /*{ 'n', &ft_format_n }, */
+	{ 'X', &ft_format_uint }, { 'n', &ft_format_n },
 	{ 'f', &ft_format_f }, { 'g', &ft_format_g },
 	{ 'e', &ft_format_e }, { '%', &ft_format_percent } };
 

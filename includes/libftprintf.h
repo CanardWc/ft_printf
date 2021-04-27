@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 15:30:04 by fgrea             #+#    #+#             */
-/*   Updated: 2021/04/27 14:50:22 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 15:27:14 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ int			ft_format_s(t_printf data, t_flags flags, va_list ap);
 int			ft_format_int(t_printf data, t_flags flags, va_list ap);
 int			ft_format_uint(t_printf data, t_flags flags, va_list ap);
 int			ft_format_percent(t_printf data, t_flags flags, va_list ap);
-/*
 int			ft_format_n(t_printf data, t_flags flags, va_list ap);
-*/
 int			ft_format_f(t_printf data, t_flags flags, va_list ap);
 int			ft_format_e(t_printf data, t_flags flags, va_list ap);
 int			ft_format_g(t_printf data, t_flags flags, va_list ap);
