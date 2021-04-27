@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 15:30:04 by fgrea             #+#    #+#             */
-/*   Updated: 2021/04/27 15:27:14 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 16:52:42 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char			*ft_search(const char *s, char *pos);
 t_dbl			ft_getdbl(double d);
 t_dbl			ft_getdbl_exponent(t_dbl data, int exp);
 char			*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp);
+int				ft_dbl_case_e(t_printf data, t_flags flags, t_dbl v);
+int				ft_dbl_case_f(t_printf data, t_flags flags, t_dbl v);
 
 t_dbl			ft_round_dbl(t_dbl value, int size);
 

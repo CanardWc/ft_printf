@@ -6,118 +6,35 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:30:13 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/27 11:28:06 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 16:53:45 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-#include <stdio.h>
 
-double	ft_get_ap_f(va_list ap, const char *s)
+int	ft_format_f(t_printf data, t_flags flags, va_list ap)
 {
-	if (ft_search(s, "l"))
-		return ((double)va_arg(ap, double));
-	else
-		return ((double)va_arg(ap, double));
-}
-
-int	ft_putflags(t_printf data, t_flags flag, t_dbl v, int size)
-{
-	flag.zero -= size;
-	if (flag.nbr > size)
-		data.ret += ft_flag_number(flag, size);
-	if (v.sign < 0)
-		ft_putchar_fd('-', 1);
-	else if (ft_search(data.s, "+"))
-		ft_flag_plus();
-	else if (ft_search(data.s, " "))
-		ft_flag_spc();
-	if (flag.zero > 0)
-	{
-		data.ret += flag.zero;
-		ft_flag_zero(flag);
-	}
-	return (data.ret);
-}
-
-int	ft_posexp_f(t_printf data, t_flags flag, t_dbl v, int size)
-{
-	char	*freed;
-
-	size += flag.prec;
-	v = ft_round_dbl(v, size);
-	freed = v.decimal;
-	size += v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
-	size += flag.prec != 0 || ft_search(data.s, "#");
-	data.ret = ft_putflags(data, flag, v, size);
-	while (v.pow-- > -1)
-		if (*v.decimal)
-			ft_putchar_fd(*v.decimal++, 1);
-	else
-		ft_putchar_fd('0', 1);
-	if (ft_search(data.s, "#") || flag.prec > 0)
-		ft_putchar_fd('.', 1);
-	while (flag.prec--)
-		if (*v.decimal)
-			ft_putchar_fd(*v.decimal++, 1);
-	else
-		ft_putchar_fd('0', 1);
-	while (size < flag.min)
-	{
-		size++;
-		ft_putchar_fd(' ', 1);
-	}
-	free(freed);
-	freed = NULL;
-	return (data.ret + size);
-}
-
-int	ft_negexp_f(t_printf data, t_flags flag, t_dbl v, int size)
-{
-	char	*freed;
-
-	data.ret++;
-	flag.min += v.pow;
-	flag.min -= v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
-	data.ret += v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
-	v = ft_round_dbl(v, flag.prec + (v.pow + 1));
-	freed = v.decimal;
-	size = (flag.prec == 0 && !ft_search(data.s, "#")) + flag.prec;
-	if (v.pow == 0)
-		return (ft_posexp_f(data, flag, v, v.pow + 1));
-	data.ret = ft_putflags(data, flag, v, size + (v.sign < 0 || ft_search(data.s, "+") || \
-				ft_search(data.s, " ")) + (-v.pow));
-	ft_putchar_fd('0', 1);
-	if ((flag.prec == 0 && ft_search(data.s, "#")) || flag.prec != 0)
-	{
-		data.ret++;
-		ft_putchar_fd('.', 1);
-		while (++v.pow < 0 && size-- && data.ret++)
-			ft_putchar_fd('0', 1);
-		while (size-- > 0 && data.ret++)
-			if (*v.decimal && flag.min--)
-				ft_putchar_fd(*v.decimal++, 1);
-		else if (1 || flag.min--)
-			ft_putchar_fd('0', 1);
-	}
-	while (--flag.min > 0 && data.ret++)
-		ft_putchar_fd(' ', 1);
-	free(freed);
-	freed = NULL;
-	return (data.ret);
-}
-
-int	ft_format_f(t_printf data, t_flags flag, va_list ap)
-{
+	char	*limits[] = { "nan", "inf", "-inf" };
 	t_dbl	v;
 	int		size;
 
-	v = ft_getdbl(ft_get_ap_f(ap, data.s));
-	size = v.pow + 1;
-	if (flag.prec == -1)
-		flag.prec = 6;
-	if (v.pow >= 0)
-		return (ft_posexp_f(data, flag, v, size));
-	else
-		return (ft_negexp_f(data, flag, v, size));
+	size = 0;
+	v = ft_getdbl((double)va_arg(ap, double));
+	if (v.pow >= 400)
+	{
+		size = ft_strlen(limits[v.pow - 400]);
+		if (flags.nbr > size)
+			data.ret += ft_flag_number(flags, size);
+		if (flags.zero > size)
+		{
+			data.ret += flags.zero - size;
+			while (flags.zero-- > size)
+				ft_putchar_fd(' ', 1);
+		}
+		ft_putstr_fd(limits[v.pow - 400], 1);
+		if (flags.min > size)
+			data.ret += ft_flag_min(flags, size);
+		return (data.ret + size);
+	}
+	return (ft_dbl_case_f(data, flags, v));
 }
