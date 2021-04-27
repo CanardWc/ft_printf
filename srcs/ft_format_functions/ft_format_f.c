@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:30:13 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/26 17:44:06 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 11:28:06 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,6 @@ int	ft_negexp_f(t_printf data, t_flags flag, t_dbl v, int size)
 		ft_putchar_fd(' ', 1);
 	free(freed);
 	freed = NULL;
-//	printf("ret==%d\n", data.ret + size);
-//	printf("data.ret==%d\n", data.ret);
-//	printf("    size==%d\n", size);
 	return (data.ret);
 }
 
