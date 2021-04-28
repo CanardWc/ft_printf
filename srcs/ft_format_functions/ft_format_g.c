@@ -1,13 +1,5 @@
 #include <libftprintf.h>
 
-double		ft_get_ap_g(va_list ap, const char *s)
-{
-	if (ft_search(s, "l"))
-		return ((double)va_arg(ap, double));
-	else
-		return ((double)va_arg(ap, double));
-}
-
 int	ft_format_g(t_printf data, t_flags flags, va_list ap)
 {
 	t_dbl	v;
@@ -15,9 +7,7 @@ int	ft_format_g(t_printf data, t_flags flags, va_list ap)
 
 	size = 1;
 	flags.min = 0;
-	v = ft_getdbl(ft_get_ap_g(ap, data.s));
-	return (data.ret);
-	/*
+	v = ft_getdbl(va_arg(ap, double));
 
 	// on arrondis ici;
 	
@@ -25,20 +15,18 @@ int	ft_format_g(t_printf data, t_flags flags, va_list ap)
 
 	if (v.pow < -4)
 	{
-		if (ft_search(data.s, "#"))
-			data.s + ft_search(data.s, "#") = '.';
-		return(ft_gestion_format_e(des trucs));
+	//	if (ft_search(data.s, "#"))
+	//		data.s + ft_search(data.s, "#") = '.';
+		return(ft_dbl_case_e(data, flags, v));
 	}
 
 	if ((flags.prec < 0 && v.pow > 6) || (v.pow > 0 && v.pow > flags.prec))
 	{
-		return(ft_gestion_format_e(des trucs));
+		return(ft_dbl_case_e(data, flags, v));
 	}
 
 	//case f
 
 	flags.prec -= v.pow;
-	return(ft_gestion_format_f(des trucs));
-
-	*/
+	return(ft_dbl_case_f(data, flags, v));
 }
