@@ -61,11 +61,12 @@ int	ft_negexp_f(t_printf data, t_flags flag, t_dbl v, int size)
 	data.ret += v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
 	v = ft_round_dbl(v, flag.prec + (v.pow + 1));
 	freed = v.decimal;
-	size = (flag.prec == 0 && !ft_search(data.s, "#")) + flag.prec;
+	size = flag.prec;
 	if (v.pow == 0)
 		return (ft_posexp_f(data, flag, v, v.pow + 1));
-	data.ret = ft_putflags(data, flag, v, size + (v.sign < 0 || ft_search(data.s, "+") || \
-				ft_search(data.s, " ")) + (-v.pow));
+	data.ret = ft_putflags(data, flag, v, size + (v.sign < 0 || \
+				ft_search(data.s, "+") || ft_search(data.s, " ")) + 1\
+			+ (flag.prec != 0 || (flag.prec == 0 && !ft_search(data.s, "#"))));
 	ft_putchar_fd('0', 1);
 	if ((flag.prec == 0 && ft_search(data.s, "#")) || flag.prec != 0)
 	{
