@@ -1,15 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_flag_asterisk.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/05 15:32:20 by edassess          #+#    #+#             */
+/*   Updated: 2021/05/05 15:46:03 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 
-const char	*form = "cspdiuoxXnfge%";
+const char	*g_form = "cspdiuoxXnfge%";
 
 static t_flags	ft_number(const char *s, va_list ap, t_flags flags)
 {
-	char	*ignore = "# +";
+	static char	*ignore = "# +";
 
 	while (ft_strchr(ignore, *s))
 		s++;
 	if (*s == '*' || ft_strchr("1234567689", *s))
-		flags.nbr = *s == '*' ? va_arg(ap, int) : ft_atoi(s);
+	{
+		if (*s == '*')
+			flags.nbr = va_arg(ap, int);
+		else
+			flags.nbr = ft_atoi(s);
+	}
 	if (flags.nbr < 0)
 	{
 		flags.min = flags.nbr;
@@ -20,25 +37,33 @@ static t_flags	ft_number(const char *s, va_list ap, t_flags flags)
 
 static t_flags	ft_min(const char *s, va_list ap, t_flags flags)
 {
-	char	*ignore = "# +0-";
+	static char	*ignore = "# +0-";
 
-	while (!ft_strchr(form, *s) && !ft_strchr("-.", *s))
+	while (!ft_strchr(g_form, *s) && !ft_strchr("-.", *s))
 		s++;
 	if (*s++ == '-')
 	{
 		while (ft_strchr(ignore, *s))
 			s++;
-		flags.min = *s == '*' ? va_arg(ap, int) : ft_atoi(s);
+		if (*s == '*')
+			flags.min = va_arg(ap, int);
+		else
+			flags.min = ft_atoi(s);
 	}
 	return (flags);
 }
 
 static t_flags	ft_prec(const char *s, va_list ap, t_flags flags)
 {
-	while (!ft_strchr(form, *s) && *s != '.')
+	while (!ft_strchr(g_form, *s) && *s != '.')
 		s++;
 	if (*s++ == '.')
-		flags.prec = *s == '*' ? va_arg(ap, int) : ft_atoi(s);
+	{
+		if (*s == '*')
+			flags.prec = va_arg(ap, int);
+		else
+			flags.prec = ft_atoi(s);
+	}
 	if (flags.prec < 0)
 		flags.prec = -1;
 	return (flags);
@@ -46,8 +71,8 @@ static t_flags	ft_prec(const char *s, va_list ap, t_flags flags)
 
 static t_flags	ft_zero(const char *s, va_list ap, t_flags flags)
 {
-	char	*forms = "0-.cspdiuoxXnfge%";
-	char	*ignore = "# +0";
+	static char	*forms = "0-.cspdiuoxXnfge%";
+	static char	*ignore = "# +0";
 
 	while (!ft_strchr(forms, *s))
 		s++;
@@ -55,7 +80,10 @@ static t_flags	ft_zero(const char *s, va_list ap, t_flags flags)
 	{
 		while (ft_strchr(ignore, *s))
 			s++;
-		flags.zero = *s == '*' ? va_arg(ap, int) : ft_atoi(s);	
+		if (*s == '*')
+			flags.zero = va_arg(ap, int);
+		else
+			flags.zero = ft_atoi(s);
 	}
 	if (flags.zero < 0)
 	{
@@ -65,7 +93,7 @@ static t_flags	ft_zero(const char *s, va_list ap, t_flags flags)
 	return (flags);
 }
 
-t_flags		ft_flag_asterisk(const char *s, va_list ap)
+t_flags	ft_flag_asterisk(const char *s, va_list ap)
 {
 	t_flags	flags;
 
@@ -86,6 +114,6 @@ t_flags		ft_flag_asterisk(const char *s, va_list ap)
 		flags.nbr = flags.zero;
 		flags.zero = 0;
 	}
-	flags.min *= flags.min < 0 ? -1 : 1;
+	flags.min *= (!(flags.min < 0) * 2) - 1;
 	return (flags);
 }

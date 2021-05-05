@@ -41,33 +41,15 @@ int	ft_posexp_f(t_printf data, t_flags flag, t_dbl v, int size)
 			ft_putchar_fd(*v.decimal++, 1);
 	else
 		ft_putchar_fd('0', 1);
-	while (size < flag.min)
-	{
-		size++;
+	while (size < flag.min && size++)
 		ft_putchar_fd(' ', 1);
-	}
 	free(freed);
 	freed = NULL;
 	return (data.ret + size);
 }
 
-int	ft_negexp_f(t_printf data, t_flags flag, t_dbl v, int size)
+int	ft_negexp_f2(t_printf data, t_flags flag, t_dbl v, int size)
 {
-	char	*freed;
-
-	data.ret++;
-	flag.min += v.pow;
-	flag.min -= v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
-	data.ret += v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
-	v = ft_round_dbl(v, flag.prec + (v.pow + 1));
-	freed = v.decimal;
-	size = flag.prec;
-	if (v.pow == 0)
-		return (ft_posexp_f(data, flag, v, v.pow + 1));
-	data.ret = ft_putflags(data, flag, v, size + (v.sign < 0 || \
-				ft_search(data.s, "+") || ft_search(data.s, " ")) + 1\
-			+ (flag.prec != 0 || (flag.prec == 0 && !ft_search(data.s, "#"))));
-	ft_putchar_fd('0', 1);
 	if ((flag.prec == 0 && ft_search(data.s, "#")) || flag.prec != 0)
 	{
 		data.ret++;
@@ -80,10 +62,32 @@ int	ft_negexp_f(t_printf data, t_flags flag, t_dbl v, int size)
 		else if (1 || flag.min--)
 			ft_putchar_fd('0', 1);
 	}
-	while (--flag.min > 0 && data.ret++)
+	while (flag.min-- > 0 && data.ret++)
 		ft_putchar_fd(' ', 1);
+	return (data.ret);
+}
+
+int	ft_negexp_f(t_printf data, t_flags flag, t_dbl v, int size)
+{
+	char	*freed;
+
+	data.ret++;
+	flag.min += v.pow;
+	flag.min -= v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
+	data.ret += v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
+	v = ft_round_dbl(v, flag.prec + (v.pow + 1));
+	size = flag.prec;
+	freed = v.decimal;
+	if (v.pow == 0)
+		return (ft_posexp_f(data, flag, v, v.pow + 1));
+	data.ret = ft_putflags(data, flag, v, size + (v.sign < 0 || \
+				ft_search(data.s, "+") || ft_search(data.s, " ")) + 1 \
+			+ (flag.prec != 0 || (flag.prec == 0 && !ft_search(data.s, "#"))));
+	ft_putchar_fd('0', 1);
+	data.ret = ft_negexp_f2(data, flag, v, size);
 	free(freed);
 	freed = NULL;
+	v.decimal = NULL;
 	return (data.ret);
 }
 

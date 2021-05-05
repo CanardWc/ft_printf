@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 11:28:41 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/27 11:28:55 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/05/05 14:10:23 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,12 @@ t_dbl	ft_new_decimal(t_dbl value, int size)
 	free(value.decimal);
 	value.decimal = NULL;
 	if (size == 0)
-	{
 		value.decimal = (char *)ft_calloc(2, sizeof(char));
-		*(value.decimal) = '1';
-	}
-	else
-	{
-		value.decimal = (char *)ft_calloc(size, sizeof(char));
-		if (!value.decimal)
-			return (value);
-		value.decimal = ft_memset(value.decimal, '0', size - 1);
-		*(value.decimal) = '1';
-	}
+	else if (!value.decimal)
+		value.decimal = (char *)ft_calloc(size + 1, sizeof(char));
+	if (!value.decimal)
+		return (value);
+	*(value.decimal) = '1';
 	value.pow++;
 	return (value);
 }
@@ -53,14 +47,11 @@ t_dbl	ft_round_dbl(t_dbl value, int size)
 	int	i;
 
 	i = 0;
-	if (value.decimal[size] == '5')
+	if (value.decimal[size] == '5' && ft_check_bankers(value.decimal + size))
 	{
-		if (ft_check_bankers(value.decimal + size))
-		{
-			if (ft_strchr("13579", value.decimal[size - 1]))
-				ft_bankers_rounding(value.decimal, size);
-			return (value);
-		}
+		if (ft_strchr("13579", value.decimal[size - 1]))
+			ft_bankers_rounding(value.decimal, size);
+		return (value);
 	}
 	while (value.decimal[i] == '9' && i < size && value.decimal[i])
 		i++;
@@ -68,11 +59,13 @@ t_dbl	ft_round_dbl(t_dbl value, int size)
 		return (value);
 	if (i == size && value.decimal[i] > '4')
 		return (ft_new_decimal(value, size));
+	i = size;
 	if (value.decimal[size] > '4')
 	{
 		while (value.decimal[--size] == '9' && size)
 			value.decimal[size] = '0';
 		value.decimal[size]++;
 	}
+	ft_memset(value.decimal + i, '0', ft_strlen(value.decimal + i));
 	return (value);
 }

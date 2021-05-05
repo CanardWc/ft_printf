@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_int.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/05 14:50:25 by edassess          #+#    #+#             */
+/*   Updated: 2021/05/05 14:58:37 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 
 static int	ft_flag_h(t_printf data, t_flags flags, va_list ap)
@@ -18,20 +30,21 @@ static long long int	ft_get_ap_int(va_list ap, const char *s)
 		return ((long long int)va_arg(ap, int));
 }
 
-static int		ft_format_int_size(long long int value, t_printf data, t_flags *flags)
+static int	ft_format_int_size(long long int value, \
+		t_printf data, t_flags *flags)
 {
-	int			size;
+	int						size;
 	unsigned long long int	v;
 
-	size = value == 0 && flags->prec == 0 ? 0 : 1;
-	v = value < 0 ? value * -1 : value;
-	while ((v /= 10) > 0)
-		size++;
+	size = !(value == 0 && flags->prec == 0);
+	v = ((!(value < 0) * 2) - 1) * value;
+	while ((v / 10) > 0 && size++)
+		v /= 10;
 	if (flags->prec == 1 && value == 0)
 		flags->prec = -1;
 	flags->prec -= size;
-	flags->zero -= value < 0 || ft_search(data.s, "+") || \
-		       ft_search(data.s, " ") ? size + 1 : size;
+	flags->zero -= (value < 0 || ft_search(data.s, "+") || \
+			ft_search(data.s, " ")) + size;
 	if (flags->prec > 0)
 		size += flags->prec;
 	if (value < 0 || ft_search(data.s, "+") || ft_search(data.s, " "))
@@ -41,17 +54,17 @@ static int		ft_format_int_size(long long int value, t_printf data, t_flags *flag
 	return (size);
 }
 
-static void		ft_putllu_fd(unsigned long long int nbr, int fd)
+static void	ft_putllu_fd(unsigned long long int nbr, int fd)
 {
 	if (nbr > 9)
 		ft_putllu_fd(nbr / 10, fd);
 	ft_putchar_fd(nbr % 10 + '0', fd);
 }
 
-int			ft_format_int(t_printf data, t_flags flags, va_list ap)
+int	ft_format_int(t_printf data, t_flags flags, va_list ap)
 {
 	long long int	v;
-	int		size;
+	int				size;
 
 	if (ft_search(data.s, "h"))
 		return (ft_flag_h(data, flags, ap));
@@ -65,7 +78,7 @@ int			ft_format_int(t_printf data, t_flags flags, va_list ap)
 		ft_flag_plus();
 	else if (ft_search(data.s, " "))
 		ft_flag_spc();
-	v *= v < 0 ? -1 : 1;
+	v *= (!(v < 0) * 2) - 1;
 	if (flags.zero > 0 && flags.min == 0 && flags.prec < 0)
 		ft_flag_zero(flags);
 	if (flags.prec > 0)

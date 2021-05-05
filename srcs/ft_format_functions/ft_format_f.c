@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:30:13 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/27 16:53:45 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/05/05 14:49:06 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_format_f(t_printf data, t_flags flags, va_list ap)
 {
-	char	*limits[] = { "nan", "inf", "-inf" };
-	t_dbl	v;
-	int		size;
+	static char	*limits[] = {"nan", "inf", "-inf"};
+	t_dbl		v;
+	int			size;
 
 	size = 0;
 	v = ft_getdbl((double)va_arg(ap, double));

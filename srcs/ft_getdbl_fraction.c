@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 12:13:57 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/27 17:14:29 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/05/05 14:13:47 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,15 @@ char	*ft_add_tmp(char *ret, char *tmp)
 	remnant = 0;
 	while (--i >= 0)
 	{
-		add = ret[i] ? ret[i] - '0' : 0;
+		if (ret[i])
+			add = ret[i] - '0';
+		else
+			add = 0;
 		add += tmp[i] - '0' + remnant;
 		ret[i] = add % 10 + '0';
 		remnant = add / 10;
 	}
+	free(tmp);
 	return (ret);
 }
 
@@ -63,23 +67,24 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 {
 	char	*ret;
 	char	*tmp;
-	int	i;
-	int	y;
+	int		i;
+	int		y;
 
 	y = 1;
-	if (!(ret = (char *)ft_calloc(2000, sizeof(char))))
+	ret = ft_calloc(2000, sizeof(char));
+	if (!ret)
 		return (ret);
 	i = 11;
-	ret[0] = exp == -1022 ? '0' : '1';
-   	while (++i < 64)
+	ret[0] = (exp != -1022) + 48;
+	while (++i < 64)
 	{
 		if ((parsed_dbl >> (63 - i) & 1))
 		{
-			if (!(tmp = (char *)ft_calloc(60, sizeof(char))))
+			tmp = (char *)ft_calloc(60, sizeof(char));
+			if (!tmp)
 				return (ret);
 			tmp = ft_binary_pow(tmp, y);
 			ret = ft_add_tmp(ret, tmp);
-			free(tmp);
 			tmp = NULL;
 		}
 		y++;

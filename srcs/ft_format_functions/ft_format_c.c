@@ -6,16 +6,19 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:21:15 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/27 13:54:26 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/05/05 14:46:37 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
 
-static void		type_wchar(wchar_t data)
+static void	type_wchar(wchar_t data)
 {
 	if (data <= 0x7f)
-		ft_putchar_fd(((data == 0) ? '~' : data), 1);
+		if (data == 0)
+			ft_putchar_fd('~', 1);
+	else
+		ft_putchar_fd(data, 1);
 	else if (data <= 0x7FF)
 	{
 		ft_putchar_fd((((data & 0x07c0) >> 6) + 0xc0), 1);
@@ -36,9 +39,9 @@ static void		type_wchar(wchar_t data)
 	}
 }
 
-int		ft_format_c(t_printf data, t_flags flags, va_list ap)
+int	ft_format_c(t_printf data, t_flags flags, va_list ap)
 {
-	int	v;
+	int		v;
 	wint_t	v2;
 
 	v = 0;

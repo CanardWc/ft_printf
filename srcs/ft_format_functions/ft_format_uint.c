@@ -1,18 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_uint.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/05 15:09:56 by edassess          #+#    #+#             */
+/*   Updated: 2021/05/05 15:31:28 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 
-const char	*bases[] =  { 
-	"0123456789", 
-	"01234567", 
-	"0123456789abcdef", 
-	"0123456789ABCDEF",
-	"0123456789abcdef" }; 
+const char	*g_bases[] = {"0123456789", "01234567", "0123456789abcdef", \
+	"0123456789ABCDEF", "0123456789abcdef"};
 
-static int	ft_flag_h(t_printf data, t_flags flags, va_list ap)
+static int	ft_flag_h(t_printf d, t_flags flags, va_list ap)
 {
-	if (ft_search(data.s, "h") && *(ft_search(data.s, "h") - 1) == 'h')
-		return (ft_format_hh_uint(data, flags, ap));
+	if (ft_search(d.s, "h") && *(ft_search(d.s, "h") - 1) == 'h')
+		return (ft_format_hh_uint(d, flags, ap));
 	else
-		return (ft_format_h_uint(data, flags, ap));
+		return (ft_format_h_uint(d, flags, ap));
 }
 
 static unsigned long long int	ft_get_ap_uint(va_list ap, const char *s)
@@ -29,57 +37,55 @@ static unsigned long long int	ft_get_ap_uint(va_list ap, const char *s)
 		return ((unsigned long long int)va_arg(ap, unsigned int));
 }
 
-static int		ft_uint_size(unsigned long long int value, \
-		const char *base, t_printf data, t_flags *flags)
+static int	ft_uint_size(unsigned long long int value, \
+		const char *base, t_printf d, t_flags *flags)
 {
 	int	size;
 
-	size = flags->prec == 0 && value == 0 ? 0 : 1;
-	if (*(data.s) != 'p' && ft_search(data.s, "#") && value != 0)
+	size = !(flags->prec == 0 && value == 0);
+	if (*(d.s) != 'p' && ft_search(d.s, "#") && value != 0)
 	{
 		size += 2;
 		flags->prec += 2;
 	}
 	if (flags->prec == 1 && value == 0)
 		flags->prec = -1;
-	while ((value /= ft_strlen(base)) > 0)
-		size++;
+	while ((value / ft_strlen(base)) > 0 && size++)
+		value /= ft_strlen(base);
 	flags->prec -= size;
 	flags->zero -= size;
 	if (flags->prec > 0)
 		size += flags->prec;
 	else if (flags->prec < 0 && flags->zero > 0)
 		size += flags->zero;
-	return (*(data.s) == 'p' ? size + 2 : size);
+	return (((*(d.s) == 'p') * 2) + size);
 }
 
-static void		ft_putllu_fd(unsigned long long int nbr, const char *base, int fd)
+static void	ft_putllu_fd(unsigned long long int nbr, const char *base, int fd)
 {
 	if (nbr > (ft_strlen(base) - 1))
 		ft_putllu_fd(nbr / ft_strlen(base), base, fd);
 	ft_putchar_fd(base[nbr % ft_strlen(base)], fd);
 }
 
-int			ft_format_uint(t_printf data, t_flags flags, va_list ap)
+int	ft_format_uint(t_printf d, t_flags flags, va_list ap)
 {
-	char			*form = "uoxXp";
-	const char		*base;
-	int			size;
+	const char				*base;
+	int						size;
 	unsigned long long int	v;
 
-	if (ft_search(data.s, "h"))
-		return (ft_flag_h(data, flags, ap));
-	base = bases[ft_strchr(form, *(data.s)) - form];
-	if (*(data.s) == 'p')
+	if (ft_search(d.s, "h"))
+		return (ft_flag_h(d, flags, ap));
+	base = g_bases[ft_strchr("uoxXp", *(d.s)) - "uoxXp"];
+	if (*(d.s) == 'p')
 		v = va_arg(ap, unsigned long long int);
 	else
-		v = ft_get_ap_uint(ap, data.s);
-	size = ft_uint_size(v, base, data, &flags);
+		v = ft_get_ap_uint(ap, d.s);
+	size = ft_uint_size(v, base, d, &flags);
 	if (flags.nbr > size)
-		data.ret += ft_flag_number(flags, size);
-	if (((ft_search(data.s, "#") && v != 0) || *(data.s) == 'p') && \
-			*(data.s) != 'u')
-		ft_flag_hash(*(ft_strchr(form, *(data.s))));
+		d.ret += ft_flag_number(flags, size);
+	if (((ft_search(d.s, "#") && v != 0) || *(d.s) == 'p') && *(d.s) != 'u')
+		ft_flag_hash(*(ft_strchr("uoxXp", *(d.s))));
 	if (flags.zero > 0 && flags.min <= 0)
 		ft_flag_zero(flags);
 	if (flags.prec > 0)
@@ -87,6 +93,6 @@ int			ft_format_uint(t_printf data, t_flags flags, va_list ap)
 	if (!(flags.prec == 0 && v == 0))
 		ft_putllu_fd(v, base, 1);
 	if (flags.min > size)
-		data.ret += ft_flag_min(flags, size);
-	return (data.ret + size);
+		d.ret += ft_flag_min(flags, size);
+	return (d.ret + size);
 }

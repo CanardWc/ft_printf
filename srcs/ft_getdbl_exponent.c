@@ -6,12 +6,11 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:31:43 by edassess          #+#    #+#             */
-/*   Updated: 2021/04/26 17:19:54 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/05/05 13:56:12 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libftprintf.h>
-#include <stdio.h>
 
 t_dbl	ft_dbl_negexp(t_dbl data, int exp)
 {
@@ -20,6 +19,7 @@ t_dbl	ft_dbl_negexp(t_dbl data, int exp)
 	char	*tmp;
 
 	data.pow = 0;
+	add = 0;
 	while (exp++ < 0)
 	{
 		tmp = data.decimal;
@@ -28,9 +28,8 @@ t_dbl	ft_dbl_negexp(t_dbl data, int exp)
 			div = 0;
 			if (*tmp)
 				div = ((*tmp - 48) * 10) / 2;
-			*tmp = ((div / 10) + add) + 48;
+			*tmp++ = ((div / 10) + add) + 48;
 			add = div % 10;
-			tmp++;
 		}
 	}
 	tmp = data.decimal;
@@ -63,6 +62,7 @@ void	ft_posexp_calc(t_dbl data, int exp)
 				*tmp = 48 + add;
 		}
 	}
+	tmp = NULL;
 }
 
 t_dbl	ft_dbl_posexp(t_dbl data, int exp)
@@ -81,6 +81,7 @@ t_dbl	ft_dbl_posexp(t_dbl data, int exp)
 	data.pow = ft_strlen(tmp) - size;
 	ft_memmove(data.decimal, tmp, ft_strlen(tmp));
 	ft_bzero(data.decimal + ft_strlen(tmp), 2000 - ft_strlen(tmp));
+	tmp = NULL;
 	return (data);
 }
 
@@ -97,5 +98,6 @@ t_dbl	ft_getdbl_exponent(t_dbl data, int exp)
 		return (ft_dbl_negexp(data, exp));
 	else if (exp >= 0)
 		return (ft_dbl_posexp(data, exp));
+	tmp = NULL;
 	return (data);
 }
