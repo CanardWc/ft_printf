@@ -6,7 +6,7 @@
 /*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 13:24:27 by edassess          #+#    #+#             */
-/*   Updated: 2021/05/05 14:07:30 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/05/06 17:24:07 by edassess         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ const t_form_f	g_form_fct[] = {
 
 static t_printf	ft_format_treatment(t_printf data, va_list ap)
 {
-	char	*format_list;
-	int		k;
-	t_flags	flags;
+	static char	*format_list = "cspdiuoxXnfge%";
+	int			k;
+	t_flags		flags;
 
-	format_list = "cspdiuoxXnfge%";
 	k = 0;
 	flags = ft_flag_asterisk(data.s, ap);
 	data.s++;
