@@ -1,5 +1,6 @@
 #include "includes/libftprintf.h"
 #include <stdio.h>
+#include <limits.h>
 
 int	main(void)
 {
@@ -46,10 +47,12 @@ int	main(void)
 		*/
 	//	while (1)
 	//	{
-	i = ft_printf(" %.16e %.16e ", 0.01234567890123456789012345678901, -0.01234567890123456789012345678901);
+	wchar_t	 empty[] = {0};
+	wchar_t	 s[] = {' ', u'ƀ', u'ɏ', u'ɐ', ' ', u'ʯ', ' ', u'ʰ', u'˿', ' ', u'ୟ', ' ', u'௫', ' ', ' ', u'࿚', 0};
+	i = ft_printf("this %.9f float", 1.5);
 	printf("\n");
 	ft_printf("i = %d\n", i);
-	i = printf(" %.16e %.16e ", 0.01234567890123456789012345678901, -0.01234567890123456789012345678901);
+	i = printf("this %.9f float", 1.5);
 	printf("\n");
 	ft_printf("i = %d\n", i);
 	//		ft_printf("%.8e\n", 23.375094499);
@@ -62,8 +65,6 @@ int	main(void)
 
 /* PROBLEMES */
 /*
-   90990.120 devient 90990.119
-   arrondi
-   des chiffres qui partent en couille
-   problemes de conversion i think
-   */
+ * Test qu'on fait pas : 3510 - 4000
+ *
+ */

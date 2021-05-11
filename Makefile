@@ -1,19 +1,8 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: fgrea <marvin@42.fr>                       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/23 10:59:04 by fgrea             #+#    #+#              #
-#    Updated: 2021/04/27 16:48:06 by fgrea            ###   ########lyon.fr    #
-#                                                                              #
-# **************************************************************************** #
 
 NAME = libftprintf.a
 
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror
+C_FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
 
 LFT_PATH = ./libraries/libft/
 LFT_INC_PATH = ./libraries/libft/includes/

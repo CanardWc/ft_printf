@@ -1,17 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_getdbl_fraction.c                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 12:13:57 by edassess          #+#    #+#             */
-/*   Updated: 2021/05/05 14:13:47 by edassess         ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include <libftprintf.h>
-#include <stdio.h>
 
 char	*ft_binary_pow(char *tmp, int i)
 {
@@ -71,7 +59,7 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 	int		y;
 
 	y = 1;
-	ret = ft_calloc(2000, sizeof(char));
+	ret = ft_calloc(2001, sizeof(char));
 	if (!ret)
 		return (ret);
 	i = 11;

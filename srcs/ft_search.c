@@ -1,3 +1,4 @@
+
 #include <libftprintf.h>
 
 char	*ft_search(const char *s, char *pos)
