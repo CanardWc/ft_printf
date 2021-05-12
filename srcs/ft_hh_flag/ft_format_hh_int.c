@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 static int	ft_format_int_size(signed char value, t_printf data, t_flags *flags)

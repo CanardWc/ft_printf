@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 t_dbl	ft_new_decimal(t_dbl value, int size)

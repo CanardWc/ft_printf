@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 14:00:30 by fgrea             #+#    #+#             */
-/*   Updated: 2021/02/12 12:40:33 by edassess         ###   ########lyon.fr   */
+/*   Updated: 2021/05/12 11:43:33 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,8 @@ char	*ft_strchr(const char *s, int c)
 {
 	while (*s != (char)c && *s)
 		s++;
-	return (*s == (char)c ? (char *)s : 0);
+	if (*s == (char)c)
+		return ((char *)s);
+	else
+		return (0);
 }

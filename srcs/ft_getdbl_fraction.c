@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 char	*ft_binary_pow(char *tmp, int i)

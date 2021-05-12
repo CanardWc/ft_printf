@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 static int	ft_flag_h(t_printf data, t_flags flags, va_list ap)

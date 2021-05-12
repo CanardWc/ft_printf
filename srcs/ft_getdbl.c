@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 t_dbl	ft_inf_cases(t_dbl dbl, unsigned long long parsed_dbl)

@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 static void	type_wchar(wchar_t data)

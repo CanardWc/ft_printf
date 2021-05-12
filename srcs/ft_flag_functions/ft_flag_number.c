@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 int	ft_flag_number(t_flags flags, int size)

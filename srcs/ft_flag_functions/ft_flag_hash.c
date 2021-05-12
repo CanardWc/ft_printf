@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 const char	*g_hash[] = {"0x", "0x", "0X", "0"};

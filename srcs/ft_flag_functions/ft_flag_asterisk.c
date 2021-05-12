@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 const char	*g_form = "cspdiuoxXnfge%";

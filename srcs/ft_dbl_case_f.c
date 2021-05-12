@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 int	ft_putflags(t_printf data, t_flags flag, t_dbl v, int size)
