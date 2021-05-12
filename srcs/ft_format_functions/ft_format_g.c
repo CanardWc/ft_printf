@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -37,55 +36,6 @@ int	ft_g_format_e(t_printf data, t_flags f, t_dbl v, int i)
 {
 	int	size;
 
-=======
-#include <libftprintf.h>
-
-static int	ft_inf_case(t_printf data, t_flags flags, t_dbl v)
-{
-	static char	*limits[] = {"nan", "inf", "-inf"};
-	int			size;
-
-	size = 0;
-	size = ft_strlen(limits[v.pow - 400]);
-	if (v.pow - 400 == 1 && (ft_search(data.s, "+") || ft_search(data.s, " ")))
-		size++;
-	if (flags.nbr > size)
-		data.ret += ft_flag_number(flags, size);
-	if (flags.zero > size)
-	{
-		data.ret += flags.zero - size;
-		while (flags.zero-- > size)
-			ft_putchar_fd(' ', 1);
-	}
-	if (v.pow - 400 == 1 && ft_search(data.s, "+"))
-		ft_putchar_fd('+', 1);
-	else if (v.pow - 400 == 1 && ft_search(data.s, " "))
-		ft_putchar_fd(' ', 1);
-	ft_putstr_fd(limits[v.pow - 400], 1);
-	if (flags.min > size)
-		data.ret += ft_flag_min(flags, size);
-	return (data.ret + size);
-}
-
-int	ft_format_g(t_printf data, t_flags flags, va_list ap)
-{
-	t_dbl		v;
-	int			size;
-	int			i;
-
-	if (flags.prec == -1)
-		flags.prec = 6;
-	v = ft_getdbl(va_arg(ap, double));
-	if (v.pow >= 400)
-		return (ft_inf_case(data, flags, v));
-	if (flags.prec == 0 && v.pow >= 0)
-		size = 1;
-	else if (v.pow < 0 && flags.prec == 0)
-		size = 1;
-	else
-		size = flags.prec;
-	v = ft_round_dbl(v, size);
->>>>>>> a6a17a6ab8d5e25edf8efe101414f3888a63b040
 	size = 0;
 	if (v.pow < -4)
 	{
