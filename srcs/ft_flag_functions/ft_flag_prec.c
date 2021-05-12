@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 void	ft_flag_prec(t_flags flags)

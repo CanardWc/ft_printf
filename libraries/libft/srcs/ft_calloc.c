@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 15:11:25 by fgrea             #+#    #+#             */
-/*   Updated: 2020/11/28 11:31:33 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/05/12 11:41:14 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ret;
 
-	if (!(ret = malloc(size * count)))
+	ret = malloc(size * count);
+	if (!ret)
 		return (NULL);
 	ft_bzero(ret, count * size);
 	return (ret);

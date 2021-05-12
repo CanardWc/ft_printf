@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 int	ft_flag_min(t_flags flags, int size)

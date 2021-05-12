@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 void	ft_flag_zero(t_flags flags)
