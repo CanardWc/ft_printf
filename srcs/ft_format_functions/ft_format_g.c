@@ -1,93 +1,109 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_format_g.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edassess <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/07 11:13:33 by edassess          #+#    #+#             */
+/*   Updated: 2021/05/07 11:31:34 by edassess         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <libftprintf.h>
 
-int	ft_format_g(t_printf data, t_flags flags, va_list ap)
+int	ft_limits_g(t_printf data, t_flags f, t_dbl v)
 {
-	t_dbl		v;
-	int			size;
-	int			i;
 	static char	*limits[] = {"nan", "inf", "-inf"};
+	int			size;
 
-	if (flags.prec == -1)
-		flags.prec = 6;
-	v = ft_getdbl(va_arg(ap, double));
-	if (v.pow >= 400)
+	size = ft_strlen(limits[v.pow - 400]);
+	if (f.nbr > size)
+		data.ret += ft_flag_number(f, size);
+	if (f.zero > size)
 	{
-		size = ft_strlen(limits[v.pow - 400]);
-		if (flags.nbr > size)
-			data.ret += ft_flag_number(flags, size);
-		if (flags.zero > size)
-		{
-			data.ret += flags.zero - size;
-			while (flags.zero-- > size)
-				ft_putchar_fd(' ', 1);
-		}
-		ft_putstr_fd(limits[v.pow - 400], 1);
-		if (flags.min > size)
-			data.ret += ft_flag_min(flags, size);
-		return (data.ret + size);
+		data.ret += f.zero - size;
+		while (f.zero-- > size)
+			ft_putchar_fd(' ', 1);
 	}
-	if (flags.prec == 0 && v.pow >= 0)
-		size = 1;
-	else if (v.pow < 0 && flags.prec == 0)
-		size = 1;
-	else
-		size = flags.prec;
-	v = ft_round_dbl(v, size);
+	ft_putstr_fd(limits[v.pow - 400], 1);
+	if (f.min > size)
+		data.ret += ft_flag_min(f, size);
+	return (data.ret + size);
+}
+
+int	ft_g_format_e(t_printf data, t_flags f, t_dbl v, int i)
+{
+	int	size;
+
 	size = 0;
 	if (v.pow < -4)
 	{
 		if (!ft_search(data.s, "#"))
-		{
-			i = ft_strlen(v.decimal) - 1;
-			while (i >= 0 && v.decimal[i] == '0')
-				i--;
-			flags.prec = i;
-			while (v.decimal[v.pow + size] && v.decimal[v.pow + size] == '0')
-				size++;
-			if (flags.prec < 0)
-				flags.prec = 0;
-		}
+			f.prec = (f.prec >= 0) * i;
 		else
-			flags.prec -= v.pow + 1;
-		return (ft_dbl_case_e(data, flags, v));
+			f.prec -= v.pow + 1;
+		return (ft_dbl_case_e(data, f, v));
 	}
-	if ((flags.prec == 0 && flags.prec < v.pow) \
-			|| (flags.prec != 0 && flags.prec <= v.pow))
+	else
 	{
-		i = ft_strlen(v.decimal) - 1;
-		while (i >= 0 && v.decimal[i] == '0')
-			i--;
 		if (!ft_search(data.s, "#"))
 		{
-			flags.prec = i - v.pow;
-			if (flags.prec < 0)
-				flags.prec = 0;
+			f.prec = i - v.pow;
 			while (v.decimal[v.pow + size] && v.decimal[v.pow + size] == '0')
 				size++;
-			if (!v.decimal[v.pow + size])
-				flags.prec = 0;
+			if (f.prec < 0 || !v.decimal[v.pow + size])
+				f.prec = 0;
 		}
-		else if (flags.prec != 0)
-			flags.prec -= v.pow + 1;
-		return (ft_dbl_case_e(data, flags, v));
+		else if (f.prec != 0)
+			f.prec -= v.pow + 1;
+		return (ft_dbl_case_e(data, f, v));
 	}
+}
+
+int	ft_g_format_f(t_printf data, t_flags f, t_dbl v, int i)
+{
+	int	size;
+
+	size = 0;
 	if (!ft_search(data.s, "#"))
 	{
-		while (v.decimal[size] && v.decimal[size] != '0' && size < flags.prec)
+		while (v.decimal[size] && v.decimal[size] != '0' && size < f.prec)
 			size++;
-		i = ft_strlen(v.decimal) - 1;
-		while (i >= 0 && v.decimal[i] == '0')
-			i--;
-		flags.prec = i - (v.pow);
-		if (flags.prec < 0)
-			flags.prec = 0;
-		if (size == 0)
-			flags.prec = 0;
-		if (flags.prec == 0 && v.pow < 0)
-			flags.prec = -v.pow;
+		f.prec = i - (v.pow);
+		if (f.prec < 0 || size == 0)
+			f.prec = 0;
+		if (f.prec == 0 && v.pow < 0)
+			f.prec = -v.pow;
 	}
-	else if (flags.prec != 0)
-		flags.prec -= v.pow + 1;
-	return (ft_dbl_case_f(data, flags, v));
+	else if (f.prec != 0)
+	{
+		f.prec -= v.pow + 1;
+	}
+	return (ft_dbl_case_f(data, f, v));
+}
+
+int	ft_format_g(t_printf data, t_flags f, va_list ap)
+{
+	t_dbl		v;
+	int			size;
+	int			i;
+
+	if (f.prec == -1)
+		f.prec = 6;
+	v = ft_getdbl(va_arg(ap, double));
+	if (v.pow >= 400)
+		return (ft_limits_g(data, f, v));
+	size = (f.prec == 0) + ((f.prec != 0) * f.prec);
+	v = ft_round_dbl(v, size);
+	size = 0;
+	i = ft_strlen(v.decimal) - 1;
+	while (i >= 0 && v.decimal[i] == '0')
+		i--;
+	while (v.decimal[v.pow + size] && v.decimal[v.pow + size] == '0')
+		size++;
+	if (v.pow < -4 || (f.prec == 0 && f.prec < v.pow) \
+			|| (f.prec != 0 && f.prec <= v.pow))
+		return (ft_g_format_e(data, f, v, i));
+	return (ft_g_format_f(data, f, v, i));
 }
