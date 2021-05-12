@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 const char	*g_h_bases[] = {"0123456789", "01234567", "0123456789abcdef", \

@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 const t_form_f	g_form_fct[] = {

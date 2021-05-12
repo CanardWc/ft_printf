@@ -6,13 +6,13 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 13:44:09 by fgrea             #+#    #+#             */
-/*   Updated: 2020/11/23 15:08:21 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/05/12 11:41:40 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int		ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (48 <= c && c <= 57)
 		return (1);

@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 t_dbl	ft_dbl_negexp(t_dbl data, int exp)

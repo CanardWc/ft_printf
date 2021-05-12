@@ -1,5 +1,53 @@
-
 #include <libftprintf.h>
+
+static int	ft_size(t_printf data, t_flags flags, t_dbl *v)
+{
+	int	size;
+
+	size = 1;
+	if (flags.prec >= 0)
+		size += flags.prec;
+	else
+		size += 6;
+	*v = ft_round_dbl(*v, size);
+	size += 4;
+	if (v->pow > 99 || v->pow < -99)
+		size++;
+	if (flags.prec != 0 || ft_search(data.s, "#"))
+		size++;
+	if (v->sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " "))
+		size++;
+	return (size);
+}
+
+static t_printf	ft_flags(t_printf data, t_flags *flags, t_dbl v, int size)
+{
+	flags->zero -= size;
+	if (flags->nbr > size)
+		data.ret += ft_flag_number(*flags, size);
+	if (v.sign < 0)
+		ft_putchar_fd('-', 1);
+	else if (ft_search(data.s, "+"))
+		ft_flag_plus();
+	else if (ft_search(data.s, " "))
+		ft_flag_spc();
+	if (flags->zero > 0)
+		ft_flag_zero(*flags);
+	if (flags->zero > 0)
+		data.ret += flags->zero;
+	ft_putchar_fd(*v.decimal++, 1);
+	if (flags->prec > 0 || ft_search(data.s, "#") || flags->prec < 0)
+	{
+		ft_putchar_fd('.', 1);
+		if (flags->prec < 0)
+			flags->prec = 6;
+		while (*v.decimal && flags->prec-- > 0)
+			ft_putchar_fd(*v.decimal++, 1);
+		while (flags->prec-- > 0)
+			ft_putchar_fd('0', 1);
+	}
+	return (data);
+}
 
 int	ft_dbl_case_e(t_printf data, t_flags flags, t_dbl v)
 {
@@ -8,44 +56,9 @@ int	ft_dbl_case_e(t_printf data, t_flags flags, t_dbl v)
 	int		div;
 
 	div = 1;
-	size = 1;
-	if (flags.prec >= 0)
-		size += flags.prec;
-	else
-		size += 6;
-	v = ft_round_dbl(v, size);
+	size = ft_size(data, flags, &v);
 	to_free = v.decimal;
-	size += 4;
-	if (v.pow > 99 || v.pow < -99)
-		size++;
-	if (flags.prec != 0 || ft_search(data.s, "#"))
-		size++;
-	if (v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " "))
-		size++;
-	flags.zero -= size;
-	if (flags.nbr > size)
-		data.ret += ft_flag_number(flags, size);
-	if (v.sign < 0)
-		ft_putchar_fd('-', 1);
-	else if (ft_search(data.s, "+"))
-		ft_flag_plus();
-	else if (ft_search(data.s, " "))
-		ft_flag_spc();
-	if (flags.zero > 0)
-		ft_flag_zero(flags);
-	if (flags.zero > 0)
-		data.ret += flags.zero;
-	ft_putchar_fd(*v.decimal++, 1);
-	if (flags.prec > 0 || ft_search(data.s, "#") || flags.prec < 0)
-	{
-		ft_putchar_fd('.', 1);
-		if (flags.prec < 0)
-			flags.prec = 6;
-		while (*v.decimal && flags.prec-- > 0)
-			ft_putchar_fd(*v.decimal++, 1);
-		while (flags.prec-- > 0)
-			ft_putchar_fd('0', 1);
-	}
+	data = ft_flags(data, &flags, v, size);
 	ft_putchar_fd('e', 1);
 	if (v.pow < 0)
 	{

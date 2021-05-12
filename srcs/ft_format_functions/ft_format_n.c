@@ -1,4 +1,3 @@
-
 #include <libftprintf.h>
 
 int	ft_format_n(t_printf data, t_flags flag, va_list ap)
