@@ -12,31 +12,35 @@
 
 #include <libftprintf.h>
 
-int	ft_limits_g(t_printf data, t_flags f, t_dbl v)
+static int	ft_limits_g(t_printf data, t_flags flags, t_dbl v)
 {
 	static char	*limits[] = {"nan", "inf", "-inf"};
 	int			size;
 
+	size = 0;
 	size = ft_strlen(limits[v.pow - 400]);
-	if (f.nbr > size)
-		data.ret += ft_flag_number(f, size);
-	if (f.zero > size)
+	if (v.pow - 400 == 1 && (ft_search(data.s, "+") || ft_search(data.s, " ")))
+		size++;
+	if (flags.nbr > size)
+		data.ret += ft_flag_number(flags, size);
+	if (flags.zero > size)
 	{
-		data.ret += f.zero - size;
-		while (f.zero-- > size)
+		data.ret += flags.zero - size;
+		while (flags.zero-- > size)
 			ft_putchar_fd(' ', 1);
 	}
+	if (v.pow - 400 == 1 && ft_search(data.s, "+"))
+		ft_putchar_fd('+', 1);
+	else if (v.pow - 400 == 1 && ft_search(data.s, " "))
+		ft_putchar_fd(' ', 1);
 	ft_putstr_fd(limits[v.pow - 400], 1);
-	if (f.min > size)
-		data.ret += ft_flag_min(f, size);
+	if (flags.min > size)
+		data.ret += ft_flag_min(flags, size);
 	return (data.ret + size);
 }
 
 int	ft_g_format_e(t_printf data, t_flags f, t_dbl v, int i)
 {
-	int	size;
-
-	size = 0;
 	if (v.pow < -4)
 	{
 		if (!ft_search(data.s, "#"))
@@ -49,10 +53,10 @@ int	ft_g_format_e(t_printf data, t_flags f, t_dbl v, int i)
 	{
 		if (!ft_search(data.s, "#"))
 		{
-			f.prec = i - v.pow;
-			while (v.decimal[v.pow + size] && v.decimal[v.pow + size] == '0')
-				size++;
-			if (f.prec < 0 || !v.decimal[v.pow + size])
+			while (!v.decimal[f.prec - 1] || v.decimal[f.prec - 1] == '0')
+				f.prec--;
+			f.prec -= 1;
+			if (f.prec < 0 || !v.decimal[1])
 				f.prec = 0;
 		}
 		else if (f.prec != 0)
