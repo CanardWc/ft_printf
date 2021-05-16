@@ -1,22 +1,21 @@
 #include <libftprintf.h>
 
-static void	ft_type_wchar(wchar_t data)
+static void	ft_type_wchar(wchar_t data, int *ret)
 {
 	if (data <= 0x7f)
-		if (data == 0)
-			ft_putchar_fd('~', 1);
-	else
-		ft_putchar_fd(data, 1);
+		ft_putchar_fd((data == 0) * '~' + (data != 0) * data, 1);
 	else if (data <= 0x7FF)
 	{
 		ft_putchar_fd((((data & 0x07c0) >> 6) + 0xc0), 1);
 		ft_putchar_fd(((data & 0x003F) + 0x80), 1);
+		*ret += 1;
 	}
 	else if (data <= 0xFFFF)
 	{
 		ft_putchar_fd((((data & 0xF000) >> 12) + 0xE0), 1);
 		ft_putchar_fd((((data & 0x0Fc0) >> 6) + 0x80), 1);
 		ft_putchar_fd(((data & 0x003F) + 0x80), 1);
+		*ret += 2;
 	}
 	else if (data <= 0x1FFFFF)
 	{
@@ -24,6 +23,7 @@ static void	ft_type_wchar(wchar_t data)
 		ft_putchar_fd((((data & 0x03F000) >> 12) + 0x80), 1);
 		ft_putchar_fd((((data & 0x0Fc0) >> 6) + 0x80), 1);
 		ft_putchar_fd(((data & 0x003F) + 0x80), 1);
+		*ret += 3;
 	}
 }
 
@@ -65,7 +65,7 @@ static int	ft_format_ls(t_printf data, t_flags flags, va_list ap)
 			data.ret += flags.zero - size;
 	}
 	while (i < size)
-		ft_type_wchar(str[i++]);
+		ft_type_wchar(str[i++], &(data.ret));
 	if (flags.min > size)
 		data.ret += ft_flag_min(flags, size);
 	return (data.ret + size);

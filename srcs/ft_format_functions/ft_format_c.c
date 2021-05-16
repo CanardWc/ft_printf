@@ -1,22 +1,21 @@
 #include <libftprintf.h>
 
-static void	type_wchar(wchar_t data)
+static void	type_wchar(wchar_t data, int *ret)
 {
 	if (data <= 0x7f)
-		if (data == 0)
-			ft_putchar_fd('~', 1);
-	else
-		ft_putchar_fd(data, 1);
+		ft_putchar_fd((data == 0) * '~' + (data != 0) * data, 1);
 	else if (data <= 0x7FF)
 	{
 		ft_putchar_fd((((data & 0x07c0) >> 6) + 0xc0), 1);
 		ft_putchar_fd(((data & 0x003F) + 0x80), 1);
+		*ret += 1;
 	}
 	else if (data <= 0xFFFF)
 	{
 		ft_putchar_fd((((data & 0xF000) >> 12) + 0xE0), 1);
 		ft_putchar_fd((((data & 0x0Fc0) >> 6) + 0x80), 1);
 		ft_putchar_fd(((data & 0x003F) + 0x80), 1);
+		*ret += 2;
 	}
 	else if (data <= 0x1FFFFF)
 	{
@@ -24,6 +23,7 @@ static void	type_wchar(wchar_t data)
 		ft_putchar_fd((((data & 0x03F000) >> 12) + 0x80), 1);
 		ft_putchar_fd((((data & 0x0Fc0) >> 6) + 0x80), 1);
 		ft_putchar_fd(((data & 0x003F) + 0x80), 1);
+		*ret += 3;
 	}
 }
 
@@ -39,7 +39,7 @@ int	ft_format_c(t_printf data, t_flags flags, va_list ap)
 	if (ft_search(data.s, "l"))
 	{
 		v2 = va_arg(ap, wint_t);
-		type_wchar(v2);
+		type_wchar(v2, &(data.ret));
 	}
 	else
 	{

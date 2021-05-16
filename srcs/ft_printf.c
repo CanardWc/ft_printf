@@ -40,16 +40,20 @@ int	ft_printf(const char *s, ...)
 	va_start(ap, s);
 	while (*(data.s))
 	{
-		if (*(data.s) == '%')
+		if (ft_strchr(data.s, '%'))
+		{
+			write(1, data.s, ft_strchr(data.s, '%') - data.s);
+			data.ret += ft_strchr(data.s, '%') - data.s;
+			data.s = ft_strchr(data.s, '%');
 			data = ft_format_treatment(data, ap);
+		}
 		else
 		{
-			ft_putchar_fd(*data.s++, 1);
-			data.ret++;
+			ft_putstr_fd((char *)data.s, 1);
+			data.ret += ft_strlen(data.s);
+			data.s += ft_strlen(data.s);
 		}
 	}
-	data.s = NULL;
-	s = NULL;
 	va_end(ap);
 	return (data.ret);
 }
