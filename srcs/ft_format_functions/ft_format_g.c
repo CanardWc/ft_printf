@@ -84,6 +84,8 @@ int	ft_g_format_f(t_printf data, t_flags f, t_dbl v, int i)
 	{
 		f.prec -= v.pow + 1;
 	}
+	if (ft_search(data.s, "#") && v.pow < 0 && f.prec == 0)
+		f.prec = -v.pow;
 	return (ft_dbl_case_f(data, f, v));
 }
 

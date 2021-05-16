@@ -62,7 +62,7 @@ int	ft_negexp_f2(t_printf data, t_flags flag, t_dbl v, int size)
 		else if (1 || flag.min--)
 			ft_putchar_fd('0', 1);
 	}
-	while (flag.min-- > 0 && data.ret++)
+	while (--flag.min > 0 && data.ret++)
 		ft_putchar_fd(' ', 1);
 	return (data.ret);
 }
