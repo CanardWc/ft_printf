@@ -62,7 +62,7 @@ char	*ft_getdbl_fraction(unsigned long long parsed_dbl, int exp)
 	if (!ret)
 		return (ret);
 	i = 11;
-	ret[0] = (exp != -1022) + 48;
+	ret[0] = (exp != -1023) + 48;
 	while (++i < 64)
 	{
 		if ((parsed_dbl >> (63 - i) & 1))

@@ -35,8 +35,6 @@ t_dbl	ft_getdbl(double d)
 	}
 	if (exp == 2047)
 		return (ft_inf_cases(dbl, parsed_dbl));
-	if (exp == 0)
-		exp++;
 	exp -= 1023;
 	dbl.decimal = ft_getdbl_fraction(parsed_dbl, exp);
 	dbl = ft_getdbl_exponent(dbl, exp);
