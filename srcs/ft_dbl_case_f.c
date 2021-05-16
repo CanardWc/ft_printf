@@ -32,15 +32,15 @@ int	ft_posexp_f(t_printf data, t_flags flag, t_dbl v, int size)
 	while (v.pow-- > -1)
 		if (*v.decimal)
 			ft_putchar_fd(*v.decimal++, 1);
-	else
-		ft_putchar_fd('0', 1);
+		else
+			ft_putchar_fd('0', 1);
 	if (ft_search(data.s, "#") || flag.prec > 0)
 		ft_putchar_fd('.', 1);
 	while (flag.prec--)
 		if (*v.decimal)
 			ft_putchar_fd(*v.decimal++, 1);
-	else
-		ft_putchar_fd('0', 1);
+		else
+			ft_putchar_fd('0', 1);
 	while (size < flag.min && size++)
 		ft_putchar_fd(' ', 1);
 	free(freed);
@@ -59,8 +59,8 @@ int	ft_negexp_f2(t_printf data, t_flags flag, t_dbl v, int size)
 		while (size-- > 0 && data.ret++)
 			if (*v.decimal && flag.min--)
 				ft_putchar_fd(*v.decimal++, 1);
-		else if (1 || flag.min--)
-			ft_putchar_fd('0', 1);
+			else if (1 || flag.min--)
+				ft_putchar_fd('0', 1);
 	}
 	while (--flag.min > 0 && data.ret++)
 		ft_putchar_fd(' ', 1);
@@ -75,7 +75,8 @@ int	ft_negexp_f(t_printf data, t_flags flag, t_dbl v, int size)
 	flag.min += v.pow;
 	flag.min -= v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
 	data.ret += v.sign < 0 || ft_search(data.s, "+") || ft_search(data.s, " ");
-	v = ft_round_dbl(v, flag.prec + (v.pow + 1));
+	if (flag.prec + (v.pow + 1) >= 0)
+		v = ft_round_dbl(v, flag.prec + (v.pow + 1));
 	size = flag.prec;
 	freed = v.decimal;
 	if (v.pow == 0)
