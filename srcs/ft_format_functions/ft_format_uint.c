@@ -62,7 +62,7 @@ int	ft_format_uint(t_printf d, t_flags flags, va_list ap)
 	int						size;
 	unsigned long long int	v;
 
-	if (ft_search(d.s, "h"))
+	if (ft_search(d.s, "h") && *d.s != 'p')
 		return (ft_flag_h(d, flags, ap));
 	base = g_bases[ft_strchr("uoxXp", *(d.s)) - "uoxXp"];
 	if (*(d.s) == 'p')
