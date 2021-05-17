@@ -1,69 +1,48 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile2                                          :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: edassess <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/05/17 10:35:23 by edassess          #+#    #+#              #
+#    Updated: 2021/05/17 10:35:32 by edassess         ###   ########lyon.fr    #
+#                                                                              #
+# **************************************************************************** #
 
-NAME = libftprintf.a
+SRCS			= ft_printf.c ft_search.c ft_format_c.c ft_format_s.c \
+	   ft_format_int.c ft_format_uint.c ft_format_percent.c ft_flag_min.c \
+	   ft_flag_number.c ft_flag_asterisk.c ft_flag_zero.c ft_flag_prec.c
+OBJS			= $(SRCS:.c=.o)
 
-CC = cc
-C_FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+BONUS			= ft_getdbl_bonus.c ft_getdbl_exponent_bonus.c \
+	 ft_getdbl_fraction_bonus.c ft_flag_hash_bonus.c \
+	 ft_flag_plus_bonus.c ft_flag_spc_bonus.c ft_format_e_bonus.c \
+	 ft_format_f_bonus.c ft_format_g_bonus.c ft_format_h_int_bonus.c \
+	 ft_format_h_uint_bonus.c ft_format_hh_int_bonus.c \
+	 ft_format_hh_uint_bonus.c ft_format_n_bonus.c \
+	 ft_dbl_case_e_bonus.c ft_dbl_case_f_bonus.c ft_round_dbl_bonus.c
 
-LFT_PATH = ./libraries/
-LFT_INC_PATH = ./libraries/
-OBJ_PATH = ./objs/
-INC_PATH = ./includes/
-SRC_PATH = ./srcs/
+BONUS_OBJS		= $(BONUS:.c=.o)
 
-OBJ_NAME = $(SRC_NAME:.c=.o)
-INC_NAME = libftprintf.h
-SRC_NAME = ft_printf.c ft_search.c ft_getdbl.c ft_getdbl_exponent.c \
-	   ft_getdbl_fraction.c \
-	   ft_format_c.c ft_format_s.c \
-	   ft_format_int.c ft_format_uint.c \
-	   ft_format_percent.c ft_flag_min.c \
-	   ft_flag_number.c ft_flag_asterisk.c \
-	   ft_flag_hash.c ft_flag_plus.c \
-	   ft_flag_spc.c ft_flag_zero.c \
-	   ft_flag_prec.c ft_format_f.c \
-	   ft_format_g.c ft_format_e.c \
-	   ft_round_dbl.c ft_format_h_int.c ft_format_h_uint.c \
-	   ft_format_hh_int.c ft_format_hh_uint.c \
-	   ft_format_n.c ft_dbl_case_e.c ft_dbl_case_f.c
+CC				= @gcc
+RM				= @rm -f
+CFLAGS			= -Wall -Wextra -Werror -I.
 
-SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
-OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
-INC = $(addprefix -I,$(INC_PATH)) $(addprefix -I,$(LFT_INC_PATH))
+NAME			= libft.a
 
-all: $(NAME)
+all:			$(NAME)
 
-$(NAME): $(OBJ)
-	@make -C $(LFT_PATH)
-	@ar rc $@ $(OBJ)
-	@libtool -static -o $@ $@ $(LFT_PATH)libft.a
-	@ranlib $@
-	@echo "Obj folder & files created"
-	@echo "Executable created"
-	@echo "Compilation finished"
-
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c $(OBJ_PATH)
-	@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
-
-$(OBJ_PATH):
-	@mkdir $(OBJ_PATH) 2> /dev/null || true
+$(NAME):		$(OBJS)
+				@ar rcs $(NAME) $(OBJS)
 
 clean:
-	@make clean -C $(LFT_PATH)
-	@rm -rf $(OBJ_PATH) 2> /dev/null || true
-	@echo "Obj folder & files suppressed"
+				@$(RM) $(OBJS) $(BONUS_OBJS)
 
-fclean: clean
-	@make fclean -C $(LFT_PATH)
-	@rm -f $(NAME)
-	@echo "Executable suppressed"
+fclean:			clean
+				@$(RM) $(NAME)
 
-re: fclean
-	@$(MAKE) all
+re:				fclean $(NAME)
 
-bonus: all
-
-norme:
-	@norminette -R CheckForbiddenSourceHeader $(SRC)
-	@echo "C files norme check finished"
-	@norminette -R CheckDefine $(INC_PATH)
-	@echo "Header files norme check finished"
+bonus:			$(OBJS) $(BONUS_OBJS)
+				@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)

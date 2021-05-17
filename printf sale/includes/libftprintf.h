@@ -32,7 +32,7 @@ typedef struct s_form_f
 	int				(*fct)(t_printf, t_flags, va_list);
 }					t_form_f;
 
-int					ft_printf(const char *s, ...);
+int					ft_printf(const char *s, ...) __attribute__ ((format(printf,1,2)));
 
 char				*ft_search(const char *s, char *pos);
 
