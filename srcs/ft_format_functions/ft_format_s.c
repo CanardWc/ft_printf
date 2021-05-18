@@ -42,6 +42,16 @@ static int	ft_str_size(wchar_t *data)
 	return (i);
 }
 
+static int	ft_flags(t_printf *data, t_flags flags, int size)
+{
+	if ((flags.prec > 0 || (flags.prec == 0 && ft_search(data->s, "."))) && \
+			(size > flags.prec))
+		size = flags.prec;
+	if (flags.nbr > size)
+		data->ret += ft_flag_number(flags, size);
+	return (size);
+}
+
 static int	ft_format_ls(t_printf data, t_flags flags, va_list ap)
 {
 	wchar_t	*str;
@@ -52,12 +62,11 @@ static int	ft_format_ls(t_printf data, t_flags flags, va_list ap)
 	str = va_arg(ap, wchar_t *);
 	if (!str)
 		str = (wchar_t *)("(null)");
-	size = ft_str_size(str);
-	if ((flags.prec > 0 || (flags.prec == 0 && ft_search(data.s, "."))) && \
-			(size > flags.prec))
-		size = flags.prec;
-	if (flags.nbr > size)
-		data.ret += ft_flag_number(flags, size);
+	if (flags.prec == 0)
+		size = 0;
+	else
+		size = ft_str_size(str);
+	size = ft_flags(&data, flags, size);
 	if (flags.zero > (flags.prec > size ? flags.prec : size) && flags.min <= 0)
 	{
 		ft_flag_zero(flags);
@@ -81,12 +90,11 @@ int	ft_format_s(t_printf data, t_flags flags, va_list ap)
 	str = va_arg(ap, char *);
 	if (!str)
 		str = "(null)";
-	size = ft_strlen(str);
-	if ((flags.prec > 0 || (flags.prec == 0 && ft_search(data.s, "."))) \
-			&& (size > flags.prec))
-		size = flags.prec;
-	if (flags.nbr > size)
-		data.ret += ft_flag_number(flags, size);
+	if (flags.prec == 0)
+		size = 0;
+	else
+		size = ft_strlen(str);
+	size = ft_flags(&data, flags, size);
 	if (flags.zero > (flags.prec > size ? flags.prec : size) && flags.min <= 0)
 	{
 		flags.zero -= size;

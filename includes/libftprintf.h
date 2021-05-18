@@ -1,7 +1,7 @@
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
 
-# include <libft.h>
+# include "../libraries/libft/includes/libft.h"
 # include <stdarg.h>
 # include <wchar.h>
 

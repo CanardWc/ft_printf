@@ -2,7 +2,7 @@
 NAME = libft.a
 
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+C_FLAGS = -Wall -Wextra -Werror
 
 OBJ_PATH = ./objs/
 INC_PATH = ./includes/
@@ -27,9 +27,13 @@ $(NAME): $(OBJ)
 	@echo "Executable created"
 	@echo "Compilation finished"
 
+$(OBJ): | $(OBJ_PATH)
+
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
+
+$(OBJ_PATH):
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
 
 clean:
 	@rm -rf $(OBJ_PATH)	2> /dev/null || true
