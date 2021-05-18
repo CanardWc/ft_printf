@@ -2,7 +2,7 @@
 NAME = libftprintf.a
 
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+C_FLAGS = -Wall -Wextra -Werror
 
 LFT_PATH = ./libraries/libft/
 LFT_INC_PATH = ./libraries/libft/includes/
@@ -16,6 +16,7 @@ SRC_FLG_HH_PATH = ft_hh_flag/
 SRC_UTL_PATH = utils/
 SRC_DBL_PATH = double/
 
+LFT_NAME = libft.a
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = libftprintf.h
 SRC_NAME = ft_printf.c \
@@ -37,6 +38,7 @@ SRC_NAME = ft_printf.c \
 	   ft_flag_functions/ft_hh_flag/ft_format_hh_int.c \
 	   ft_flag_functions/ft_hh_flag/ft_format_hh_uint.c
 
+LFT = $(addprefix $(LFT_PATH),$(LFT_NAME))
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 INC = $(addprefix -I,$(INC_PATH)) $(addprefix -I,$(LFT_INC_PATH))
@@ -45,14 +47,16 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LFT_PATH)
-	@ar rc $@ $(OBJ)
-	@libtool -static -o $@ $@ $(LFT_PATH)libft.a
+	@cp $(LFT) $@
+	@ar rcs $@ $(OBJ)
 	@ranlib $@
 	@echo "Obj folder & files created"
 	@echo "Executable created"
 	@echo "Compilation finished"
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c $(OBJ_PATH)
+$(OBJ): | $(OBJ_PATH)
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
 
 $(OBJ_PATH):
